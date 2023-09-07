@@ -16,6 +16,8 @@
             'weightchar' => 'Gewicht Bezeichnung (G, L, KG, ...)',
             'weight_available' => ':weight:char',
 
+            
+
             'add' => [
                 'title' => 'Produkt erstellen',
                 'submit_button' => 'Erstellen',
@@ -24,6 +26,7 @@
                 'unlimited_available' => 'Unbegrenzt verfügbar',
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
+                'variant' => 'Variant',
             ],
 
             'edit' => [

@@ -43,7 +43,7 @@
 													
 													<div class="kt-portlet__body">
 														<div class="kt-section kt-section--first">
-														<div class="form-group">
+															<div class="form-group">
 																<label for="product_edit_name">{{ __('backend/management.products.name') }}</label>
 																<input type="text" class="form-control @if($errors->has('product_edit_name')) is-invalid @endif" id="product_edit_name" name="product_edit_name" placeholder="{{ __('backend/management.products.name') }}" value="{{ \App\Classes\LangHelper::getValue($lang, 'product', 'name', $product->id) ?? $product->name }}" />
 
@@ -153,6 +153,17 @@
 																</label>
 															</div>
 
+															<!-- added by Khamid 2023-09-07 -->
+															<div class="form-group">
+																<label class="k-radio k-radio--all k-radio--solid">
+																	<input type="radio" name="product_edit_stock_management" value="variants" @if($product->asVariant()) checked @endif/>
+																	<span></span>
+																	{{ __('backend/management.products.add.variant') }}
+																</label>
+															</div>
+															<!-- / added by Khamid -->
+															
+
 															<div class="product_edit_weight_div form-group" style="@if(!$product->asWeight()) display: none; @endif">
 																<label for="product_edit_weight">{{ __('backend/management.products.weight') }}</label>
 																<input type="number" class="text-editor form-control @if($errors->has('product_edit_weight')) is-invalid @endif" id="product_edit_weight" name="product_edit_weight" placeholder="{{ __('backend/management.products.weight') }}" value="{{ $product->getWeightAvailable() }}" />
@@ -196,6 +207,58 @@
 																	</span>
 																@endif
 															</div>
+
+															<!-- added by Khamid 2023-09-07 -->
+															<div class="product_edit_variant_div"  style="@if(!$product->asVariant()) display: none; @endif">
+																<div class="row">
+																	<div class="col-9 variant-wrapper">
+																		@if(count($variants) > 0)
+																			@foreach($variants as $variant)
+																			<div class="variant-item row">
+																				<div class="col-5">
+																					<div class="form-group">
+																						<label for="">{{ __('backend/management.products.title') }}</label>
+																						<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" value="{{$variant->title}}" required />
+																					</div>
+																				</div>
+																				<div class="col-5">
+																					<div class="form-group">
+																						<label for="">{{ __('backend/management.products.price') }}</label>
+																						<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]" value="{{$variant->price}}" required />
+																					</div>
+																				</div>
+																				<div class="col-2">
+																					<a class="delete-variant cursor-pointer"><i class="la la-trash"></i></a>
+																				</div>
+																			</div>
+																			@endforeach
+																		@else
+																		<div class="variant-item row">
+																			<div class="col-5">
+																				<div class="form-group">
+																					<label for="">{{ __('backend/management.products.title') }}</label>
+																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" required />
+																				</div>
+																			</div>
+																			<div class="col-5">
+																				<div class="form-group">
+																					<label for="">{{ __('backend/management.products.price') }}</label>
+																					<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]" required />
+																				</div>
+																			</div>
+																			<div class="col-2">
+																				<a class="delete-variant cursor-pointer"><i class="la la-trash"></i></a>
+																			</div>
+																		</div>
+																		@endif
+																	</div>
+																	<div class="col-3">
+																		<button class="btn btn-wide btn-bold btn-primary" id="add_variant_btn" type="button" style="margin-top:22px">Add</button>
+																	</div>
+																</div>
+															</div>
+															<!-- / added by Khamid -->
+
 														@endif
 														</div>
 													</div>
@@ -222,6 +285,7 @@
 		});
 
 		$('input[data-content-visible]').change(function() {
+			$('.product_edit_variant_div').hide();
 			if($(this).attr('data-content-visible') == 'true' && $(this).is(':checked')) {
 				$('.product_edit_content_div').show();
 			} else {
@@ -230,12 +294,44 @@
 		});
 
 		$('input[data-weight-visible]').change(function() {
+			$('.product_edit_variant_div').hide();
 			if($(this).attr('data-weight-visible') == 'true' && $(this).is(':checked')) {
 				$('.product_edit_weight_div').show();
 			} else {
 				$('.product_edit_weight_div').hide();
 			}
 		});
+
+		// added by Khamid
+		$('input[name="product_edit_stock_management"]').change(function() {
+			
+			if($(this).val() == "variants"){
+				$('.product_edit_weight_div').hide();
+				$('.product_edit_content_div').hide();
+				$('.product_edit_variant_div').show();
+
+				// set base product price as 0 and make it disabled
+				$("#product_edit_price_in_cent").val(0).attr("disabled", true);
+				$("#product_edit_old_price_in_cent").val(0).attr("disabled", true);
+			} else {
+				$("#product_edit_price_in_cent").removeAttr("disabled");
+				$("#product_edit_old_price_in_cent").removeAttr("disabled");
+			}
+		})
+
+		$("#add_variant_btn").on("click", function(){
+			let html = $(".variant-item:first").clone(true).appendTo('.variant-wrapper');
+			$(".variant-item:last").find("input").map(function(){
+				$(this).val("");
+			});
+		})
+
+		$(".delete-variant").on("click", function(){
+			if($(".variant-item").length == 1){
+				return;
+			}
+			$(this).parents(".variant-item").remove();
+		})
   	});
 </script>
 @endsection

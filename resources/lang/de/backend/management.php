@@ -24,6 +24,7 @@
                 'unlimited_available' => 'Unbegrenzt verfügbar',
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
+                'variant' => 'Variant',
             ],
 
             'edit' => [
@@ -105,6 +106,7 @@
             'stock_status' => 'Lagerbestand',
             'sells' => 'Verkäufe',
             'actions' => 'Aktionen',
+            'delete' => 'Löschen',
         ],
 
         'faqs' => [

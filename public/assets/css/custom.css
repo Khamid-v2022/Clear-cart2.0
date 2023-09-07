@@ -1,0 +1,11 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Product add */
+.delete-variant {
+    font-size: 23px;
+    display: flex;
+    margin-top: 32px;
+    width: fit-content;
+}

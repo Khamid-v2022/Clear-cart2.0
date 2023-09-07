@@ -11,7 +11,7 @@ namespace App\Models;
         protected $table = 'products';
 
         protected $fillable = [
-            'sells', 'name', 'description', 'interval', 'short_description', 'drop_needed', 'content', 'old_price_in_cent', 'price_in_cent', 'category_id', 'stock_management', 'as_weight', 'weight_available', 'weight_char',
+            'sells', 'name', 'description', 'interval', 'short_description', 'drop_needed', 'content', 'old_price_in_cent', 'price_in_cent', 'category_id', 'stock_management', 'as_weight', 'weight_available', 'weight_char', 'as_variant'
         ];
 
         protected $hidden = [
@@ -131,6 +131,11 @@ namespace App\Models;
         public function getWeightAvailable()
         {
             return $this->weight_available;
+        }
+
+        public function asVariant()
+        {
+            return $this->as_variant;
         }
 
         public function isAvailableAmount($amount)

@@ -1,6 +1,6 @@
 <?php
 
-    \URL::forceScheme('https');
+    // \URL::forceScheme('https');
 
     Route::get('/robots.txt', 'RobotsController@robots')->name('robots');
     Route::get('/sitemap', 'SitemapController@main')->name('sitemap');

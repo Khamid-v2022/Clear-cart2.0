@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Management;
 
     use App\Http\Controllers\Controller;
     use App\Models\Product;
+    use App\Models\ProductVariant;
     use App\Models\ProductBonus;
     use App\Models\ProductItem;
     use App\Models\Setting;
@@ -424,10 +425,10 @@ namespace App\Http\Controllers\Backend\Management;
                             'product_edit_category_id' => new RuleProductCategoryExists(),
                             'product_edit_short_description' => 'required|max:255',
                             'product_edit_content' => 'max:2000',
-                            'product_edit_price_in_cent' => 'required|integer',
+                            'product_edit_price_in_cent' => 'nullable|integer',
                             'product_edit_interval' => 'integer|min:1',
                             'product_edit_old_price_in_cent' => 'nullable|integer',
-                            'product_edit_stock_management'=> 'required|in:normal,weight,unlimited',
+                            'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants',
                         ]);
 
                         if (! $validator->fails()) {
@@ -442,6 +443,7 @@ namespace App\Http\Controllers\Backend\Management;
                             $product_edit_stock_management = $request->input('product_edit_stock_management');
 
                             $as_weight = 0;
+                            $as_variant = 0;
                             $weight_available = 0;
                             $stock_management = 1;
                             $weightchar = '';
@@ -461,6 +463,10 @@ namespace App\Http\Controllers\Backend\Management;
                                 } else {
                                     $weightchar = 'g';
                                 }
+                            } elseif ($product_add_stock_management == 'variants') {
+                                $variant_titles = $request->get('product_add_variant_title');
+                                $variant_prices = $request->get('product_add_variant_price');
+                                $as_variant = 1;
                             }
 
                             $drop_needed = 0;
@@ -482,7 +488,18 @@ namespace App\Http\Controllers\Backend\Management;
                                 'weight_char' => $weightchar,
                                 'interval' => $interval,
                                 'content' => encrypt($content),
+                                'as_variant' => $as_variant
                             ]);
+
+                            if($product_add_stock_management == 'variants'){
+                                foreach ($variant_titles as $key => $title) {
+                                    $variants[] = ProductVariant::create([
+                                        'product_id' => $new_product->id,
+                                        'title' => $title,
+                                        'price' => $variant_prices[$key]
+                                    ]);
+                                }
+                            }
 
                             return redirect()->route('backend-management-product-edit', $product->id)->with([
                                 'successMessage' => __('backend/main.changes_successfully'),
@@ -511,6 +528,7 @@ namespace App\Http\Controllers\Backend\Management;
         public function showProductEditPage(Request $request, $id, $lang = null)
         {
             $product = Product::where('id', $id)->get()->first();
+            $variants = ProductVariant::where('product_id', $product->id)->get();
 
             if ($product == null) {
                 return redirect()->route('backend-management-products');
@@ -518,6 +536,7 @@ namespace App\Http\Controllers\Backend\Management;
 
             return view('backend.management.products.edit', [
                 'product' => $product,
+                'variants' => $variants,
                 'lang' => $lang,
                 'managementPage' => true,
             ]);
@@ -533,9 +552,10 @@ namespace App\Http\Controllers\Backend\Management;
                     'product_add_short_description' => 'required|max:255',
                     'product_add_content' => 'max:2000',
                     'product_add_interval' => 'integer|min:1',
-                    'product_add_price_in_cent' => 'required|integer',
+                    // 'product_add_price_in_cent' => 'required|integer',
+                    'product_add_price_in_cent' => 'nullable|integer',
                     'product_add_old_price_in_cent' => 'nullable|integer',
-                    'product_add_stock_management'=> 'required|in:normal,weight,unlimited',
+                    'product_add_stock_management'=> 'required|in:normal,weight,unlimited,variants',
                 ]);
 
                 if (! $validator->fails()) {
@@ -543,13 +563,14 @@ namespace App\Http\Controllers\Backend\Management;
                     $description = $request->input('product_add_description');
                     $short_description = $request->input('product_add_short_description');
                     $content = $request->get('product_add_content') ? $request->input('product_add_content') : '';
-                    $price_in_cent = $request->input('product_add_price_in_cent');
+                    $price_in_cent = $request->input('product_add_price_in_cent') ?? 0;
                     $old_price_in_cent = $request->input('product_add_old_price_in_cent') ?? 0;
                     $interval = $request->input('product_add_interval') ?? 1;
                     $category_id = $request->input('product_add_category_id');
                     $product_add_stock_management = $request->input('product_add_stock_management');
 
                     $as_weight = 0;
+                    $as_variant = 0;
                     $weight_available = 0;
                     $stock_management = 1;
                     $weightchar = '';
@@ -569,6 +590,10 @@ namespace App\Http\Controllers\Backend\Management;
                         } else {
                             $weightchar = 'g';
                         }
+                    } elseif ($product_add_stock_management == 'variants') {
+                        $variant_titles = $request->get('product_add_variant_title');
+                        $variant_prices = $request->get('product_add_variant_price');
+                        $as_variant = 1;
                     }
 
                     $drop_needed = 0;
@@ -576,7 +601,7 @@ namespace App\Http\Controllers\Backend\Management;
                         $drop_needed = 1;
                     }
 
-                    Product::create([
+                    $new_product = Product::create([
                         'name' => $name,
                         'description' => encrypt($description),
                         'short_description' => encrypt($short_description),
@@ -591,7 +616,19 @@ namespace App\Http\Controllers\Backend\Management;
                         'weight_char' => $weightchar,
                         'content' => encrypt($content),
                         'sells' => 0,
+                        'as_variant' => $as_variant
                     ]);
+
+                    if($product_add_stock_management == 'variants'){
+                        foreach ($variant_titles as $key => $title) {
+                            $variants[] = ProductVariant::create([
+                                'product_id' => $new_product->id,
+                                'title' => $title,
+                                'price' => $variant_prices[$key]
+                            ]);
+                        }
+                    }
+
 
                     return redirect()->route('backend-management-product-add')->with([
                         'successMessage' => __('backend/main.added_successfully'),

@@ -75,6 +75,9 @@
 
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.0/codemirror.min.css" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.0/addon/hint/show-hint.css" />
+
+		<!-- Custom CSS -->
+		<link href="{{ asset_dir('css/custom.css') }}" rel="stylesheet" type="text/css" />
 	</head>
 
 	<!-- end::Head -->
