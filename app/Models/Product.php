@@ -3,6 +3,7 @@
 namespace App\Models;
 
     use App\Models\ProductCategory;
+    use App\Models\ProductVariant;
     use App\Models\Setting;
     use Illuminate\Database\Eloquent\Model;
 
@@ -161,6 +162,8 @@ namespace App\Models;
                 return true;
             } elseif ($this->inStock()) {
                 return true;
+            } elseif($this->asVariant() && count($this->getVariants()) > 0){
+                return true;
             }
 
             return false;
@@ -204,5 +207,10 @@ namespace App\Models;
             $stock = ProductItem::where('product_id', $this->id)->count();
 
             return $stock;
+        }
+
+        public function getVariants(){
+            $variants = ProductVariant::where('product_id', $this->id)->get();
+            return $variants;
         }
     }

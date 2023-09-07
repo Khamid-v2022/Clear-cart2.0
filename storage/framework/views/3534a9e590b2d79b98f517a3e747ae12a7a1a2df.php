@@ -48,6 +48,14 @@
         <link href="<?php echo e(asset_dir('css/theme.css')); ?>" rel="stylesheet" />
 
         <link href="<?php echo e(route('custom-css')); ?>" rel="stylesheet" />
+
+        <!-- Custom CSS -->
+		<link href="<?php echo e(asset_dir('css/custom.css')); ?>" rel="stylesheet" type="text/css" />
+
+        <script src="<?php echo e(asset_dir('admin/assets/vendors/general/jquery/dist/jquery.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset_dir('admin/assets/vendors/general/jquery-form/dist/jquery.form.min.js')); ?>" type="text/javascript"></script>
+
+        
     </head>
     <body>
         <div id="app">
@@ -368,9 +376,38 @@
                             data: {product_id:productId, amount:amount}
                         })
                         .done(function(response) {
-                             updateCart();
+                            updateCart();
 
                             $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        })
+                        .fail(function() {
+                            alert("Unbekannter Fehler, Seite neuladen.");
+
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        })
+                        .always(function() {
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        });
+                    }
+                }
+            }
+
+            function addVariantToCart(productId) {
+                if(!$('a[cart-btn=' + productId + ']').hasClass('disabled')) {
+                    var selected_variant_id = $("#variant_select").val();
+                    var cost = parseInt($("#variant_price").html());
+
+                    if(selected_variant_id > 0) {
+                        $('a[cart-btn=' + productId + ']').addClass('disabled');
+
+                        $.ajax({
+                            'url': '<?php echo e(route('cart-add-variant-item-ajax')); ?>',
+                            method: 'POST',
+                            data: {product_id:productId, selected_variant_id:selected_variant_id, cost: cost}
+                        })
+                        .done(function(response) {
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                            updateCart();
                         })
                         .fail(function() {
                             alert("Unbekannter Fehler, Seite neuladen.");
@@ -392,6 +429,9 @@
             });
             <?php endif; ?>
         </script>
+
+        <?php $__env->startSection('page_scripts'); ?>
+        <?php echo $__env->yieldSection(); ?>
     </body>
 </html>
 <?php /**PATH E:\workspace\web\clear-shop\resources\views/frontend/layouts/app.blade.php ENDPATH**/ ?>

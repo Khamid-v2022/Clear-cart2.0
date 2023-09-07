@@ -371,6 +371,29 @@ namespace App\Http\Controllers\Shop;
             }
         }
 
+        public function ajaxAddVariantItem(Request $request)
+        {
+            if ($request->getMethod() == 'POST') {
+                $productId = intval($request->get('product_id') ?? '0');
+                $cost = intval($request->get('cost') ?? '0');
+                $variant_id = intval($request->get('selected_variant_id') ?? '0');
+
+                $product = Product::where('id', $productId)->get()->first();
+
+                if ($product != null) {
+                    UserCart::create([
+                        'user_id' => Auth::user()->id,
+                        'product_id' => $product->id,
+                        'cost' => $cost,
+                        'is_variant_type' => 1,
+                        'variant_id' => $variant_id
+                    ]);
+                }
+            }
+        }
+
+        
+
         public function show()
         {
             return view('frontend/shop.cart', [

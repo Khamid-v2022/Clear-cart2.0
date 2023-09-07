@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Shop;
     use App\Models\FAQ;
     use App\Models\Notification;
     use App\Models\Product;
+    use App\Models\ProductVariant;
     use App\Models\ProductCategory;
     use App\Models\ProductItem;
     use App\Models\Setting;
@@ -337,14 +338,14 @@ namespace App\Http\Controllers\Shop;
         public function showProductPage($productId)
         {
             $product = Product::where('id', $productId)->get()->first();
-            $variants = ProductVariant::where('product_id', $product->id)->get();
+            // $variants = ProductVariant::where('product_id', $product->id)->get();
 
             if ($product != null) {
                 return view('frontend/shop.product', [
                     'metaTITLE' => strip_tags($product->name),
                     'metaDESC' => strip_tags(substr(strlen($product->description) ? decrypt($product->description) : '', 0, 65)),
                     'product' => $product,
-                    'variants' => $variants,
+                    // 'variants' => $variants,
                     'productShowLongDes' => true,
                 ]);
             }

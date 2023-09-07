@@ -17,7 +17,7 @@
             <div class="row">-->
             @foreach(App\Models\Product::getUncategorizedProducts() as $product)
                 <div class="col-md-4">
-                @include('frontend/shop.product_card')
+                @include('frontend/shop.product_simple_card')
                 </div>
             @endforeach
             <!--</div>
@@ -30,7 +30,7 @@
             <div class="row">-->
             @foreach($category->getProducts() as $product)
                 <div class="col-md-4">
-                @include('frontend/shop.product_card') 
+                @include('frontend/shop.product_simple_card') 
                 </div>
             @endforeach
             <!--</div>-->

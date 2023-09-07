@@ -29,9 +29,9 @@
                                         </td>
                                         <td>
                                             @if($cartItem[0]->asWeight())
-                                            {{ $cartItem[1] }}{{ $cartItem[0]->getWeightChar() }}
+                                                {{ $cartItem[1] }}{{ $cartItem[0]->getWeightChar() }}
                                             @else
-                                            {{ $cartItem[1] }}
+                                                {{ $cartItem[1] }}
                                             @endif
                                         </td>
                                         <td>

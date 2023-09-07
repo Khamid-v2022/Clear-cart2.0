@@ -15,7 +15,7 @@ namespace App\Models;
         protected $table = 'users_cart';
 
         protected $fillable = [
-            'user_id', 'product_id', 'amount',
+            'user_id', 'product_id', 'amount', 'cost', 'is_variant_type', 'variant_id'
         ];
 
         public static function isEmpty($userid)
@@ -297,8 +297,10 @@ namespace App\Models;
                     ]);
                 }
 
+                
                 $amount = $userCart->amount;
-
+                
+                
                 if ($product->asWeight() && $product->getInterval() > 1) {
                     if ($amount % $product->getInterval() != 0) {
                         $amount = round($amount / $product->getInterval(), 0, \PHP_ROUND_HALF_DOWN) * $product->getInterval();
@@ -317,9 +319,18 @@ namespace App\Models;
                             'amount' => $amount,
                         ]);
                     }
+                } else if($product->asVariant()){
+                    $userCart->update([
+                        'amount' => 1,
+                    ]);
                 }
 
-                $total = $product->price_in_cent * $userCart->amount;
+                if($product->asVariant()) {
+                    $total = $userCart->cost;
+                } else {
+                    $total = $product->price_in_cent * $userCart->amount;
+                }
+                
 
                 $cart[] = [
                     $product, $userCart->amount, $total,
