@@ -148,6 +148,8 @@ namespace App\Models;
                     return true;
                 } elseif ($this->isUnlimited()) {
                     return true;
+                } elseif($this->asVariant()){
+                    return true;
                 }
             }
 

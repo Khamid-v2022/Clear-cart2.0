@@ -23,7 +23,7 @@
                         </span>
                     @elseif($product->isUnlimited())
                         {{ __('frontend/v4.unlimited_ava') }}
-                    @elseif(!$product->asWeight())
+                    @elseif(!$product->asWeight() && !$product->asVariant())
                         {{ __('frontend/v4.stock_ava', [
                             'amount' => $product->getStock()
                         ]) }}

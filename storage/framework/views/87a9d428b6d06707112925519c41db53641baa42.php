@@ -27,7 +27,7 @@
                     <?php elseif($product->isUnlimited()): ?>
                         <?php echo e(__('frontend/v4.unlimited_ava')); ?>
 
-                    <?php elseif(!$product->asWeight()): ?>
+                    <?php elseif(!$product->asWeight() && !$product->asVariant()): ?>
                         <?php echo e(__('frontend/v4.stock_ava', [
                             'amount' => $product->getStock()
                         ])); ?>

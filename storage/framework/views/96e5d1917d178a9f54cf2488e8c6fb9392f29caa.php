@@ -48,7 +48,7 @@
 
                                         </td>
                                         <td>
-                                            <a href="<?php echo e(route('cart-item-delete', $cartItem[0]->id)); ?>"><?php echo e(__('frontend/v4.remove')); ?></a>
+                                            <a href="<?php echo e(route('cart-item-delete', $cartItem[4])); ?>"><?php echo e(__('frontend/v4.remove')); ?></a>
                                         </td>
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

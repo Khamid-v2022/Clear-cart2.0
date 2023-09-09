@@ -335,15 +335,17 @@ namespace App\Models;
                     ]);
                 }
 
+                $variant_id = 0;
                 if($product->asVariant()) {
                     $total = $userCart->variant_price;
+                    $variant_id = $userCart->variant_id;
                 } else {
                     $total = $product->price_in_cent * $userCart->amount;
                 }
                 
 
                 $cart[] = [
-                    $product, $userCart->amount, $total,
+                    $product, $userCart->amount, $total, $variant_id, $userCart->id
                 ];
             }
 

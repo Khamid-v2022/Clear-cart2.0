@@ -45,7 +45,7 @@
                                             {{ \App\Models\Product::getFormattedPriceFromCent($cartItem[2]) }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('cart-item-delete', $cartItem[0]->id) }}">{{ __('frontend/v4.remove') }}</a>
+                                            <a href="{{ route('cart-item-delete', $cartItem[4]) }}">{{ __('frontend/v4.remove') }}</a>
                                         </td>
                                     </tr>
                                     @endforeach

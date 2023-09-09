@@ -14,6 +14,7 @@ namespace App\Http\Controllers\Shop;
     use App\Models\UserCoupon;
     use App\Models\UserCouponCheckout;
     use App\Models\UserOrder;
+    use App\Models\UserOrderHeader;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
 
@@ -102,6 +103,16 @@ namespace App\Http\Controllers\Shop;
                         $createShopping = false;
                         $cartEntries = [];
 
+                        // create Order Header
+                        $order_header = UserOrderHeader::create([
+                            'user_id' => Auth::user()->id,
+                            'delivery_price' => $deliveryMethodPrice,
+                            'delivery_method' => $deliveryMethodName,
+                            'drop_info' => $dropInput,
+                            'total_price' => $total
+                        ]);
+
+
                         foreach (UserCart::getCartByUserId(Auth::user()->id) as $cartItem) {
                             if ($cartItem[0] == null) {
                                 return redirect()->route('checkout')->with([
@@ -133,6 +144,7 @@ namespace App\Http\Controllers\Shop;
 
                             if ($product->isUnlimited()) {
                                 $order = UserOrder::create([
+                                    'order_header_id' => $order_header->id,
                                     'user_id' => Auth::user()->id,
                                     'name' => $product->name,
                                     'content' => $product->content,
@@ -165,6 +177,7 @@ namespace App\Http\Controllers\Shop;
                                 Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + $cartItem[1]);
                             } elseif ($product->asWeight()) {
                                 $order = UserOrder::create([
+                                    'order_header_id' => $order_header->id,
                                     'user_id' => Auth::user()->id,
                                     'name' => $product->name,
                                     'amount' => 1,
@@ -196,7 +209,43 @@ namespace App\Http\Controllers\Shop;
                                 ]);
 
                                 Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + 1);
-                            } else {
+                            } else if($product->asVariant()){
+                                $order = UserOrder::create([
+                                    'order_header_id' => $order_header->id,
+                                    'user_id' => Auth::user()->id,
+                                    'name' => $product->name,
+                                    'content' => $product->content,
+                                    'amount' => $cartItem[1],
+                                    'price_in_cent' => $cartItem[2],        // Use Variant price
+                                    'totalprice' => $cartItem[2],           // Use Variant price
+                                    'drop_info' => $dropInfo,
+                                    'delivery_price' => $deliveryMethodPriceX,
+                                    'delivery_method' => $deliveryMethodNameX,
+                                    'is_variant_type' => 1,
+                                    'variant_id' => $cartItem[3],
+                                    'status' => $status,
+                                    'weight' => 0,
+                                    'weight_char' => '',
+                                ]);
+
+                                if ($product->dropNeeded()) {
+                                    if ($order != null) {
+                                        $createShopping = true;
+                                        $cartEntries[] = [
+                                            'product_id' => $product->id,
+                                            'order_id' => $order->id,
+                                            'user_id' => Auth::user()->id,
+                                        ];
+                                    }
+                                }
+
+                                $product->update([
+                                    'sells' => $product->sells + $cartItem[1],
+                                ]);
+
+                                Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + $cartItem[1]);
+                            }
+                            else {
                                 /*
                                 * New order adding logic
                                 */
@@ -219,6 +268,7 @@ namespace App\Http\Controllers\Shop;
                                 Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + $cartItem[1]);
     
                                 UserOrder::create([
+                                    'order_header_id' => $order_header->id,
                                     'user_id' => Auth::user()->id,
                                     'name' => $product->name,
                                     'amount' => $cartItem[1],
@@ -253,13 +303,11 @@ namespace App\Http\Controllers\Shop;
                         }
 
                         // CLEAR CART
-
                         UserCart::where([
                             ['user_id', '=', Auth::user()->id],
                         ])->delete();
 
                         // SUCCESS PART
-
                         $newBalance = Auth::user()->balance_in_cent - $total;
 
                         // COUPON
@@ -322,10 +370,10 @@ namespace App\Http\Controllers\Shop;
             return redirect()->route('cart');
         }
 
-        public function delete($product_id)
+        public function delete($cart_id)
         {
             UserCart::where([
-                ['product_id', '=', $product_id],
+                ['id', '=', $cart_id],
                 ['user_id', '=', Auth::user()->id],
             ])->delete();
 

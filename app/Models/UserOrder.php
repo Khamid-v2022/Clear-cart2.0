@@ -13,7 +13,7 @@ namespace App\Models;
         protected $table = 'users_orders';
 
         protected $fillable = [
-            'user_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice', 'drop_info', 'delivery_method', 'delivery_price',
+            'order_header_id', 'user_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice', 'drop_info', 'delivery_method', 'delivery_price', 'is_variant_type', 'variant_id'
         ];
 
         public static function getById($id)

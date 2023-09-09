@@ -414,6 +414,7 @@
                             data: {product_id:productId, selected_variant_id:selected_variant_id, price: price}
                         })
                         .done(function(response) {
+                            $("#variant_select").val("").trigger('change');
                             $('a[cart-btn=' + productId + ']').removeClass('disabled');
                             updateCart();
                         })
