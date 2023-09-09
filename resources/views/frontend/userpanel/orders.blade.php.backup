@@ -19,9 +19,9 @@
                             </div>
 
                             <div id="orderCollapse-{{ $loop->iteration }}" class="collapse @if($loop->iteration == 1) show @endif" aria-labelledby="orderHeading-{{ $loop->iteration }}" data-parent="#orderAccordion">
-                                <!-- <div class="card-body">
+                                <div class="card-body">
                                     <textarea class="form-control" rows="15">@forelse (explode('\r\n\r\n', $order->content) as $content){!! e(strlen($content) ? str_replace(' |  | ', ' | ', preg_replace('#(\r\n|\r|\n)#',' | ',trim(decrypt($content)))) . PHP_EOL . '---------' . PHP_EOL : '') !!}@empty N/A @endforelse</textarea>
-                                </div> -->
+                                </div>
 
                                 <ul class="list-group list-group-flush">
                                     @if($order->getAmount() > 1)
@@ -101,6 +101,7 @@
                     @endforeach
                 </div>
 
+                {!! preg_replace('/' . $user_orders->currentPage() . '\?page=/', '', $user_orders->links()) !!}
             @else
                 <div class="alert alert-warning">
                     {{ __('frontend/user.orders_page.no_orders_exists') }}

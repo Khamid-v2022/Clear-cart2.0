@@ -463,7 +463,7 @@ namespace App\Http\Controllers\Backend\Management;
                                 } else {
                                     $weightchar = 'g';
                                 }
-                            } elseif ($product_add_stock_management == 'variants') {
+                            } elseif ($product_edit_stock_management == 'variants') {
                                 $variant_titles = $request->get('product_add_variant_title');
                                 $variant_prices = $request->get('product_add_variant_price');
                                 $as_variant = 1;
@@ -491,10 +491,12 @@ namespace App\Http\Controllers\Backend\Management;
                                 'as_variant' => $as_variant
                             ]);
 
-                            if($product_add_stock_management == 'variants'){
+                            if($product_edit_stock_management == 'variants'){
+                                // Delete old Variants
+                                ProductVariant::where('product_id', $product->id)->delete();
                                 foreach ($variant_titles as $key => $title) {
                                     $variants[] = ProductVariant::create([
-                                        'product_id' => $new_product->id,
+                                        'product_id' => $product->id,
                                         'title' => $title,
                                         'price' => $variant_prices[$key]
                                     ]);

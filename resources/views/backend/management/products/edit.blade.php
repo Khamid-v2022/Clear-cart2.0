@@ -218,13 +218,13 @@
 																				<div class="col-5">
 																					<div class="form-group">
 																						<label for="">{{ __('backend/management.products.title') }}</label>
-																						<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" value="{{$variant->title}}" required />
+																						<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" value="{{$variant->title}}" />
 																					</div>
 																				</div>
 																				<div class="col-5">
 																					<div class="form-group">
 																						<label for="">{{ __('backend/management.products.price') }}</label>
-																						<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]" value="{{$variant->price}}" required />
+																						<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]" value="{{$variant->price}}" />
 																					</div>
 																				</div>
 																				<div class="col-2">

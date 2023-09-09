@@ -145,6 +145,7 @@
 
 																</label>
 															</div>
+															<!-- / added by Khamid -->
 
 															<div class="product_add_weight_div form-group" style="display: none;">
 																<label for="product_add_weightchar"><?php echo e(__('backend/management.products.weightchar')); ?></label>
@@ -190,6 +191,7 @@
 																<?php endif; ?>
 															</div>
 
+															<!-- added by Khamid 2023-09-07 -->
 															<div class="product_add_variant_div" style="display: none;">
 																<div class="row">
 																	<div class="col-9 variant-wrapper">
@@ -197,13 +199,13 @@
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for=""><?php echo e(__('backend/management.products.title')); ?></label>
-																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" required />
+																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]"  />
 																				</div>
 																			</div>
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for=""><?php echo e(__('backend/management.products.price')); ?></label>
-																					<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]" required />
+																					<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]"  />
 																				</div>
 																			</div>
 																			<div class="col-2">
@@ -216,6 +218,7 @@
 																	</div>
 																</div>
 															</div>
+															<!-- / added by Khamid -->
 														</div>
 													</div>
 													<div class="kt-portlet__foot">
@@ -258,6 +261,7 @@
 			}
 		});
 
+		// added by Khamid
 		$('input[name="product_add_stock_management"]').change(function() {
 			
 			if($(this).val() == "variants"){

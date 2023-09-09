@@ -282,11 +282,15 @@ namespace App\Http\Controllers\UserPanel;
 
         public function showOrdersPage($pageNumber = 0)
         {
-            $user_orders = UserOrder::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(1, ['*'], 'page', $pageNumber);
+            // $user_orders = UserOrder::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(1, ['*'], 'page', $pageNumber);
 
-            if ($pageNumber > $user_orders->lastPage() || $pageNumber <= 0) {
-                return redirect()->route('orders-with-pageNumber', 1);
-            }
+            // if ($pageNumber > $user_orders->lastPage() || $pageNumber <= 0) {
+            //     return redirect()->route('orders-with-pageNumber', 1);
+            // }
+
+            $user_orders = UserOrder::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+            // dd($user_orders);
+            // exit;
 
             return view('frontend/userpanel.orders', [
                 'user_orders' => $user_orders,
