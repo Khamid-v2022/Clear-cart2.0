@@ -35,7 +35,11 @@
                                             @endif
                                         </td>
                                         <td>
-                                            {{ $cartItem[0]->getFormattedPrice() }}
+                                            @if($cartItem[0]->asVariant())
+                                                {{ \App\Models\Product::getFormattedPriceFromCent($cartItem[2]) }}
+                                            @else
+                                                {{ $cartItem[0]->getFormattedPrice() }}
+                                            @endif
                                         </td>
                                         <td>
                                             {{ \App\Models\Product::getFormattedPriceFromCent($cartItem[2]) }}

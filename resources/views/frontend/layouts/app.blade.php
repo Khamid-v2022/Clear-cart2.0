@@ -30,11 +30,6 @@
         <!-- Bootstrap -->
         <link href="{{ asset_dir('vendor/bootstrap-4.1.3/css/bootstrap.min.css') }}" rel="stylesheet" />
 
-        <!-- Datatable -->
-        <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
-
         <!-- Styles -->
         <link href="{{ asset_dir('css/app.css') }}" rel="stylesheet" />
         
@@ -330,6 +325,14 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
         <script type="text/javascript">
+
+            function getFormattedPriceFromCent(cent){
+                let price = cent / 100;
+                price= price.toLocaleString("de-DE", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+                return price;
+            }
+
+            // Need to move some where 
             function updateCart() {
                 //$('#cart-name').html('{{ __('frontend/v4.adding_cart') }}');
 
@@ -378,7 +381,7 @@
             function addVariantToCart(productId) {
                 if(!$('a[cart-btn=' + productId + ']').hasClass('disabled')) {
                     var selected_variant_id = $("#variant_select").val();
-                    var price = parseInt($("#variant_price").html());
+                    var price = parseInt($("#variant_price").attr("data-price-in-cent"));
 
                     if(selected_variant_id > 0) {
                         $('a[cart-btn=' + productId + ']').addClass('disabled');

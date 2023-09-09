@@ -75,7 +75,7 @@
                             </select>
                         </div>
                         <div class="col-xs-5 col-lg-6 text-start pt-1">
-                            <lable class="price-label">Price:<span class="ml-2" id="variant_price"></span> EUR</label>
+                            <lable class="price-label">Price:<span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
                         </div>
                     @else
                         <div class="col-xs-6 col-lg-6 only-p-right">
@@ -139,7 +139,9 @@
             const selected_id = $(this).val();
             variants.forEach((item) => {
                 if(item.id == selected_id){
-                    $("#variant_price").html(item.price);
+
+                    let formated_price = getFormattedPriceFromCent(item.price);
+                    $("#variant_price").attr("data-price-in-cent", item.price).html(formated_price);
                 }
             })
                 

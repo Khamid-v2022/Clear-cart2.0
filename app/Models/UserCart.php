@@ -15,7 +15,7 @@ namespace App\Models;
         protected $table = 'users_cart';
 
         protected $fillable = [
-            'user_id', 'product_id', 'amount', 'cost', 'is_variant_type', 'variant_id'
+            'user_id', 'product_id', 'amount', 'variant_price', 'is_variant_type', 'variant_id'
         ];
 
         public static function isEmpty($userid)
@@ -201,7 +201,12 @@ namespace App\Models;
                 $product = $cartItem[0];
                 $amount = $cartItem[1];
 
-                $sub += $amount * $product->price_in_cent;
+                if($product->asVariant()){
+                    $sub += $cartItem[2];
+                } else {
+                    $sub += $amount * $product->price_in_cent;
+                }
+                
             }
 
             if ($sub < 0) {
@@ -231,7 +236,12 @@ namespace App\Models;
                     }
                 }
 
-                $sub += $amount * $prc;
+                if($product->asVariant()){
+                    $sub += $cartItem[2];
+                } else {
+                    $sub += $amount * $prc;
+                }
+                
             }
 
             if ($sub < 0) {
@@ -326,7 +336,7 @@ namespace App\Models;
                 }
 
                 if($product->asVariant()) {
-                    $total = $userCart->cost;
+                    $total = $userCart->variant_price;
                 } else {
                     $total = $product->price_in_cent * $userCart->amount;
                 }

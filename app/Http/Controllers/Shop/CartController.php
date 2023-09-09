@@ -375,7 +375,7 @@ namespace App\Http\Controllers\Shop;
         {
             if ($request->getMethod() == 'POST') {
                 $productId = intval($request->get('product_id') ?? '0');
-                $cost = intval($request->get('cost') ?? '0');
+                $price = intval($request->get('price') ?? '0');
                 $variant_id = intval($request->get('selected_variant_id') ?? '0');
 
                 $product = Product::where('id', $productId)->get()->first();
@@ -384,7 +384,7 @@ namespace App\Http\Controllers\Shop;
                     UserCart::create([
                         'user_id' => Auth::user()->id,
                         'product_id' => $product->id,
-                        'cost' => $cost,
+                        'variant_price' => $price,
                         'is_variant_type' => 1,
                         'variant_id' => $variant_id
                     ]);

@@ -35,8 +35,13 @@
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?php echo e($cartItem[0]->getFormattedPrice()); ?>
+                                            <?php if($cartItem[0]->asVariant()): ?>
+                                                <?php echo e(\App\Models\Product::getFormattedPriceFromCent($cartItem[2])); ?>
 
+                                            <?php else: ?>
+                                                <?php echo e($cartItem[0]->getFormattedPrice()); ?>
+
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <?php echo e(\App\Models\Product::getFormattedPriceFromCent($cartItem[2])); ?>
