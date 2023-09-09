@@ -112,7 +112,7 @@ namespace App\Http\Controllers\Shop;
                             'total_price' => $total
                         ]);
 
-
+                        $total_deliveryPrice = 0;
                         foreach (UserCart::getCartByUserId(Auth::user()->id) as $cartItem) {
                             if ($cartItem[0] == null) {
                                 return redirect()->route('checkout')->with([
@@ -140,6 +140,8 @@ namespace App\Http\Controllers\Shop;
 
                                 $deliveryMethodNameX = $deliveryMethodName;
                                 $deliveryMethodPriceX = $deliveryMethodPrice;
+
+                                $total_deliveryPrice += $deliveryMethodPriceX;
                             }
 
                             if ($product->isUnlimited()) {
@@ -301,6 +303,10 @@ namespace App\Http\Controllers\Shop;
                                 }
                             }
                         }
+
+                        // update total Delivery price to the orders header table
+                        $order_header->delivery_price = $total_deliveryPrice;
+                        $order_header->save();
 
                         // CLEAR CART
                         UserCart::where([

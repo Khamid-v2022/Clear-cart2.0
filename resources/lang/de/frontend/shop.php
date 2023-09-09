@@ -34,9 +34,12 @@
         ],
 
         'delivery_price' => 'Versandkosten:',
+        'total_delivery_price' => 'Totale Versandkosten:',
 
         'delivery_method_needed' => 'Bitte Versandart auswählen.',
 
+        'order_id' => 'Order ID:',
+        'transaction_id' => 'Transactie ID',
         'orders_notes' => 'Anmerkungen:',
         'order_note' => 'Drop',
         'orders_status' => 'Status:',

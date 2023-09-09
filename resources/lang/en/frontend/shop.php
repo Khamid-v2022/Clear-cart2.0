@@ -34,9 +34,12 @@
         ],
 
         'delivery_price' => 'Delivery price:',
+        'total_delivery_price' => 'Total Delivery price:',
 
         'delivery_method_needed' => 'Please choose a delivery method.',
 
+        'order_id' => 'Order ID:',
+        'transaction_id' => 'Transaction ID',
         'orders_notes' => 'Notes:',
         'order_note' => 'Drop',
         'orders_status' => 'Status:',

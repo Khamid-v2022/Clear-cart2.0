@@ -97,6 +97,8 @@
 
     Route::get('orders', 'UserPanel\UserPanelController@showOrdersPage')->name('orders');
     Route::get('orders/page/{page?}', 'UserPanel\UserPanelController@showOrdersPage')->name('orders-with-pageNumber');
+    Route::get('order-details/{id}', 'UserPanel\UserPanelController@showOrdersDetailPage')->name('order-detail-page');
+   
 
     Route::get('tickets', 'UserPanel\TicketController@showTicketsPage')->name('tickets');
     Route::get('tickets/page/{page?}', 'UserPanel\TicketController@showTicketsPage')->name('tickets-with-pageNumber');
