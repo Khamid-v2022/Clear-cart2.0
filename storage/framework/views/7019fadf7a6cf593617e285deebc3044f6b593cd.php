@@ -140,7 +140,7 @@
 									<!--end: Search -->
 
 									<!--begin: Quick actions -->
-									<div class="k-header__topbar-item dropdown">
+									<!-- <div class="k-header__topbar-item dropdown">
 										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
 											<span class="k-header__topbar-icon"><i class="flaticon-layers"></i></span>
 										</div>
@@ -182,8 +182,7 @@
 												<?php endif; ?>
 											</div>
 										</div>
-									</div>
-
+									</div> -->
 									<!--end: Quick actions -->
 
 									<!--begin: Notifications -->
@@ -205,11 +204,10 @@
 											</div>
 										</div>
 									</div>
-
 									<!--end: Notifications -->
 
 									<!--begin: Language bar -->
-									<div class="k-header__topbar-item k-header__topbar-item--langs">
+									<!-- <div class="k-header__topbar-item k-header__topbar-item--langs">
 										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
 											<span class="k-header__topbar-icon">
 												<img class="" src="<?php echo e(asset_dir('admin/assets/media/flags/017-germany.svg')); ?>" alt="" />
@@ -225,12 +223,11 @@
 												</li>
 											</ul>
 										</div>
-									</div>
-
+									</div> -->
 									<!--end: Language bar -->
 
 									<!--begin: User bar -->
-									<div class="k-header__topbar-item k-header__topbar-item--user">
+									<!-- <div class="k-header__topbar-item k-header__topbar-item--user">
 										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
 											<img alt="" src="<?php echo e(asset_dir('admin/assets/media/users/default.jpg')); ?>" />
 										</div>
@@ -267,8 +264,7 @@
 												</li>
 											</ul>
 										</div>
-									</div>
-
+									</div> -->
 									<!--end: User bar -->
 								</div>
 
@@ -289,39 +285,10 @@
 												</a>
 											</li>
 
-											<?php if(Auth::user()->hasPermission('jabber_newsletter')): ?>
-											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-jabber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
-												<a href="<?php echo e(route('backend-jabber')); ?>" class="k-menu__link">
-													<span class="k-menu__link-text"><?php echo e(__('backend/jabber.title')); ?></span>
-												</a>
-											</li>
-											<?php endif; ?>
-
 											<?php if(Auth::user()->hasPermission('manage_orders')): ?>
-											<!-- <li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-orders' || \Route::currentRouteName() == 'backend-orders-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
-												<a href="<?php echo e(route('backend-orders')); ?>" class="k-menu__link">
-													<span class="k-menu__link-text"><?php echo e(__('backend/orders.title')); ?></span>
-												</a>
-											</li> -->
 											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-shoppings' || \Route::currentRouteName() == 'backend-shoppings-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
 												<a href="<?php echo e(route('backend-shoppings')); ?>" class="k-menu__link">
 													<span class="k-menu__link-text"><?php echo e(__('backend/orders.title')); ?></span>
-												</a>
-											</li>
-											<?php endif; ?>
-
-											<?php if(Auth::user()->hasPermission('manage_design')): ?>
-											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-design'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
-												<a href="<?php echo e(route('backend-design')); ?>" class="k-menu__link">
-													<span class="k-menu__link-text"><?php echo e(__('backend/design.title')); ?></span>
-												</a>
-											</li>
-											<?php endif; ?>
-
-											<?php if(Auth::user()->hasPermission('manage_media')): ?>
-											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-media' || \Route::currentRouteName() == 'backend-media-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
-												<a href="<?php echo e(route('backend-media')); ?>" class="k-menu__link">
-													<span class="k-menu__link-text"><?php echo e(__('backend/media.title')); ?></span>
 												</a>
 											</li>
 											<?php endif; ?>
@@ -506,28 +473,6 @@
 																	<span></span>
 																</i>
 																<span class="k-menu__link-text"><?php echo e(__('backend/system.settings.title')); ?></span>
-															</a>
-														</li>
-														<?php endif; ?>
-
-														<?php if(Auth::user()->hasPermission('system_bonus')): ?>
-														<li class="k-menu__item" aria-haspopup="true">
-															<a href="<?php echo e(route('backend-system-bonus')); ?>" class="k-menu__link ">
-																<i class="k-menu__link-bullet k-menu__link-bullet--line">
-																	<span></span>
-																</i>
-																<span class="k-menu__link-text">Bonus</span>
-															</a>
-														</li>
-														<?php endif; ?>
-
-														<?php if(Auth::user()->hasPermission('system_payments')): ?>
-														<li class="k-menu__item" aria-haspopup="true">
-															<a href="<?php echo e(route('backend-system-payments')); ?>" class="k-menu__link ">
-																<i class="k-menu__link-bullet k-menu__link-bullet--line">
-																<span></span>
-																</i>
-																<span class="k-menu__link-text"><?php echo e(__('backend/system.payments.title')); ?></span>
 															</a>
 														</li>
 														<?php endif; ?>

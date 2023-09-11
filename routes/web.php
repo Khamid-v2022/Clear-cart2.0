@@ -161,24 +161,24 @@
     Route::get('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings');
     Route::post('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings-form');
 
-    // System Bonus
-    Route::get('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus');
-    Route::post('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus-form');
-    Route::get('admin/system/bonus/del/{id}', 'Backend\System\BonusController@delete')->name('backend-system-bonus-del');
+    // System Bonus - No longer Use
+    // Route::get('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus');
+    // Route::post('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus-form');
+    // Route::get('admin/system/bonus/del/{id}', 'Backend\System\BonusController@delete')->name('backend-system-bonus-del');
 
-    // Design
-    Route::get('admin/design', 'Backend\DesignController@page')->name('backend-design');
-    Route::post('admin/design', 'Backend\DesignController@page')->name('backend-design-form');
+    // Design - No longer Use
+    // Route::get('admin/design', 'Backend\DesignController@page')->name('backend-design');
+    // Route::post('admin/design', 'Backend\DesignController@page')->name('backend-design-form');
 
-    // Media
-    Route::post('admin/media/upload', 'Backend\MediaController@upload')->name('backend-media-upload');
-    Route::get('admin/media', 'Backend\MediaController@page')->name('backend-media');
-    Route::get('admin/media/page/{page?}', 'Backend\MediaController@page')->name('backend-media-with-pageNumber');
-    Route::get('admin/media/delete/{id}', 'Backend\MediaController@delete')->name('backend-media-delete');
+    // Media - No longer Use
+    // Route::post('admin/media/upload', 'Backend\MediaController@upload')->name('backend-media-upload');
+    // Route::get('admin/media', 'Backend\MediaController@page')->name('backend-media');
+    // Route::get('admin/media/page/{page?}', 'Backend\MediaController@page')->name('backend-media-with-pageNumber');
+    // Route::get('admin/media/delete/{id}', 'Backend\MediaController@delete')->name('backend-media-delete');
 
-    // System Payments
-    Route::get('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments');
-    Route::post('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments-form');
+    // System Payments - No longer Use
+    // Route::get('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments');
+    // Route::post('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments-form');
 
     // Bitcoin Wallet
     Route::get('admin/bitcoin', 'Backend\Bitcoin\DashboardController@showDashboardPage')->name('backend-bitcoin-dashboard');
@@ -186,10 +186,10 @@
     Route::post('admin/bitcoin/sendbtc', 'Backend\Bitcoin\DashboardController@sendBtcForm')->name('backend-bitcoin-sendbtc-form');
     Route::post('admin/bitcoin/primarywallet', 'Backend\Bitcoin\DashboardController@setPrimaryWalletForm')->name('backend-bitcoin-primarywallet-form');
 
-    // Jabber
-    Route::get('admin/jabber', 'Backend\JabberController@showJabberPage')->name('backend-jabber');
-    Route::post('admin/jabber/newsletter', 'Backend\JabberController@sendNewsletter')->name('backend-jabber-newsletter-form');
-    Route::post('admin/jabber/login', 'Backend\JabberController@loginSave')->name('backend-jabber-login-form');
+    // Jabber --- No longer Use
+    // Route::get('admin/jabber', 'Backend\JabberController@showJabberPage')->name('backend-jabber');
+    // Route::post('admin/jabber/newsletter', 'Backend\JabberController@sendNewsletter')->name('backend-jabber-newsletter-form');
+    // Route::post('admin/jabber/login', 'Backend\JabberController@loginSave')->name('backend-jabber-login-form');
 
     // Orders
     Route::post('admin/orders/add-note/{id}', 'Backend\OrdersController@addNote')->name('backend-orders-add-note-form');
