@@ -57,4 +57,10 @@ namespace App\Models;
         // {
         //     return UserOrder::where('order_header_id', $this->id)->get();
         // }
+
+        public function getFormattedPriceWithShipping(){
+            $after = '';
+
+            return number_format(($this->total_price + $this->delivery_price) / 100, 2, ',', '.').' '.Setting::getShopCurrency().$after;
+        }
     }

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Backend\API;
     use App\Models\User;
     use App\Models\UserOrder;
     use App\Models\UserTicket;
+    use App\Models\UserCartShopping;
     use Auth;
 
     class JSONController extends Controller
@@ -23,7 +24,8 @@ namespace App\Http\Controllers\Backend\API;
                 ]);
             }
 
-            $userOrders = UserOrder::orderByDesc('created_at')->limit(10)->get()->all();
+            // $userOrders = UserOrder::orderByDesc('created_at')->limit(10)->get()->all();
+            $userOrders = UserCartShopping::orderByDesc('created_at')->limit(10)->get()->all();
 
             $response = [
                 'meta' => [
@@ -48,9 +50,8 @@ namespace App\Http\Controllers\Backend\API;
                 $response['data'][] = [
                     'id' => $userOrder->id,
                     'customer_name' => $userOrderName,
-                    'price' => $userOrder->getFormattedPrice(),
-                    'hire_date' => $userOrder->created_at->format('d.m.Y H:i'),
-                    'product' => strlen($userOrder->name) > 0 ? $userOrder->name : 'UNKNOWN',
+                    'price' => $userOrder->getFormattedPriceWithShipping(),
+                    'hire_date' => $userOrder->created_at->format('d.m.Y H:i')
                 ];
             }
 

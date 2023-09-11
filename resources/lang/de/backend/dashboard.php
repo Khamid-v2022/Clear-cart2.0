@@ -34,6 +34,8 @@
             'product' => 'Produkt',
             'date' => 'Datum',
             'date_format' => 'DD/MM/YYYY',
+            'user_name' => 'Gebruikersnaam',
+            'price_with_shipping' => 'Prijs met verzending'
         ],
 
         'total_orders' => [

@@ -35,4 +35,9 @@
             'notes' => 'Drop',
         ],
 
+        'shipping' => [
+            'shipping_method' => 'Verzendmethode',
+            'drop_info' => 'Drop'
+        ]
+
     ];

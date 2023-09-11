@@ -20,7 +20,7 @@
 		<!--begin::Dashboard 4-->
 		<!--begin::Row-->
 		<div class="row">
-			<div class="col-lg-12 col-xl-3 order-lg-1 order-xl-1">
+			<div class="col-lg-3 col-sm-6 order-lg-1 order-xl-1">
 
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid">
@@ -42,7 +42,7 @@
 				<!--end::Portlet-->
 			</div>
 
-			<div class="col-lg-12 col-xl-3 order-lg-1 order-xl-1">
+			<div class="col-lg-3 col-sm-6 order-lg-1 order-xl-1">
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid">
 					<div class="k-portlet__head  k-portlet__head--noborder">
@@ -63,7 +63,7 @@
 			</div>
 			
 
-			<div class="col-lg-12 col-xl-3 order-lg-1 order-xl-1">
+			<div class="col-lg-3 col-sm-6 order-lg-1 order-xl-1">
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid">
 					<div class="k-portlet__head  k-portlet__head--noborder">
@@ -83,7 +83,7 @@
 				<!--end::Portlet-->
 			</div>
 
-			<div class="col-lg-12 col-xl-3 order-lg-1 order-xl-1">
+			<div class="col-lg-3 col-sm-6 order-lg-1 order-xl-1">
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid">
 					<div class="k-portlet__head  k-portlet__head--noborder">
@@ -103,9 +103,10 @@
 				<!--end::Portlet-->
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-6 col-xl-4 order-lg-2 order-xl-1">
 
+		<div class="row">
+
+			<div class="col-lg-6 col-xl-4 order-lg-2 order-xl-1">
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid-half k-widget-12">
 					<div class="k-portlet__body">
@@ -125,7 +126,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!--end::Portlet-->
 
 				<!--begin::Portlet-->
@@ -166,12 +166,10 @@
 						</div>
 					</div>
 				</div>
-
 				<!--end::Portlet-->
-				
 			</div>
-			<div class="col-lg-12 col-xl-8 order-lg-1 order-xl-1">
 
+			<div class="col-lg-12 col-xl-8 order-lg-1 order-xl-1">
 				<!--begin::Portlet-->
 				<div class="k-portlet k-portlet--height-fluid">
 					<div class="k-portlet__head k-portlet__head--lg k-portlet__head--noborder k-portlet__head--break-sm">
@@ -186,7 +184,6 @@
 						<div class="k-datatable" id="k_recent_orders"></div>
 					</div>
 				</div>
-
 				<!--end::Portlet-->
 			</div>
 		</div>
@@ -398,17 +395,14 @@
 						sortable: false,
 						width: 20,
 						type: 'number',
-						selector: {class: 'k-checkbox--solid k-checkbox--brand'},
+						// selector: {class: 'k-checkbox--solid k-checkbox--brand'},
 						textAlign: 'center',
 					}, {
 						field: 'customer_name',
-						title: '{{ __('backend/dashboard.recent_orders.customer') }}'
-					}, {
-						field: 'product',
-						title: '{{ __('backend/dashboard.recent_orders.product') }}'
+						title: '{{ __('backend/dashboard.recent_orders.user_name') }}'
 					}, {
 						field: 'price',
-						title: '{{ __('backend/dashboard.recent_orders.price') }}'
+						title: '{{ __('backend/dashboard.recent_orders.price_with_shipping') }}'
 					}, {
 						field: 'hire_date',
 						title: '{{ __('backend/dashboard.recent_orders.date') }}'

@@ -34,6 +34,8 @@
             'product' => 'Produkt',
             'date' => 'Datum',
             'date_format' => 'DD/MM/YYYY',
+            'user_name' => 'User Name',
+            'price_with_shipping' => 'Price with Shipping'
         ],
 
         'total_orders' => [
