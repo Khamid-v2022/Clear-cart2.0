@@ -88,7 +88,20 @@ namespace App\Http\Controllers\Shop;
                     }
 
                     $coupon = null;
-                    if (Auth::user()->balance_in_cent >= $total) {
+
+                    
+                    // get Total Shipping price
+                    $total_deliveryPrice = 0;
+                    foreach (UserCart::getCartByUserId(Auth::user()->id) as $cartItem) {
+                        $product = $cartItem[0];
+
+                        if ($product->dropNeeded()) {
+                            $total_deliveryPrice += $deliveryMethodPrice;
+                        }
+                    }
+
+                    // check Balance is enoght (compare balance >= total price + shipping price)
+                    if (Auth::user()->balance_in_cent >= ( $total + $total_deliveryPrice )) {
                         if ($coupon != null) {
                             $coupon->update([
                                 'used' => $coupon->used + 1,
@@ -103,7 +116,6 @@ namespace App\Http\Controllers\Shop;
                         $createShopping = false;
                         $cartEntries = [];
 
-                        $total_deliveryPrice = 0;
                         foreach (UserCart::getCartByUserId(Auth::user()->id) as $cartItem) {
                             if ($cartItem[0] == null) {
                                 return redirect()->route('checkout')->with([
@@ -131,8 +143,6 @@ namespace App\Http\Controllers\Shop;
 
                                 $deliveryMethodNameX = $deliveryMethodName;
                                 $deliveryMethodPriceX = $deliveryMethodPrice;
-
-                                $total_deliveryPrice += $deliveryMethodPriceX;
                             }
 
                             if ($product->isUnlimited()) {
@@ -300,7 +310,7 @@ namespace App\Http\Controllers\Shop;
                         ])->delete();
 
                         // SUCCESS PART
-                        $newBalance = Auth::user()->balance_in_cent - $total;
+                        $newBalance = Auth::user()->balance_in_cent - $total - $total_deliveryPrice;
 
                         // COUPON
                         if (count(Auth::user()->getCheckoutCoupons()) > 0) {
