@@ -29,6 +29,9 @@
                                             <?php if($cartItem[0]->asWeight()): ?>
                                                 <?php echo e($cartItem[1]); ?><?php echo e($cartItem[0]->getWeightChar()); ?>
 
+                                            <?php elseif($cartItem[0]->asVariant()): ?>
+                                                <?php echo e(\App\Models\UserCart::getVariant($cartItem[3]) -> title); ?>
+
                                             <?php else: ?>
                                                 <?php echo e($cartItem[1]); ?>
 

@@ -358,4 +358,12 @@ namespace App\Models;
 
             return $product;
         }
+
+        public function getVariant($variant_id = NULL){
+            if($variant_id){
+                return ProductVariant::where('id', $variant_id)->get()->first();
+            } else {
+                return ProductVariant::where('id', $this->variant_id)->get()->first();
+            }
+        }
     }

@@ -30,6 +30,8 @@
                                         <td>
                                             @if($cartItem[0]->asWeight())
                                                 {{ $cartItem[1] }}{{ $cartItem[0]->getWeightChar() }}
+                                            @elseif($cartItem[0]->asVariant())
+                                                {{ \App\Models\UserCart::getVariant($cartItem[3]) -> title }}
                                             @else
                                                 {{ $cartItem[1] }}
                                             @endif
