@@ -5,6 +5,7 @@ namespace App\Models;
     use App\Models\Setting;
     use App\Models\User;
     use App\Models\UserOrderNote;
+    use App\Models\ProductVariant;
     use DB;
     use Illuminate\Database\Eloquent\Model;
 
@@ -59,6 +60,10 @@ namespace App\Models;
             $userCartEntry = UserCartEntry::where('order_id', $this->id)->get()->first();
 
             return $userCartEntry != null;
+        }
+
+        public function getVariant(){
+            return ProductVariant::where('id', $this->variant_id)->get()->first();
         }
 
         public function getShoppingId()

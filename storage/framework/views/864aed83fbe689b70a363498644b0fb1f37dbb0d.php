@@ -20,12 +20,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $__currentLoopData = $user_orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order_header): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php $__currentLoopData = $user_orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order_shopping): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr class="">
                                             <td>
-                                                <?php echo e(__('frontend/shop.order_id')); ?> <span class="text-danger">#<?php echo e($order_header->id); ?></span>
+                                                <?php echo e(__('frontend/shop.order_id')); ?> <span class="text-danger">#<?php echo e($order_shopping->id); ?></span>
                                                 <div>
-                                                <?php $__currentLoopData = $order_header->getOrderDetail(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php $__currentLoopData = $order_shopping->getOrders(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <div>
                                                         <span class="product-name text-dark"><?php echo e($order->name); ?></span> 
                                                         <span class="product-quantity text-muted">
@@ -37,17 +37,21 @@
                                                                 <?php echo e($order->getWeight() . $order->getWeightChar()); ?>
 
                                                             <?php endif; ?>
+                                                            <?php if($order->is_variant_type): ?>
+                                                            <?php echo e($order->getVariant()->title); ?>
+
+                                                            <?php endif; ?>
                                                         </span>
                                                     </div>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </div>
                                             </td>
                                             <td>
-                                                <?php echo e(\App\Models\Product::getFormattedPriceFromCent($order_header->total_price + $order_header->delivery_price)); ?>
+                                                <?php echo e(\App\Models\Product::getFormattedPriceFromCent($order_shopping->total_price + $order_shopping->delivery_price)); ?>
 
                                             </td>
                                             <td>
-                                                <a href="<?php echo e(route('order-detail-page', $order_header->id)); ?>"><?php echo e(__('frontend/v4.details')); ?></a>
+                                                <a href="<?php echo e(route('order-detail-page', $order_shopping->id)); ?>"><?php echo e(__('frontend/v4.details')); ?></a>
                                             </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

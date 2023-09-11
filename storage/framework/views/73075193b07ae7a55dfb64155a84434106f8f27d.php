@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <h3 class="page-title">Order Details</h3>
 
-            <?php if($header_info): ?>
+            <?php if($shopping): ?>
                 <div class="card">
-                    <div class="card-header">Order ID: #<?php echo e($header_info -> id); ?> - <?php echo e($header_info -> created_at); ?></div>
+                    <div class="card-header">Order ID: #<?php echo e($shopping -> id); ?> - <?php echo e($shopping -> created_at); ?></div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-transactions table-striped">
@@ -26,13 +26,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $__currentLoopData = $order_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php $__currentLoopData = $shopping->getOrders(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr class="">
                                             <td> #<?php echo e($order->id); ?></td>
                                             <td><?php echo e($order->name); ?></td>
                                             <td>
                                                 <?php if($order->getAmount() > 1): ?>
                                                     <?php echo e($order->getAmount()); ?>
+
+                                                <?php endif; ?>
+                                                <?php if($order->variant_id): ?>
+                                                    <?php echo e($order->getVariant()->title); ?>
 
                                                 <?php endif; ?>
                                             </td>

@@ -20,12 +20,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($user_orders as $order_header)
+                                        @foreach($user_orders as $order_shopping)
                                         <tr class="">
                                             <td>
-                                                {{ __('frontend/shop.order_id') }} <span class="text-danger">#{{ $order_header->id }}</span>
+                                                {{ __('frontend/shop.order_id') }} <span class="text-danger">#{{ $order_shopping->id }}</span>
                                                 <div>
-                                                @foreach($order_header->getOrderDetail() as $order)
+                                                @foreach($order_shopping->getOrders() as $order)
                                                     <div>
                                                         <span class="product-name text-dark">{{ $order->name }}</span> 
                                                         <span class="product-quantity text-muted">
@@ -35,16 +35,19 @@
                                                             @if($order->asWeight())
                                                                 {{ $order->getWeight() . $order->getWeightChar() }}
                                                             @endif
+                                                            @if($order->is_variant_type)
+                                                            {{ $order->getVariant()->title}}
+                                                            @endif
                                                         </span>
                                                     </div>
                                                 @endforeach
                                                 </div>
                                             </td>
                                             <td>
-                                                {{ \App\Models\Product::getFormattedPriceFromCent($order_header->total_price + $order_header->delivery_price)  }}
+                                                {{ \App\Models\Product::getFormattedPriceFromCent($order_shopping->total_price + $order_shopping->delivery_price)  }}
                                             </td>
                                             <td>
-                                                <a href="{{ route('order-detail-page', $order_header->id) }}">{{ __('frontend/v4.details') }}</a>
+                                                <a href="{{ route('order-detail-page', $order_shopping->id) }}">{{ __('frontend/v4.details') }}</a>
                                             </td>
                                         </tr>
                                         @endforeach

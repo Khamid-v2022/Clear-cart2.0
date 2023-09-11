@@ -10,7 +10,7 @@ namespace App\Models;
         protected $table = 'users_carts_shoppings';
 
         protected $fillable = [
-            'user_id', 'is_done',
+            'user_id', 'delivery_method', 'delivery_price', 'drop_info', 'total_price', 'is_done',
         ];
 
         public function getUser()
@@ -52,4 +52,9 @@ namespace App\Models;
 
             return $orders;
         }
+
+        // public function getOrderDetail()
+        // {
+        //     return UserOrder::where('order_header_id', $this->id)->get();
+        // }
     }

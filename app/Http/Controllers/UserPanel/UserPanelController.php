@@ -7,7 +7,7 @@ namespace App\Http\Controllers\UserPanel;
     use App\Models\Coupon;
     use App\Models\UserCouponCheckout;
     use App\Models\UserOrder;
-    use App\Models\UserOrderHeader;
+    use App\Models\UserCartShopping;
     use App\Models\UserTransaction;
     use App\Rules\RuleCouponRedeem;
     use Hash;
@@ -283,8 +283,7 @@ namespace App\Http\Controllers\UserPanel;
 
         public function showOrdersPage($pageNumber = 0)
         {
-            // $user_orders = UserOrder::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(1, ['*'], 'page', $pageNumber);
-            $user_orders = UserOrderHeader::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(10, ['*'], 'page', $pageNumber);
+            $user_orders = UserCartShopping::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(10, ['*'], 'page', $pageNumber);
 
             if ($pageNumber > $user_orders->lastPage() || $pageNumber <= 0) {
                 return redirect()->route('orders-with-pageNumber', 1);
@@ -296,11 +295,10 @@ namespace App\Http\Controllers\UserPanel;
         }
 
         public function showOrdersDetailPage($header_id) {
-            $order_details = UserOrder::where('order_header_id', $header_id)->get();
-            $order_header = UserOrderHeader::where('id', $header_id)->first();
+            $shopping = UserCartShopping::where('id', $header_id)->first();
+
             return view('frontend/userpanel.order_details', [
-                'header_info' => $order_header,
-                'order_details' => $order_details,
+                'shopping' => $shopping,
             ]);
         }
 

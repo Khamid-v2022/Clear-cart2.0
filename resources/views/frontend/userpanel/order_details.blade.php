@@ -6,9 +6,9 @@
         <div class="col-md-12">
             <h3 class="page-title">Order Details</h3>
 
-            @if($header_info)
+            @if($shopping)
                 <div class="card">
-                    <div class="card-header">Order ID: #{{ $header_info -> id }} - {{ $header_info -> created_at }}</div>
+                    <div class="card-header">Order ID: #{{ $shopping -> id }} - {{ $shopping -> created_at }}</div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-transactions table-striped">
@@ -26,13 +26,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($order_details as $order)
+                                        @foreach($shopping->getOrders() as $order)
                                         <tr class="">
                                             <td> #{{ $order->id }}</td>
                                             <td>{{ $order->name }}</td>
                                             <td>
                                                 @if($order->getAmount() > 1)
                                                     {{ $order->getAmount() }}
+                                                @endif
+                                                @if($order->variant_id)
+                                                    {{ $order->getVariant()->title }}
                                                 @endif
                                             </td>
                                             <td> {{ $order->getFormattedPrice() }} </td>
