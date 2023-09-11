@@ -298,8 +298,13 @@
 											<?php endif; ?>
 
 											<?php if(Auth::user()->hasPermission('manage_orders')): ?>
-											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-orders' || \Route::currentRouteName() == 'backend-orders-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
+											<!-- <li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-orders' || \Route::currentRouteName() == 'backend-orders-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
 												<a href="<?php echo e(route('backend-orders')); ?>" class="k-menu__link">
+													<span class="k-menu__link-text"><?php echo e(__('backend/orders.title')); ?></span>
+												</a>
+											</li> -->
+											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-shoppings' || \Route::currentRouteName() == 'backend-shoppings-with-pageNumber'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
+												<a href="<?php echo e(route('backend-shoppings')); ?>" class="k-menu__link">
 													<span class="k-menu__link-text"><?php echo e(__('backend/orders.title')); ?></span>
 												</a>
 											</li>

@@ -28,7 +28,7 @@
                                                 <?php $__currentLoopData = $order_header->getOrderDetail(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <div>
                                                         <span class="product-name text-dark"><?php echo e($order->name); ?></span> 
-                                                        <span class="product-quantity text-muted ms-3">
+                                                        <span class="product-quantity text-muted">
                                                             <?php if($order->getAmount() > 1): ?>
                                                                 <?php echo e($order->getAmount()); ?>
 
