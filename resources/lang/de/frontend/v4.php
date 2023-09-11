@@ -9,6 +9,7 @@
         'product' => 'Produkt',
         'amount' => 'Anzahl',
         'price' => 'Preis',
+        'details' => 'Übersicht',
         'total1' => 'Gesamt',
         'actions' => 'Aktionen',
         'remove' => 'Entfernen',

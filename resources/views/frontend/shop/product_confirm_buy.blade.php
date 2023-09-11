@@ -66,13 +66,13 @@
                             @endif
                         </li>
                     </ul>
-@if(isset($bonus) && $bonus != null)
-<ul class="list-group list-group-flush">
-    <li class="list-group-item">
-        <b>Bonus:</b> {{ $bonus  }}
-    </li>
-</ul>
-@endif
+                    @if(isset($bonus) && $bonus != null)
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <b>Bonus:</b> {{ $bonus  }}
+                            </li>
+                        </ul>
+                    @endif
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">

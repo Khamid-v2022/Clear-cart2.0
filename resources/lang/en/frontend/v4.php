@@ -9,6 +9,7 @@
         'product' => 'Product',
         'amount' => 'Amount',
         'price' => 'Price',
+        'details' => 'Details',
         'total1' => 'Total',
         'actions' => 'Actions',
         'remove' => 'Remove',

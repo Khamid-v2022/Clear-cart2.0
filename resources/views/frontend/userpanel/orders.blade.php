@@ -14,34 +14,37 @@
                                 <table class="table table-transactions table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col">{{ __('frontend/shop.order_id') }}</th>
-                                            <th scope="col">{{ __('frontend/user.date') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.orders_order_note') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.totalprice') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.delivery_method.title') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.total_delivery_price') }}</th>
+                                            <th scope="col">{{ __('frontend/v4.product') }}</th>
+                                            <th scope="col">{{ __('frontend/v4.price') }}</th>
+                                            <th scope="col">{{ __('frontend/v4.details') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($user_orders as $order_header)
                                         <tr class="">
                                             <td>
-                                                #{{ $order_header->id }}
+                                                {{ __('frontend/shop.order_id') }} <span class="text-danger">#{{ $order_header->id }}</span>
+                                                <div>
+                                                @foreach($order_header->getOrderDetail() as $order)
+                                                    <div>
+                                                        <span class="product-name text-dark">{{ $order->name }}</span> 
+                                                        <span class="product-quantity text-muted">
+                                                            @if($order->getAmount() > 1)
+                                                                {{ $order->getAmount() }}
+                                                            @endif
+                                                            @if($order->asWeight())
+                                                                {{ $order->getWeight() . $order->getWeightChar() }}
+                                                            @endif
+                                                        </span>
+                                                    </div>
+                                                @endforeach
+                                                </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('order-detail-page', $order_header->id) }}">{{ $order_header->created_at }}</a>
+                                                {{ \App\Models\Product::getFormattedPriceFromCent($order_header->total_price + $order_header->delivery_price)  }}
                                             </td>
                                             <td>
-                                                {{ decrypt($order_header->drop_info) }}
-                                            </td>
-                                            <td>
-                                                {{ $order_header->total_price }}
-                                            </td>
-                                            <td>
-                                                {{ $order_header->delivery_method }}
-                                            </td>
-                                            <td>
-                                                {{ $order_header->delivery_price }}
+                                                <a href="{{ route('order-detail-page', $order_header->id) }}">{{ __('frontend/v4.details') }}</a>
                                             </td>
                                         </tr>
                                         @endforeach

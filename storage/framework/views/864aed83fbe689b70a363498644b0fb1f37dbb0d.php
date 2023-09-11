@@ -14,39 +14,40 @@
                                 <table class="table table-transactions table-striped">
                                     <thead>
                                         <tr>
-                                            <th scope="col"><?php echo e(__('frontend/shop.order_id')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/user.date')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.orders_order_note')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.totalprice')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.delivery_method.title')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.total_delivery_price')); ?></th>
+                                            <th scope="col"><?php echo e(__('frontend/v4.product')); ?></th>
+                                            <th scope="col"><?php echo e(__('frontend/v4.price')); ?></th>
+                                            <th scope="col"><?php echo e(__('frontend/v4.details')); ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $__currentLoopData = $user_orders; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order_header): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr class="">
                                             <td>
-                                                #<?php echo e($order_header->id); ?>
+                                                <?php echo e(__('frontend/shop.order_id')); ?> <span class="text-danger">#<?php echo e($order_header->id); ?></span>
+                                                <div>
+                                                <?php $__currentLoopData = $order_header->getOrderDetail(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <div>
+                                                        <span class="product-name text-dark"><?php echo e($order->name); ?></span> 
+                                                        <span class="product-quantity text-muted ms-3">
+                                                            <?php if($order->getAmount() > 1): ?>
+                                                                <?php echo e($order->getAmount()); ?>
+
+                                                            <?php endif; ?>
+                                                            <?php if($order->asWeight()): ?>
+                                                                <?php echo e($order->getWeight() . $order->getWeightChar()); ?>
+
+                                                            <?php endif; ?>
+                                                        </span>
+                                                    </div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <?php echo e(\App\Models\Product::getFormattedPriceFromCent($order_header->total_price + $order_header->delivery_price)); ?>
 
                                             </td>
                                             <td>
-                                                <a href="<?php echo e(route('order-detail-page', $order_header->id)); ?>"><?php echo e($order_header->created_at); ?></a>
-                                            </td>
-                                            <td>
-                                                <?php echo e(decrypt($order_header->drop_info)); ?>
-
-                                            </td>
-                                            <td>
-                                                <?php echo e($order_header->total_price); ?>
-
-                                            </td>
-                                            <td>
-                                                <?php echo e($order_header->delivery_method); ?>
-
-                                            </td>
-                                            <td>
-                                                <?php echo e($order_header->delivery_price); ?>
-
+                                                <a href="<?php echo e(route('order-detail-page', $order_header->id)); ?>"><?php echo e(__('frontend/v4.details')); ?></a>
                                             </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
