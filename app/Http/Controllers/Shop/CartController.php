@@ -89,19 +89,8 @@ namespace App\Http\Controllers\Shop;
 
                     $coupon = null;
 
-                    
-                    // get Total Shipping price
-                    $total_deliveryPrice = 0;
-                    foreach (UserCart::getCartByUserId(Auth::user()->id) as $cartItem) {
-                        $product = $cartItem[0];
-
-                        if ($product->dropNeeded()) {
-                            $total_deliveryPrice += $deliveryMethodPrice;
-                        }
-                    }
-
                     // check Balance is enoght (compare balance >= total price + shipping price)
-                    if (Auth::user()->balance_in_cent >= ( $total + $total_deliveryPrice )) {
+                    if (Auth::user()->balance_in_cent >= ( $total + $deliveryMethodPrice )) {
                         if ($coupon != null) {
                             $coupon->update([
                                 'used' => $coupon->used + 1,
@@ -287,7 +276,7 @@ namespace App\Http\Controllers\Shop;
                         if ($createShopping && count($cartEntries) > 1) {
                             $shopping = UserCartShopping::create([
                                 'user_id' => Auth::user()->id,
-                                'delivery_price' => $total_deliveryPrice,
+                                'delivery_price' => $deliveryMethodPrice,
                                 'delivery_method' => $deliveryMethodName,
                                 'drop_info' => $dropInput,
                                 'total_price' => $total
@@ -310,7 +299,7 @@ namespace App\Http\Controllers\Shop;
                         ])->delete();
 
                         // SUCCESS PART
-                        $newBalance = Auth::user()->balance_in_cent - $total - $total_deliveryPrice;
+                        $newBalance = Auth::user()->balance_in_cent - $total - $deliveryMethodPrice;
 
                         // COUPON
                         if (count(Auth::user()->getCheckoutCoupons()) > 0) {
