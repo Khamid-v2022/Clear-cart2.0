@@ -79,8 +79,8 @@
 
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                                <ul class="navbar-nav mr-auto">
-                                <li class="nav-item">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
                                             <a class="nav-link" href="<?php echo e(url('/')); ?>"><?php echo e(__('frontend/main.home')); ?></a>
                                         </li>
 
@@ -167,9 +167,9 @@
                                             </div>
                                         </li>
                                         <?php endif; ?>
-                                        
-                                
-                                        </ul>
+                                            
+                                    
+                                    </ul>
                                     <ul class="navbar-nav ml-auto">
                                         
                                         <?php if(auth()->guard()->guest()): ?>
@@ -206,10 +206,10 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-                                                    <a class="dropdown-item" href="<?php echo e(route('home')); ?>">
+                                                    <!-- <a class="dropdown-item" href="<?php echo e(route('home')); ?>">
                                                         <?php echo e(__('frontend/user.profile')); ?>
 
-                                                    </a>
+                                                    </a> -->
 
                                                     <a class="dropdown-item" href="<?php echo e(route('orders')); ?>">
                                                         <?php echo e(__('frontend/user.orders')); ?>
@@ -228,12 +228,10 @@
 
                                                     </a>
 
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('settings')); ?>">
+                                                    <!-- <a class="dropdown-item" href="<?php echo e(route('settings')); ?>">
                                                         <?php echo e(__('frontend/user.settings')); ?>
 
-                                                    </a>
+                                                    </a> -->
 
                                                     <?php if(Auth::user()->hasPermission('access_backend')): ?>
                                                     <div class="dropdown-divider"></div>

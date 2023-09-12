@@ -78,8 +78,8 @@
 
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                                <ul class="navbar-nav mr-auto">
-                                <li class="nav-item">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
                                             <a class="nav-link" href="{{ url('/') }}">{{ __('frontend/main.home') }}</a>
                                         </li>
 
@@ -157,9 +157,9 @@
                                             </div>
                                         </li>
                                         @endauth
-                                        
-                                
-                                        </ul>
+                                            
+                                    
+                                    </ul>
                                     <ul class="navbar-nav ml-auto">
                                         
                                         @guest
@@ -194,9 +194,9 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-                                                    <a class="dropdown-item" href="{{ route('home') }}">
+                                                    <!-- <a class="dropdown-item" href="{{ route('home') }}">
                                                         {{ __('frontend/user.profile') }}
-                                                    </a>
+                                                    </a> -->
 
                                                     <a class="dropdown-item" href="{{ route('orders') }}">
                                                         {{ __('frontend/user.orders') }}
@@ -212,11 +212,9 @@
                                                         {{ __('frontend/user.transactions') }}
                                                     </a>
 
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="{{ route('settings') }}">
+                                                    <!-- <a class="dropdown-item" href="{{ route('settings') }}">
                                                         {{ __('frontend/user.settings') }}
-                                                    </a>
+                                                    </a> -->
 
                                                     @if(Auth::user()->hasPermission('access_backend'))
                                                     <div class="dropdown-divider"></div>

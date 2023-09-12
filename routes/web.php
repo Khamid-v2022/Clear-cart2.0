@@ -62,8 +62,8 @@
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
     */
 
-    // UserPanel
-    Route::get('home', 'UserPanel\UserPanelController@showUserDashboard')->name('home');
+    // UserPanel - No longer Use
+    // Route::get('home', 'UserPanel\UserPanelController@showUserDashboard')->name('home');
 
     Route::get('coupon/remove/checkout', 'UserPanel\UserPanelController@removeCouponCheckout')->name('remove-coupon-checkout');
     Route::post('coupon/redeem/checkout', 'UserPanel\UserPanelController@redeemCouponCheckout')->name('redeem-coupon-checkout');
@@ -157,9 +157,9 @@
     Route::get('admin', 'Backend\DashboardController@showDashboard')->name('backend-dashboard');
     Route::get('admin/dashboard', 'Backend\DashboardController@showDashboard')->name('backend-dashboard');
 
-    // System Settings
-    Route::get('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings');
-    Route::post('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings-form');
+    // System Settings - No longer Use
+    // Route::get('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings');
+    // Route::post('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings-form');
 
     // System Bonus - No longer Use
     // Route::get('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus');
