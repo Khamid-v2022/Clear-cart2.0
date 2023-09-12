@@ -84,16 +84,46 @@
 					</div>
 					<div class="k-portlet__body">
 						<div>
-							<strong class="text-"><?php echo e(__('backend/orders.table.delivery_method')); ?>:</strong> <span><?php echo e($shopping->delivery_method); ?></span>
+							<strong class=""><?php echo e(__('backend/orders.table.delivery_method')); ?>:</strong> <span><?php echo e($shopping->delivery_method); ?></span>
 						</div>
 						<div>
-							<strong class=""><?php echo e(__('backend/orders.table.notes')); ?>:</strong> 
-							<span>
-								<?php if(strlen($shopping->drop_info) > 0): ?>
-									<?php echo nl2br(e(decrypt($shopping->drop_info))); ?>
+							<strong class=""><?php echo e(__('backend/orders.table.notes')); ?>:</strong>
+							<div class="ml-3">
+								<label><?php echo e(__('backend/orders.shipping.drop.name')); ?>:</label> 
+								<span>
+									<?php if(strlen($shopping->drop_name) > 0): ?> 
+										<?php echo nl2br(e(decrypt($shopping->drop_name))); ?>
 
-								<?php endif; ?>
-							</span>
+									<?php endif; ?>
+								</span><br>
+								<label><?php echo e(__('backend/orders.shipping.drop.street')); ?>:</label> 
+								<span>
+									<?php if(strlen($shopping->drop_street) > 0): ?> 
+										<?php echo nl2br(e(decrypt($shopping->drop_street))); ?>
+
+									<?php endif; ?>
+								</span><br>
+								<label><?php echo e(__('backend/orders.shipping.drop.postal_code')); ?>:</label> 
+								<span>
+									<?php if(strlen($shopping->drop_postal_code) > 0): ?> 
+										<?php echo nl2br(e(decrypt($shopping->drop_postal_code))); ?> 
+									<?php endif; ?>
+								</span><br>
+								<label><?php echo e(__('backend/orders.shipping.drop.city')); ?>:</label> 
+								<span>
+									<?php if(strlen($shopping->drop_city) > 0): ?> 
+										<?php echo nl2br(e(decrypt($shopping->drop_city))); ?>
+
+									<?php endif; ?>
+								</span><br>
+								<label><?php echo e(__('backend/orders.shipping.drop.country')); ?>:</label> 
+								<span>
+									<?php if(strlen($shopping->drop_country) > 0): ?> 
+										<?php echo nl2br(e(decrypt($shopping->drop_country))); ?>
+
+									<?php endif; ?>
+								</span>
+							</div> 
 						</div>
 						<div>
 							<strong class=""><?php echo e(__('backend/orders.shipping.delivery_price')); ?>:</strong>

@@ -41,6 +41,13 @@
         'order_id' => 'Order ID:',
         'transaction_id' => 'Transaction ID',
         'orders_notes' => 'Notes:',
+        'drop' => [
+            'name' => 'Name',
+            'street' => 'Street',
+            'postal_code' => 'Postal Code',
+            'city' => 'City',
+            'country' => 'Country'
+        ],
         'order_note' => 'Drop',
         'orders_status' => 'Status:',
         'orders_order_note' => 'Drop:',

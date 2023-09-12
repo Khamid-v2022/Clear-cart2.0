@@ -38,6 +38,13 @@
         'shipping' => [
             'shipping_method' => 'Shipping Method',
             'drop_info' => 'Drop',
+            'drop' => [
+                'name' => 'Name',
+                'street' => 'Street',
+                'postal_code' => 'Postal Code',
+                'city' => 'City',
+                'country' => 'Country'
+            ],
             'delivery_price' => 'Delivery Price'
         ],
 

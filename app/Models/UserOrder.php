@@ -5,6 +5,7 @@ namespace App\Models;
     use App\Models\Setting;
     use App\Models\User;
     use App\Models\UserOrderNote;
+    use App\Models\UserCartShopping;
     use App\Models\ProductVariant;
     use DB;
     use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,7 @@ namespace App\Models;
         protected $table = 'users_orders';
 
         protected $fillable = [
-            'order_header_id', 'user_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice', 'drop_info', 'delivery_method', 'delivery_price', 'is_variant_type', 'variant_id'
+            'user_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice',  'delivery_method', 'delivery_price', 'is_variant_type', 'variant_id'
         ];
 
         public static function getById($id)
@@ -81,7 +82,8 @@ namespace App\Models;
 
         public function getDrop()
         {
-            return $this->drop_info;
+            // UserCartShopping::where('id', $this->)
+            return '';
         }
 
         public function getWeight()

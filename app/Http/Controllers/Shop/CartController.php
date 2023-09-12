@@ -49,24 +49,11 @@ namespace App\Http\Controllers\Shop;
                     }
 
                     // DROP
-                    $dropInput = $request->get('product_drop') ?? '';
-                    if (UserCart::hasDroplestProducts(Auth::user()->id)) {
-                        if (strlen($dropInput) > 500) {
-                            return redirect()->route('checkout')->with([
-                                'errorMessage' => __('frontend/shop.order_note_long', [
-                                    'charallowed' => 500,
-                                ]),
-                            ]);
-                        }
-
-                        if (strlen($dropInput) <= 0) {
-                            return redirect()->route('checkout')->with([
-                                'errorMessage' => __('frontend/shop.order_note_needed'),
-                            ]);
-                        }
-
-                        $dropInput = encrypt($request->get('product_drop'));
-                    }
+                    $dropName = encrypt($request->get('drop_name')) ?? NULL;
+                    $dropStreet = encrypt($request->get('drop_street')) ?? NULL;
+                    $dropCity = encrypt($request->get('drop_city')) ?? NULL;
+                    $dropCountry = encrypt($request->get('drop_country')) ?? NULL;
+                    $dropPostalCode = encrypt($request->get('drop_postal_code')) ?? NULL;
 
                     $cartTotal = UserCart::getCartSubInCent(Auth::user()->id);
                     $total = $cartTotal;
@@ -122,13 +109,11 @@ namespace App\Http\Controllers\Shop;
                             $product = $cartItem[0];
 
                             $status = 'nothing';
-                            $dropInfo = '';
                             $deliveryMethodNameX = '';
                             $deliveryMethodPriceX = 0;
 
                             if ($product->dropNeeded()) {
                                 $status = 'pending';
-                                $dropInfo = $dropInput;
 
                                 $deliveryMethodNameX = $deliveryMethodName;
                                 $deliveryMethodPriceX = $deliveryMethodPrice;
@@ -142,7 +127,6 @@ namespace App\Http\Controllers\Shop;
                                     'amount' => $cartItem[1],
                                     'price_in_cent' => $product->price_in_cent,
                                     'totalprice' => $cartItem[2],
-                                    'drop_info' => $dropInfo,
                                     'delivery_price' => $deliveryMethodPriceX,
                                     'delivery_method' => $deliveryMethodNameX,
                                     'status' => $status,
@@ -176,7 +160,6 @@ namespace App\Http\Controllers\Shop;
                                     'weight_char' => $product->getWeightChar(),
                                     'price_in_cent' => $product->price_in_cent,
                                     'totalprice' => $cartItem[2],
-                                    'drop_info' => $dropInfo,
                                     'delivery_price' => $deliveryMethodPriceX,
                                     'delivery_method' => $deliveryMethodNameX,
                                     'status' => $status,
@@ -207,7 +190,6 @@ namespace App\Http\Controllers\Shop;
                                     'amount' => $cartItem[1],
                                     'price_in_cent' => $cartItem[2],        // Use Variant price
                                     'totalprice' => $cartItem[2],           // Use Variant price
-                                    'drop_info' => $dropInfo,
                                     'delivery_price' => $deliveryMethodPriceX,
                                     'delivery_method' => $deliveryMethodNameX,
                                     'is_variant_type' => 1,
@@ -268,7 +250,6 @@ namespace App\Http\Controllers\Shop;
                                     'status' => $status,
                                     'delivery_price' => $deliveryMethodPriceX,
                                     'delivery_method' => $deliveryMethodNameX,
-                                    'drop_info' => $dropInfo
                                 ]);
                             }
                         }
@@ -278,7 +259,11 @@ namespace App\Http\Controllers\Shop;
                                 'user_id' => Auth::user()->id,
                                 'delivery_price' => $deliveryMethodPrice,
                                 'delivery_method' => $deliveryMethodName,
-                                'drop_info' => $dropInput,
+                                'drop_name' => $dropName,
+                                'drop_street' => $dropStreet,
+                                'drop_postal_code' => $dropPostalCode,
+                                'drop_city' => $dropCity,
+                                'drop_country' => $dropCountry,
                                 'total_price' => $total
                             ]);
 

@@ -38,6 +38,13 @@
         'shipping' => [
             'shipping_method' => 'Verzendmethode',
             'drop_info' => 'Drop',
+            'drop' => [
+                'name' => 'Naam',
+                'street' => 'Straat',
+                'postal_code' => 'Postcode',
+                'city' => 'Stad',
+                'country' => 'Land'
+            ],
             'delivery_price' => 'Bezorgkosten'
         ],
 

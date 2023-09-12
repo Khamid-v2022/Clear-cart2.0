@@ -83,15 +83,42 @@
 					</div>
 					<div class="k-portlet__body">
 						<div>
-							<strong class="text-">{{ __('backend/orders.table.delivery_method') }}:</strong> <span>{{ $shopping->delivery_method }}</span>
+							<strong class="">{{ __('backend/orders.table.delivery_method') }}:</strong> <span>{{ $shopping->delivery_method }}</span>
 						</div>
 						<div>
-							<strong class="">{{ __('backend/orders.table.notes') }}:</strong> 
-							<span>
-								@if(strlen($shopping->drop_info) > 0)
-									{!! nl2br(e(decrypt($shopping->drop_info))) !!}
-								@endif
-							</span>
+							<strong class="">{{ __('backend/orders.table.notes') }}:</strong>
+							<div class="ml-3">
+								<label>{{ __('backend/orders.shipping.drop.name') }}:</label> 
+								<span>
+									@if(strlen($shopping->drop_name) > 0) 
+										{!! nl2br(e(decrypt($shopping->drop_name))) !!}
+									@endif
+								</span><br>
+								<label>{{ __('backend/orders.shipping.drop.street') }}:</label> 
+								<span>
+									@if(strlen($shopping->drop_street) > 0) 
+										{!! nl2br(e(decrypt($shopping->drop_street))) !!}
+									@endif
+								</span><br>
+								<label>{{ __('backend/orders.shipping.drop.postal_code') }}:</label> 
+								<span>
+									@if(strlen($shopping->drop_postal_code) > 0) 
+										{!! nl2br(e(decrypt($shopping->drop_postal_code))) !!} 
+									@endif
+								</span><br>
+								<label>{{ __('backend/orders.shipping.drop.city') }}:</label> 
+								<span>
+									@if(strlen($shopping->drop_city) > 0) 
+										{!! nl2br(e(decrypt($shopping->drop_city))) !!}
+									@endif
+								</span><br>
+								<label>{{ __('backend/orders.shipping.drop.country') }}:</label> 
+								<span>
+									@if(strlen($shopping->drop_country) > 0) 
+										{!! nl2br(e(decrypt($shopping->drop_country))) !!}
+									@endif
+								</span>
+							</div> 
 						</div>
 						<div>
 							<strong class="">{{ __('backend/orders.shipping.delivery_price') }}:</strong>

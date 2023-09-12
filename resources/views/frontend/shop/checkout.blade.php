@@ -16,22 +16,20 @@
                 <div class="card-header">{{ __('frontend/v4.confirm_order') }}</div>
                     <div class="card-body">
 						@if(count(\Auth::user()->getCheckoutCoupons()) <= 0)
-						<b>Hast du einen Gutscheincode?</b>
-						<form method="POST" action="{{ route('redeem-coupon-checkout') }}">
-							@csrf
-
-							<input autofocus type="text" class="form-control{{ $errors->has('coupon_code') ? ' is-invalid' : '' }}" value="{{ old('coupon_code') }}" name="coupon_code" />
-							@if ($errors->has('coupon_code'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('coupon_code') }}</strong>
-                                    </span>
-                                @endif
-
-							<input type="submit" class="btn btn-secondary mt-15" value="Einlösen" />
-						</form>
+							<b>Hast du einen Gutscheincode?</b>
+							<form method="POST" action="{{ route('redeem-coupon-checkout') }}">
+								@csrf
+								<input autofocus type="text" class="form-control{{ $errors->has('coupon_code') ? ' is-invalid' : '' }}" value="{{ old('coupon_code') }}" name="coupon_code" />
+								@if ($errors->has('coupon_code'))
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $errors->first('coupon_code') }}</strong>
+									</span>
+								@endif
+								<input type="submit" class="btn btn-secondary mt-15" value="Einlösen" />
+							</form>
 						@else
-						<b>Dein Gutscheincode: </b>{{ strtoupper(\Auth::user()->getCheckoutCoupons()[0]->coupon_code) }}<br />
-						<a href="{{ route('remove-coupon-checkout') }}">Anderen Gutschein verwenden</a>
+							<b>Dein Gutscheincode: </b>{{ strtoupper(\Auth::user()->getCheckoutCoupons()[0]->coupon_code) }}<br />
+							<a href="{{ route('remove-coupon-checkout') }}">Anderen Gutschein verwenden</a>
 						@endif
 						<hr />
 
@@ -49,31 +47,52 @@
 									<b>{{ __('frontend/shop.delivery_method.title') }}</b><br /><br />
 
 									@foreach(App\Models\DeliveryMethod::all() as $deliveryMethod)
-									<label class="k-radio k-radio--all k-radio--solid">
-										<input type="radio" name="product_delivery_method" value="{{ $deliveryMethod->id }}" data-content-visible="false" data-weight-visible="false" @if(!$deliveryMethod->isAvailableForUsersCart()) disabled @endif />
-										<span></span>
-										{{ __('frontend/shop.delivery_method.row', [
-											'name' => $deliveryMethod->name,
-											'price' => $deliveryMethod->getFormattedPrice()
-										]) }}
-									
-										@if(!$deliveryMethod->isAvailableForUsersCart())
-										<div class="delivery-method-info">
-											{{ __('frontend/shop.delivery_method.minmaxinfo', [
-												'min' => $deliveryMethod->getFormattedMinAmount(),
-												'max' => $deliveryMethod->getFormattedMaxAmount()
+										<label class="k-radio k-radio--all k-radio--solid">
+											<input type="radio" name="product_delivery_method" value="{{ $deliveryMethod->id }}" data-content-visible="false" data-weight-visible="false" @if(!$deliveryMethod->isAvailableForUsersCart()) disabled @endif />
+											<span></span>
+											{{ __('frontend/shop.delivery_method.row', [
+												'name' => $deliveryMethod->name,
+												'price' => $deliveryMethod->getFormattedPrice()
 											]) }}
-										</div>
-										@endif
-									</label><br />
+										
+											@if(!$deliveryMethod->isAvailableForUsersCart())
+											<div class="delivery-method-info">
+												{{ __('frontend/shop.delivery_method.minmaxinfo', [
+													'min' => $deliveryMethod->getFormattedMinAmount(),
+													'max' => $deliveryMethod->getFormattedMaxAmount()
+												]) }}
+											</div>
+											@endif
+										</label><br />
 									@endforeach
 								</li>
 							</ul>
 
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">
-									<label for="product_drop">{{ __('frontend/shop.order_note') }}</label>
-									<textarea class="form-control" name="product_drop" id="product_drop" placeholder="{{ __('frontend/shop.order_note_placeholder') }}">{{ old('product_drop') ?? \Session::get('productDrop') ?? '' }}</textarea>
+									<b>{{ __('frontend/shop.order_note') }}</b>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label for="drop_name">{{ __('frontend/shop.drop.name') }}</label>
+											<input class="form-control" name="drop_name" id="drop_name" placeholder="" value="{{ old('drop_name') ?? \Session::get('dropName') ?? '' }}" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="drop_street">{{ __('frontend/shop.drop.street') }}</label>
+											<input class="form-control" name="drop_street" id="drop_street" placeholder="" value="{{ old('drop_street') ?? \Session::get('dropStreet') ?? '' }}" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="drop_city">{{ __('frontend/shop.drop.city') }}</label>
+											<input class="form-control" name="drop_city" id="drop_city" placeholder="" value="{{ old('drop_city') ?? \Session::get('dropCity') ?? '' }}" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="drop_country">{{ __('frontend/shop.drop.country') }}</label>
+											<input class="form-control" name="drop_country" id="drop_country" placeholder="" value="{{ old('drop_country') ?? \Session::get('dropCountry') ?? '' }}" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="drop_postal_code">{{ __('frontend/shop.drop.postal_code') }}</label>
+											<input class="form-control" name="drop_postal_code" id="drop_postal_code" placeholder="" value="{{ old('drop_postal_code') ?? \Session::get('dropPostalCode') ?? '' }}">
+										</div>
+									</div>
 								</li>
 							</ul>
 

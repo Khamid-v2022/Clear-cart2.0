@@ -20,9 +20,8 @@
                                             <th scope="col"><?php echo e(__('frontend/shop.price')); ?></th>
                                             <th scope="col"><?php echo e(__('frontend/shop.delivery_price')); ?></th>
                                             <th scope="col"><?php echo e(__('frontend/shop.delivery_method.title')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.bought_weight')); ?></th>
                                             <th scope="col"><?php echo e(__('frontend/shop.totalprice')); ?></th>
-                                            <th scope="col"><?php echo e(__('frontend/shop.orders_status')); ?></th>
+                                            <!-- <th scope="col"><?php echo e(__('frontend/shop.orders_status')); ?></th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -34,6 +33,9 @@
                                                 <?php if($order->getAmount() > 1): ?>
                                                     <?php echo e($order->getAmount()); ?>
 
+                                                <?php elseif($order->asWeight()): ?>
+                                                    <?php echo e($order->getWeight() . $order->getWeightChar()); ?>
+
                                                 <?php endif; ?>
                                                 <?php if($order->variant_id): ?>
                                                     <?php echo e($order->getVariant()->title); ?>
@@ -44,16 +46,10 @@
                                             <td> <?php echo e($order->getFormattedDeliveryPrice()); ?> </td>
                                             <td> <?php echo e($order->delivery_method); ?> </td>
                                             <td>
-                                                <?php if($order->asWeight()): ?>
-                                                    <?php echo e($order->getWeight() . $order->getWeightChar()); ?>
-
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
                                                 <?php echo e($order->getFormattedTotalPrice()); ?>
 
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <?php if($order->getStatus() != 'nothing'): ?>
                                                     <?php if($order->getStatus() == 'cancelled'): ?>
                                                         <?php echo e(__('frontend/shop.orders.status.cancelled')); ?>
@@ -66,7 +62,7 @@
 
                                                     <?php endif; ?>
                                                 <?php endif; ?>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>

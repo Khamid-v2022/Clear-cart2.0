@@ -42,6 +42,13 @@
         'transaction_id' => 'Transactie ID',
         'orders_notes' => 'Anmerkungen:',
         'order_note' => 'Drop',
+        'drop' => [
+            'name' => 'Naam',
+            'street' => 'Straat',
+            'postal_code' => 'Postcode',
+            'city' => 'Stad',
+            'country' => 'Land'
+        ],
         'orders_status' => 'Status:',
         'orders_order_note' => 'Drop:',
         'order_note_placeholder' => 'Lieferanschrift (HD / PS / BKD...)',

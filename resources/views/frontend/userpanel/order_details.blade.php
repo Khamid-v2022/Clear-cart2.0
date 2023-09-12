@@ -20,9 +20,8 @@
                                             <th scope="col">{{ __('frontend/shop.price') }}</th>
                                             <th scope="col">{{ __('frontend/shop.delivery_price') }}</th>
                                             <th scope="col">{{ __('frontend/shop.delivery_method.title') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.bought_weight') }}</th>
                                             <th scope="col">{{ __('frontend/shop.totalprice') }}</th>
-                                            <th scope="col">{{ __('frontend/shop.orders_status') }}</th>
+                                            <!-- <th scope="col">{{ __('frontend/shop.orders_status') }}</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -33,6 +32,8 @@
                                             <td>
                                                 @if($order->getAmount() > 1)
                                                     {{ $order->getAmount() }}
+                                                @elseif($order->asWeight())
+                                                    {{ $order->getWeight() . $order->getWeightChar() }}
                                                 @endif
                                                 @if($order->variant_id)
                                                     {{ $order->getVariant()->title }}
@@ -42,14 +43,9 @@
                                             <td> {{ $order->getFormattedDeliveryPrice() }} </td>
                                             <td> {{ $order->delivery_method }} </td>
                                             <td>
-                                                @if($order->asWeight())
-                                                    {{ $order->getWeight() . $order->getWeightChar() }}
-                                                @endif
-                                            </td>
-                                            <td>
                                                 {{ $order->getFormattedTotalPrice() }}
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 @if($order->getStatus() != 'nothing')
                                                     @if($order->getStatus() == 'cancelled')
                                                         {{ __('frontend/shop.orders.status.cancelled') }}
@@ -59,7 +55,7 @@
                                                         {{ __('frontend/shop.orders.status.pending') }}
                                                     @endif
                                                 @endif
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         @endforeach
                                     </tbody>
