@@ -47,7 +47,8 @@
 
 									<?php $__currentLoopData = App\Models\DeliveryMethod::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deliveryMethod): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<label class="k-radio k-radio--all k-radio--solid">
-											<input type="radio" name="product_delivery_method" value="<?php echo e($deliveryMethod->id); ?>" data-content-visible="false" data-weight-visible="false" <?php if(!$deliveryMethod->isAvailableForUsersCart()): ?> disabled <?php endif; ?> />
+											<input type="radio" name="product_delivery_method" value="<?php echo e($deliveryMethod->id); ?>" data-content-visible="false" data-weight-visible="false" <?php if(!$deliveryMethod->isAvailableForUsersCart()): ?> disabled <?php endif; ?> 
+											data-delivery-price="<?php echo e($deliveryMethod->price); ?>" />
 											<span></span>
 											<?php echo e(__('frontend/shop.delivery_method.row', [
 												'name' => $deliveryMethod->name,
@@ -82,16 +83,16 @@
 											<input class="form-control" name="drop_street" id="drop_street" placeholder="" value="<?php echo e(old('drop_street') ?? \Session::get('dropStreet') ?? ''); ?>" required>
 										</div>
 										<div class="col-sm-6 form-group">
+											<label for="drop_postal_code"><?php echo e(__('frontend/shop.drop.postal_code')); ?></label>
+											<input class="form-control" name="drop_postal_code" id="drop_postal_code" placeholder="" value="<?php echo e(old('drop_postal_code') ?? \Session::get('dropPostalCode') ?? ''); ?>">
+										</div>
+										<div class="col-sm-6 form-group">
 											<label for="drop_city"><?php echo e(__('frontend/shop.drop.city')); ?></label>
 											<input class="form-control" name="drop_city" id="drop_city" placeholder="" value="<?php echo e(old('drop_city') ?? \Session::get('dropCity') ?? ''); ?>" required>
 										</div>
 										<div class="col-sm-6 form-group">
 											<label for="drop_country"><?php echo e(__('frontend/shop.drop.country')); ?></label>
 											<input class="form-control" name="drop_country" id="drop_country" placeholder="" value="<?php echo e(old('drop_country') ?? \Session::get('dropCountry') ?? ''); ?>" required>
-										</div>
-										<div class="col-sm-6 form-group">
-											<label for="drop_postal_code"><?php echo e(__('frontend/shop.drop.postal_code')); ?></label>
-											<input class="form-control" name="drop_postal_code" id="drop_postal_code" placeholder="" value="<?php echo e(old('drop_postal_code') ?? \Session::get('dropPostalCode') ?? ''); ?>">
 										</div>
 									</div>
 								</li>
@@ -101,25 +102,28 @@
 							<?php endif; ?>
 							
 							<b><?php echo e(__('frontend/v4.carttotal')); ?> </b><br />
-							<?php echo e(\App\Models\UserCart::getCartSubPrice(\Auth::user()->id, false)); ?>  <br />
+							<span id="total_price" data-total_price = "<?php echo e(\App\Models\UserCart::getCartSubInCent(\Auth::user()->id)); ?>"><?php echo e(\App\Models\UserCart::getCartSubPrice(\Auth::user()->id, false)); ?></span>  <br />
 							<br />
 
 							<?php if(count(Auth::user()->getCheckoutCoupons()) > 0): ?>
-							<b><?php echo e(__('frontend/v4.amount_rabatt')); ?> </b><br />
-							<?php echo e(\App\Models\UserCart::getCartRabatt(\Auth::user()->id)); ?> <br />
-							<br />
+								<b><?php echo e(__('frontend/v4.amount_rabatt')); ?> </b><br />
+								<?php echo e(\App\Models\UserCart::getCartRabatt(\Auth::user()->id)); ?> <br />
+								<br />
 							<?php endif; ?>
+
 							<b><?php echo e(__('frontend/v4.amount_to_pay')); ?> </b><br />
-							<?php echo e(\App\Classes\Rabatt::priceformat(\App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id))); ?> <br />
+							<span id="amount_pay" data-amount_pay = "<?php echo e(\App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id)); ?>">
+								<?php echo e(\App\Classes\Rabatt::priceformat(\App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id))); ?> 
+							</span><br />
 							
 
 							<?php if(\App\Models\UserCart::hasDroplestProducts(\Auth::user()->id)): ?>
-							<i><?php echo e(__('frontend/v4.zzglversand')); ?></i>
+								<i><?php echo e(__('frontend/v4.zzglversand')); ?></i>
+								<span id="shipping_cost"></span>
 							<?php endif; ?>
 							
 							<br />
 							<br />
-
 
 							<hr />
 						
@@ -133,4 +137,18 @@
 </div>
 <?php $__env->stopSection(); ?>
 
+
+<?php $__env->startSection('page_scripts'); ?>
+<script type="text/javascript">
+	$(function() {
+        $("input[name=product_delivery_method]").on("click", function(){
+			const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
+			let total_price = parseInt($("#total_price").attr('data-total_price'));
+
+			$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+			$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)")
+		})
+  	});
+</script>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('frontend.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\workspace\web\clear-shop\resources\views/frontend/shop/checkout.blade.php ENDPATH**/ ?>

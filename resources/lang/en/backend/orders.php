@@ -33,6 +33,7 @@
             'actions' => 'Actions',
             'product' => 'Product',
             'notes' => 'Drop',
+            'price' => 'Price'
         ],
 
         'shipping' => [

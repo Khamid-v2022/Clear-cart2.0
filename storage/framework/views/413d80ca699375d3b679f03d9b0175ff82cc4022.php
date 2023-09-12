@@ -26,6 +26,7 @@
 									<th><?php echo e(__('backend/orders.table.id')); ?></th>
 									<th><?php echo e(__('backend/orders.table.product')); ?></th>
 									<th><?php echo e(__('backend/orders.table.amount')); ?></th>
+									<th><?php echo e(__('backend/orders.table.price')); ?></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -51,6 +52,10 @@
 										<?php echo e($order->getAmount()); ?>
 
 										<?php endif; ?>
+									</td>
+									<td>
+										<?php echo e($order->getFormattedPrice()); ?>
+
 									</td>
 									<!-- <td style="font-size: 20px;">
 										<a href="<?php echo e(route('backend-order-id', $order->id)); ?>" data-toggle="tooltip" data-original-title="<?php echo e(__('backend/orders.view')); ?>"><i class="la la-eye"></i></a>

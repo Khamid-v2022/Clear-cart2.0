@@ -28,6 +28,7 @@
 									<th>{{ __('backend/orders.table.id') }}</th>
 									<th>{{ __('backend/orders.table.product') }}</th>
 									<th>{{ __('backend/orders.table.amount') }}</th>
+									<th>{{ __('backend/orders.table.price') }}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -50,6 +51,9 @@
 										@else
 										{{ $order->getAmount() }}
 										@endif
+									</td>
+									<td>
+										{{ $order->getFormattedPrice() }}
 									</td>
 									<!-- <td style="font-size: 20px;">
 										<a href="{{ route('backend-order-id', $order->id) }}" data-toggle="tooltip" data-original-title="{{ __('backend/orders.view') }}"><i class="la la-eye"></i></a>

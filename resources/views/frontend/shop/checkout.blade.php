@@ -48,7 +48,8 @@
 
 									@foreach(App\Models\DeliveryMethod::all() as $deliveryMethod)
 										<label class="k-radio k-radio--all k-radio--solid">
-											<input type="radio" name="product_delivery_method" value="{{ $deliveryMethod->id }}" data-content-visible="false" data-weight-visible="false" @if(!$deliveryMethod->isAvailableForUsersCart()) disabled @endif />
+											<input type="radio" name="product_delivery_method" value="{{ $deliveryMethod->id }}" data-content-visible="false" data-weight-visible="false" @if(!$deliveryMethod->isAvailableForUsersCart()) disabled @endif 
+											data-delivery-price="{{ $deliveryMethod->price }}" />
 											<span></span>
 											{{ __('frontend/shop.delivery_method.row', [
 												'name' => $deliveryMethod->name,
@@ -81,16 +82,16 @@
 											<input class="form-control" name="drop_street" id="drop_street" placeholder="" value="{{ old('drop_street') ?? \Session::get('dropStreet') ?? '' }}" required>
 										</div>
 										<div class="col-sm-6 form-group">
+											<label for="drop_postal_code">{{ __('frontend/shop.drop.postal_code') }}</label>
+											<input class="form-control" name="drop_postal_code" id="drop_postal_code" placeholder="" value="{{ old('drop_postal_code') ?? \Session::get('dropPostalCode') ?? '' }}">
+										</div>
+										<div class="col-sm-6 form-group">
 											<label for="drop_city">{{ __('frontend/shop.drop.city') }}</label>
 											<input class="form-control" name="drop_city" id="drop_city" placeholder="" value="{{ old('drop_city') ?? \Session::get('dropCity') ?? '' }}" required>
 										</div>
 										<div class="col-sm-6 form-group">
 											<label for="drop_country">{{ __('frontend/shop.drop.country') }}</label>
 											<input class="form-control" name="drop_country" id="drop_country" placeholder="" value="{{ old('drop_country') ?? \Session::get('dropCountry') ?? '' }}" required>
-										</div>
-										<div class="col-sm-6 form-group">
-											<label for="drop_postal_code">{{ __('frontend/shop.drop.postal_code') }}</label>
-											<input class="form-control" name="drop_postal_code" id="drop_postal_code" placeholder="" value="{{ old('drop_postal_code') ?? \Session::get('dropPostalCode') ?? '' }}">
 										</div>
 									</div>
 								</li>
@@ -100,25 +101,28 @@
 							@endif
 							
 							<b>{{ __('frontend/v4.carttotal') }} </b><br />
-							{{ \App\Models\UserCart::getCartSubPrice(\Auth::user()->id, false) }}  <br />
+							<span id="total_price" data-total_price = "{{ \App\Models\UserCart::getCartSubInCent(\Auth::user()->id) }}">{{ \App\Models\UserCart::getCartSubPrice(\Auth::user()->id, false) }}</span>  <br />
 							<br />
 
 							@if(count(Auth::user()->getCheckoutCoupons()) > 0)
-							<b>{{ __('frontend/v4.amount_rabatt') }} </b><br />
-							{{ \App\Models\UserCart::getCartRabatt(\Auth::user()->id) }} <br />
-							<br />
+								<b>{{ __('frontend/v4.amount_rabatt') }} </b><br />
+								{{ \App\Models\UserCart::getCartRabatt(\Auth::user()->id) }} <br />
+								<br />
 							@endif
+
 							<b>{{ __('frontend/v4.amount_to_pay') }} </b><br />
-							{{ \App\Classes\Rabatt::priceformat(\App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id)) }} <br />
+							<span id="amount_pay" data-amount_pay = "{{ \App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id) }}">
+								{{ \App\Classes\Rabatt::priceformat(\App\Models\UserCart::getCartSubInCentCheckedCoupon(\Auth::user()->id)) }} 
+							</span><br />
 							
 
 							@if(\App\Models\UserCart::hasDroplestProducts(\Auth::user()->id))
-							<i>{{ __('frontend/v4.zzglversand') }}</i>
+								<i>{{ __('frontend/v4.zzglversand') }}</i>
+								<span id="shipping_cost"></span>
 							@endif
 							
 							<br />
 							<br />
-
 
 							<hr />
 						
@@ -130,4 +134,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('page_scripts')
+<script type="text/javascript">
+	$(function() {
+        $("input[name=product_delivery_method]").on("click", function(){
+			const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
+			let total_price = parseInt($("#total_price").attr('data-total_price'));
+
+			$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+			$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)")
+		})
+  	});
+</script>
 @endsection
