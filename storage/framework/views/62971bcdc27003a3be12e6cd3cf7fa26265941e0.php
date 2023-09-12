@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
                             	<div class="k-content__head	k-grid__item">
 									<div class="k-content__head-main">
@@ -74,7 +76,7 @@
 																<?php endif; ?>
 															</div>
 
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label for="product_add_price_in_cent"><?php echo e(__('backend/management.products.price_in_cent')); ?></label>
 																<input type="text" class="form-control <?php if($errors->has('product_add_price_in_cent')): ?> is-invalid <?php endif; ?>" id="product_add_price_in_cent" name="product_add_price_in_cent" placeholder="<?php echo e(__('backend/management.products.price_in_cent_example')); ?>" value="<?php echo e(old('product_add_price_in_cent')); ?>" />
 
@@ -103,15 +105,15 @@
 																	<?php echo e(__('backend/management.products.add.drop_needed')); ?>
 
 																</label>
-															</div>
+															</div> -->
 
 															<div style="margin-bottom: 5px;">
 																<b><?php echo e(__('backend/management.products.add.options')); ?></b>
 															</div>
 															
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label class="k-radio k-radio--all k-radio--solid">
-																	<input type="radio" name="product_add_stock_management" checked value="normal" data-content-visible="false" data-weight-visible="false" />
+																	<input type="radio" name="product_add_stock_management" value="normal" data-content-visible="false" data-weight-visible="false" />
 																	<span></span>
 																	<?php echo e(__('backend/management.products.add.normal_stock_management')); ?>
 
@@ -134,12 +136,12 @@
 																	<?php echo e(__('backend/management.products.add.unlimited_available')); ?>
 
 																</label>
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
 															<div class="form-group">
 																<label class="k-radio k-radio--all k-radio--solid">
-																	<input type="radio" name="product_add_stock_management" value="variants"/>
+																	<input type="radio" name="product_add_stock_management" checked value="variants"/>
 																	<span></span>
 																	<?php echo e(__('backend/management.products.add.variant')); ?>
 
@@ -147,7 +149,7 @@
 															</div>
 															<!-- / added by Khamid -->
 
-															<div class="product_add_weight_div form-group" style="display: none;">
+															<!-- <div class="product_add_weight_div form-group" style="display: none;">
 																<label for="product_add_weightchar"><?php echo e(__('backend/management.products.weightchar')); ?></label>
 																<input type="text" class="form-control <?php if($errors->has('product_add_weightchar')): ?> is-invalid <?php endif; ?>" id="product_add_weightchar" name="product_add_weightchar" placeholder="<?php echo e(__('backend/management.products.weightchar')); ?>" value="<?php echo e(old('product_add_weightchar')); ?>" />
 
@@ -189,23 +191,23 @@
 																		<strong><?php echo e($errors->first('product_add_content')); ?></strong>
 																	</span>
 																<?php endif; ?>
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
-															<div class="product_add_variant_div" style="display: none;">
+															<div class="product_add_variant_div">
 																<div class="row">
 																	<div class="col-9 variant-wrapper">
 																		<div class="variant-item row">
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for=""><?php echo e(__('backend/management.products.title')); ?></label>
-																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]"  />
+																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" required />
 																				</div>
 																			</div>
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for=""><?php echo e(__('backend/management.products.price')); ?></label>
-																					<input type="number" step="any" class="form-control product-variant-price" name="product_add_variant_price[]"  />
+																					<input type="number" class="form-control product-variant-price" name="product_add_variant_price[]" required />
 																				</div>
 																			</div>
 																			<div class="col-2">

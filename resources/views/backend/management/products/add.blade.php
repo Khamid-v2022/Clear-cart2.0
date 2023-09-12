@@ -76,7 +76,7 @@
 																@endif
 															</div>
 
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label for="product_add_price_in_cent">{{ __('backend/management.products.price_in_cent') }}</label>
 																<input type="text" class="form-control @if($errors->has('product_add_price_in_cent')) is-invalid @endif" id="product_add_price_in_cent" name="product_add_price_in_cent" placeholder="{{ __('backend/management.products.price_in_cent_example') }}" value="{{ old('product_add_price_in_cent') }}" />
 
@@ -104,15 +104,15 @@
 																	<span></span>
 																	{{ __('backend/management.products.add.drop_needed') }}
 																</label>
-															</div>
+															</div> -->
 
 															<div style="margin-bottom: 5px;">
 																<b>{{ __('backend/management.products.add.options') }}</b>
 															</div>
 															
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label class="k-radio k-radio--all k-radio--solid">
-																	<input type="radio" name="product_add_stock_management" checked value="normal" data-content-visible="false" data-weight-visible="false" />
+																	<input type="radio" name="product_add_stock_management" value="normal" data-content-visible="false" data-weight-visible="false" />
 																	<span></span>
 																	{{ __('backend/management.products.add.normal_stock_management') }}
 																</label>
@@ -132,19 +132,19 @@
 																	<span></span>
 																	{{ __('backend/management.products.add.unlimited_available') }}
 																</label>
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
 															<div class="form-group">
 																<label class="k-radio k-radio--all k-radio--solid">
-																	<input type="radio" name="product_add_stock_management" value="variants"/>
+																	<input type="radio" name="product_add_stock_management" checked value="variants"/>
 																	<span></span>
 																	{{ __('backend/management.products.add.variant') }}
 																</label>
 															</div>
 															<!-- / added by Khamid -->
 
-															<div class="product_add_weight_div form-group" style="display: none;">
+															<!-- <div class="product_add_weight_div form-group" style="display: none;">
 																<label for="product_add_weightchar">{{ __('backend/management.products.weightchar') }}</label>
 																<input type="text" class="form-control @if($errors->has('product_add_weightchar')) is-invalid @endif" id="product_add_weightchar" name="product_add_weightchar" placeholder="{{ __('backend/management.products.weightchar') }}" value="{{ old('product_add_weightchar') }}" />
 
@@ -186,23 +186,23 @@
 																		<strong>{{ $errors->first('product_add_content') }}</strong>
 																	</span>
 																@endif
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
-															<div class="product_add_variant_div" style="display: none;">
+															<div class="product_add_variant_div">
 																<div class="row">
 																	<div class="col-9 variant-wrapper">
 																		<div class="variant-item row">
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for="">{{ __('backend/management.products.title') }}</label>
-																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]"  />
+																					<input type="text" class="form-control product-variant-title" name="product_add_variant_title[]" required />
 																				</div>
 																			</div>
 																			<div class="col-5">
 																				<div class="form-group">
 																					<label for="">{{ __('backend/management.products.price') }}</label>
-																					<input type="number" class="form-control product-variant-price" name="product_add_variant_price[]"  />
+																					<input type="number" class="form-control product-variant-price" name="product_add_variant_price[]" required />
 																				</div>
 																			</div>
 																			<div class="col-2">

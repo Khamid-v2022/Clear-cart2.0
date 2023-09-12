@@ -65,9 +65,9 @@
 																		{{ $product->getSells() }}@if($product->asWeight()){{ $product->getWeightChar() }}@endif
 																	</td>
 																	<td style="font-size: 20px;">
-																		@if(!$product->isUnlimited() && !$product->asWeight())
+																		<!-- @if(!$product->isUnlimited() && !$product->asWeight())
 																		<a href="{{ route('backend-management-product-database', $product->id) }}" data-toggle="tooltip" data-original-title="{{ __('backend/main.tooltips.database') }}"><i class="la la-database"></i></a>
-																		@endif
+																		@endif -->
 																		<a href="{{ route('backend-management-product-edit', $product->id) }}" data-toggle="tooltip" data-original-title="{{ __('backend/main.tooltips.edit') }}"><i class="la la-edit"></i></a>
 																		<a href="{{ route('backend-management-product-delete', $product->id) }}" data-toggle="tooltip" data-original-title="{{ __('backend/main.tooltips.delete') }}"><i class="la la-trash"></i></a>
 																	</td>

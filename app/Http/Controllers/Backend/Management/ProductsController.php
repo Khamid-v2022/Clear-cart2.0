@@ -436,7 +436,7 @@ namespace App\Http\Controllers\Backend\Management;
                             $description = $request->input('product_edit_description');
                             $short_description = $request->input('product_edit_short_description');
                             $content = $request->get('product_edit_content') ? $request->input('product_edit_content') : '';
-                            $price_in_cent = $request->input('product_edit_price_in_cent');
+                            $price_in_cent = $request->input('product_edit_price_in_cent') ?? 0;
                             $old_price_in_cent = $request->input('product_edit_old_price_in_cent') ?? 0;
                             $interval = $request->input('product_edit_interval') ?? 1;
                             $category_id = $request->input('product_edit_category_id');

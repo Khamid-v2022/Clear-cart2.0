@@ -95,7 +95,7 @@
 															</div>
 															
 															@if($lang == null)
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label for="product_edit_price_in_cent">{{ __('backend/management.products.price_in_cent') }}</label>
 																<input type="text" class="form-control @if($errors->has('product_edit_price_in_cent')) is-invalid @endif" id="product_edit_price_in_cent" name="product_edit_price_in_cent" placeholder="{{ __('backend/management.products.price_in_cent_example') }}" value="{{ $product->price_in_cent }}" />
 
@@ -123,13 +123,13 @@
 																	<span></span>
 																	{{ __('backend/management.products.edit.drop_needed') }}
 																</label>
-															</div>
+															</div> -->
 
 															<div style="margin-bottom: 5px;">
 																<b>{{ __('backend/management.products.edit.options') }}</b>
 															</div>
 															
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label class="k-radio k-radio--all k-radio--solid">
 																	<input type="radio" name="product_edit_stock_management" value="normal" data-content-visible="false" data-weight-visible="false" @if(!$product->isUnlimited() && !$product->asWeight()) checked @endif />
 																	<span></span>
@@ -151,7 +151,7 @@
 																	<span></span>
 																	{{ __('backend/management.products.edit.unlimited_available') }}
 																</label>
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
 															<div class="form-group">
@@ -164,7 +164,7 @@
 															<!-- / added by Khamid -->
 															
 
-															<div class="product_edit_weight_div form-group" style="@if(!$product->asWeight()) display: none; @endif">
+															<!-- <div class="product_edit_weight_div form-group" style="@if(!$product->asWeight()) display: none; @endif">
 																<label for="product_edit_weight">{{ __('backend/management.products.weight') }}</label>
 																<input type="number" class="text-editor form-control @if($errors->has('product_edit_weight')) is-invalid @endif" id="product_edit_weight" name="product_edit_weight" placeholder="{{ __('backend/management.products.weight') }}" value="{{ $product->getWeightAvailable() }}" />
 
@@ -206,7 +206,7 @@
 																		<strong>{{ $errors->first('product_edit_content') }}</strong>
 																	</span>
 																@endif
-															</div>
+															</div> -->
 
 															<!-- added by Khamid 2023-09-07 -->
 															<div class="product_edit_variant_div"  style="@if(!$product->asVariant()) display: none; @endif">

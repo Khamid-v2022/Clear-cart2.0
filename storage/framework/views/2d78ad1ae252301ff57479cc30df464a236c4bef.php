@@ -68,9 +68,9 @@
 																		<?php echo e($product->getSells()); ?><?php if($product->asWeight()): ?><?php echo e($product->getWeightChar()); ?><?php endif; ?>
 																	</td>
 																	<td style="font-size: 20px;">
-																		<?php if(!$product->isUnlimited() && !$product->asWeight()): ?>
+																		<!-- <?php if(!$product->isUnlimited() && !$product->asWeight()): ?>
 																		<a href="<?php echo e(route('backend-management-product-database', $product->id)); ?>" data-toggle="tooltip" data-original-title="<?php echo e(__('backend/main.tooltips.database')); ?>"><i class="la la-database"></i></a>
-																		<?php endif; ?>
+																		<?php endif; ?> -->
 																		<a href="<?php echo e(route('backend-management-product-edit', $product->id)); ?>" data-toggle="tooltip" data-original-title="<?php echo e(__('backend/main.tooltips.edit')); ?>"><i class="la la-edit"></i></a>
 																		<a href="<?php echo e(route('backend-management-product-delete', $product->id)); ?>" data-toggle="tooltip" data-original-title="<?php echo e(__('backend/main.tooltips.delete')); ?>"><i class="la la-trash"></i></a>
 																	</td>
