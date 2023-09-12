@@ -37,7 +37,12 @@
 
         'shipping' => [
             'shipping_method' => 'Shipping Method',
-            'drop_info' => 'Drop'
-        ]
+            'drop_info' => 'Drop',
+            'delivery_price' => 'Delivery Price'
+        ],
+
+        'total_price' => 'Total Order Price',
+        'date_time' => 'Date Time',
+        'user_name' => 'User Name'
 
     ];

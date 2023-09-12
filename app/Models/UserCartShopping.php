@@ -63,4 +63,10 @@ namespace App\Models;
 
             return number_format(($this->total_price + $this->delivery_price) / 100, 2, ',', '.').' '.Setting::getShopCurrency().$after;
         }
+
+        public function getFormattedPrice($price){
+            $after = '';
+
+            return number_format($price / 100, 2, ',', '.').' '.Setting::getShopCurrency().$after;
+        }
     }

@@ -37,7 +37,12 @@
 
         'shipping' => [
             'shipping_method' => 'Verzendmethode',
-            'drop_info' => 'Drop'
-        ]
+            'drop_info' => 'Drop',
+            'delivery_price' => 'Bezorgkosten'
+        ],
+
+        'total_price' => 'Totale bestelprijs',
+        'date_time' => 'Datum Tijd',
+        'user_name' => 'Gebruikersnaam'
 
     ];
