@@ -416,6 +416,40 @@ namespace App\Http\Controllers\Shop;
             }
         }
 
+
+        public function ajaxAddTieredItem(Request $request)
+        {
+            if ($request->getMethod() == 'POST') {
+                $productId = intval($request->get('product_id') ?? '0');
+                $amount = intval($request->get('amount') ?? '0');
+
+                $product = Product::where('id', $productId)->get()->first();
+
+                if ($product != null) {
+                    $userCartItem = UserCart::where([
+                        ['product_id', '=', $productId],
+                        ['user_id', '=', Auth::user()->id],
+                    ])->get()->first();
+
+                    if ($userCartItem != null) {
+                        $newAmount = $userCartItem->amount + $amount;
+
+                        // recalculate the price from the Tiered Price list
+                        // $price = Product::getTieredPriceFromAmount($newAmount, $productId);
+
+                        $userCartItem->update([
+                            'amount' => $newAmount,
+                        ]);
+                    } else {
+                        UserCart::create([
+                            'product_id' => $product->id,
+                            'amount' => $amount,
+                            'user_id' => Auth::user()->id,
+                        ]);
+                    }
+                }
+            }
+        }
         
 
         public function show()

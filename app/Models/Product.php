@@ -4,6 +4,7 @@ namespace App\Models;
 
     use App\Models\ProductCategory;
     use App\Models\ProductVariant;
+    use App\Models\ProductTieredPrices;
     use App\Models\Setting;
     use Illuminate\Database\Eloquent\Model;
 
@@ -152,7 +153,7 @@ namespace App\Models;
                     return true;
                 } elseif ($this->isUnlimited()) {
                     return true;
-                } elseif($this->asVariant()){
+                } elseif($this->asVariant() || $this->asTiered()){
                     return true;
                 }
             }
@@ -169,6 +170,8 @@ namespace App\Models;
             } elseif ($this->inStock()) {
                 return true;
             } elseif($this->asVariant() && count($this->getVariants()) > 0){
+                return true;
+            } elseif($this->asTiered() && count($this->getTieredPrices()) > 0){
                 return true;
             }
 
@@ -218,5 +221,29 @@ namespace App\Models;
         public function getVariants(){
             $variants = ProductVariant::where('product_id', $this->id)->get();
             return $variants;
+        }
+
+        public function getTieredPrices(){
+            $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->get();
+            return $tieredPrices;
+        }
+
+        public function getTieredPriceFromAmount($amount = 0, $product_id = NULL){
+            if($product_id){
+                $tieredPrices = ProductTieredPrices::where('product_id', $product_id)->orderBy('amount')->get();
+            } else {
+                $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->orderBy('amount')->get();
+            }
+
+            if(count($tieredPrices) > 0) {
+                foreach($tieredPrices as $price){
+                    if($amount <= $price->amount){
+                        return $price->price;
+                    }
+                }
+                return $tieredPrices[count($tieredPrices) - 1]->price;
+            }
+
+            return 0;
         }
     }

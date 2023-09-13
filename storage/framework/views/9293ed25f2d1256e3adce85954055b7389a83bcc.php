@@ -11,30 +11,22 @@
     <?php if(count(\App\Models\Product::all())): ?>
         <div class="row">
         <?php if(count(App\Models\Product::getUncategorizedProducts())): ?>
-            <!--<h5><?php echo e(__('frontend/shop.uncategorized')); ?></h5>
-            <div class="row">-->
             <?php $__currentLoopData = App\Models\Product::getUncategorizedProducts(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-4">
                 <?php echo $__env->make('frontend/shop.product_simple_card', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <!--</div>
-        
-            <hr />-->
         <?php endif; ?>
 
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <!--<h5><?php echo e($category->name); ?></h5>
-            <div class="row">-->
+        
             <?php $__currentLoopData = $category->getProducts(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-4">
                 <?php echo $__env->make('frontend/shop.product_simple_card', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?> 
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <!--</div>-->
 
             <?php if(!$loop->last): ?>
-            <!--<hr />--> 
             <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>

@@ -81,6 +81,7 @@
         'buy_error' => 'An unknown error occurred during the purchase.',
         'stock_status' => 'Stock status:',
         'price' => 'Price:',
+        'select_variant' => 'Select Variant:',
         'totalprice' => 'Total price:',
         'must_logged_in' => 'You need to log in or register to buy the product.',
         'to_shop' => 'Back to shop',

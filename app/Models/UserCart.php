@@ -203,6 +203,9 @@ namespace App\Models;
 
                 if($product->asVariant()){
                     $sub += $cartItem[2];
+                } else if($product->asTiered()) {
+                    $price = $product->getTieredPriceFromAmount($amount);
+                    $sub += $price * $amount;
                 } else {
                     $sub += $amount * $product->price_in_cent;
                 }
@@ -238,6 +241,9 @@ namespace App\Models;
 
                 if($product->asVariant()){
                     $sub += $cartItem[2];
+                }  else if($product->asTiered()) {
+                    $price = $product->getTieredPriceFromAmount($amount);
+                    $sub += $price * $amount;
                 } else {
                     $sub += $amount * $prc;
                 }
@@ -339,6 +345,9 @@ namespace App\Models;
                 if($product->asVariant()) {
                     $total = $userCart->variant_price;
                     $variant_id = $userCart->variant_id;
+                } else if($product->asTiered()) {
+                    $price = $product->getTieredPriceFromAmount($userCart->amount);
+                    $total = $price * $userCart->amount;
                 } else {
                     $total = $product->price_in_cent * $userCart->amount;
                 }

@@ -27,7 +27,7 @@
                     <?php elseif($product->isUnlimited()): ?>
                         <?php echo e(__('frontend/v4.unlimited_ava')); ?>
 
-                    <?php elseif(!$product->asWeight() && !$product->asVariant()): ?>
+                    <?php elseif(!$product->asWeight() && !$product->asVariant() && !$product->asTiered()): ?>
                         <?php echo e(__('frontend/v4.stock_ava', [
                             'amount' => $product->getStock()
                         ])); ?>
@@ -77,14 +77,26 @@
                         ?>
                         <div class="col-xs-7 col-lg-6">
                             <select class="form-control" id="variant_select" required>
-                                <option value="">Select Variant</option>
+                                <option value=""><?php echo e(__('frontend/shop.select_variant')); ?></option>
                                 <?php $__currentLoopData = $variants; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $variant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($variant->id); ?>"><?php echo e($variant->title); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
                         <div class="col-xs-5 col-lg-6 text-start pt-1">
-                            <lable class="price-label">Price:<span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
+                            <lable class="price-label"><?php echo e(__('frontend/shop.price')); ?><span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
+                        </div>
+                    <?php elseif($product->asTiered()): ?>
+                        <?php 
+                            $tiered_prices = $product->getTieredPrices()
+                        ?>
+                        <div class="col-xs-7 col-lg-6 d-flex">
+                            <button type="button" class="btn" id="decrease_amount_btn">-</button>
+                            <input type="number" id="product_amount_tiered" name="product_amount"  cart-amount="<?php echo e($product->id); ?>" class="form-control form-control-round" min="0" value="0"> 
+                            <button type="button" class="btn" id="increase_amount_btn">+</button>
+                        </div>
+                        <div class="col-xs-5 col-lg-6 text-start pt-1">
+                            <lable class="price-label">Price:<span class="ml-2" id="product_price" data-price-in-cent=""></span> EUR</label>
                         </div>
                     <?php else: ?>
                         <div class="col-xs-6 col-lg-6 only-p-right">
@@ -109,9 +121,11 @@
                     </div> -->
                     <div class="col-xs-12 col-lg-12">
                         <?php if($product->asVariant()): ?>
-                        <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addVariantToCart(<?php echo e($product->id); ?>);" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
+                            <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addVariantToCart(<?php echo e($product->id); ?>);" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
+                        <?php elseif($product->asTiered()): ?>
+                            <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addTieredProductToCart(<?php echo e($product->id); ?>, 'input[cart-amount=<?php echo e($product->id); ?>]');" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
                         <?php else: ?>
-                        <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addToCart(<?php echo e($product->id); ?>, 'input[cart-amount=<?php echo e($product->id); ?>]');" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
+                            <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addToCart(<?php echo e($product->id); ?>, 'input[cart-amount=<?php echo e($product->id); ?>]');" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -140,6 +154,14 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         <?php endif; ?>
 
+        <?php if($product->asTiered()): ?>
+            var tiered_prices = [];
+            <?php $__currentLoopData = $tiered_prices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $price): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                tiered_prices.push({'amount' : <?php echo e($price->amount); ?>, 'price': <?php echo e($price->price); ?> });
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        <?php endif; ?>
+
+
         $("#variant_select").on("change", function(){
             if(!$(this).val()){
                 $("#variant_price").html("");
@@ -153,8 +175,44 @@
                     let formated_price = getFormattedPriceFromCent(item.price);
                     $("#variant_price").attr("data-price-in-cent", item.price).html(formated_price);
                 }
-            })
+            })   
+        })
+
+        $("#product_amount_tiered").on("change", function(){
+            const amount = parseInt($(this).val());
+
+            if(tiered_prices.length > 0){
+                // sort by amount
+                tiered_prices = tiered_prices.sort((a, b) => a.amount - b.amount);
+
+                for(let i = 0; i < tiered_prices.length; i++){
+                    if(amount <= tiered_prices[i].amount){
+                        let formated_price = getFormattedPriceFromCent(tiered_prices[i].price);
+                        $("#product_price").attr("data-price-in-cent", tiered_prices[i].price).html(formated_price);
+                        return;
+                    }
+                }
                 
+                let formated_price = getFormattedPriceFromCent(tiered_prices[tiered_prices.length - 1].price);
+                $("#product_price").attr("data-price-in-cent", tiered_prices[tiered_prices.length - 1].price).html(formated_price);
+
+            }
+        })
+
+        $("#decrease_amount_btn").on("click", function(){
+            let amount = parseInt($("#product_amount_tiered").val());
+            if(amount > 0){
+                amount--;
+                $("#product_amount_tiered").val(amount).trigger("change");
+            }
+               
+        })
+
+        $("#increase_amount_btn").on("click", function(){
+            let amount = parseInt($("#product_amount_tiered").val());
+
+            amount++;
+            $("#product_amount_tiered").val(amount).trigger("change");
         })
   	});
 </script>

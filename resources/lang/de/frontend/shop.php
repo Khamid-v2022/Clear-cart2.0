@@ -81,6 +81,7 @@
         'buy_error' => 'Beim Kauf ist ein unbekannter Fehler aufgetreten.',
         'stock_status' => 'Lagerbestand:',
         'price' => 'Preis:',
+        'select_variant' => 'Selecteer Variant',
         'totalprice' => 'Gesamtpreis:',
         'must_logged_in' => 'Du musst dich einloggen oder registrieren, um das Produkt kaufen zu können.',
         'to_shop' => 'Zum Shop',

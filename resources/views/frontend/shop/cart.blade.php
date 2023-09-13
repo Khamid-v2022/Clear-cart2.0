@@ -39,6 +39,8 @@
                                         <td>
                                             @if($cartItem[0]->asVariant())
                                                 {{ \App\Models\Product::getFormattedPriceFromCent($cartItem[2]) }}
+                                            @elseif($cartItem[0]->asTiered())
+                                                {{ \App\Models\Product::getFormattedPriceFromCent($cartItem[0]->getTieredPriceFromAmount($cartItem[1] )) }}
                                             @else
                                                 {{ $cartItem[0]->getFormattedPrice() }}
                                             @endif

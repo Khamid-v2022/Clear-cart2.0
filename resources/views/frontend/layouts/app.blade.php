@@ -400,6 +400,36 @@
                     }
                 }
             }
+
+            function addTieredProductToCart(productId, amountClass) {
+                if(!$('a[cart-btn=' + productId + ']').hasClass('disabled')) {
+                    var amount = parseInt($(amountClass).val());
+                    $(amountClass).val('');
+
+                    if(amount > 0) {
+                        $('a[cart-btn=' + productId + ']').addClass('disabled');
+
+                        $.ajax({
+                            'url': '{{ route('cart-add-tiered-item-ajax') }}',
+                            method: 'POST',
+                            data: {product_id:productId, amount:amount}
+                        })
+                        .done(function(response) {
+                            updateCart();
+
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        })
+                        .fail(function() {
+                            alert("Unbekannter Fehler, Seite neuladen.");
+
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        })
+                        .always(function() {
+                            $('a[cart-btn=' + productId + ']').removeClass('disabled');
+                        });
+                    }
+                }
+            }
             
             @if(isset($clipboardJS))
             var clipboard = new ClipboardJS('{{ $clipboardJS->element }}');

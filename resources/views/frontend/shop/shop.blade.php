@@ -13,30 +13,22 @@
     @if(count(\App\Models\Product::all()))
         <div class="row">
         @if(count(App\Models\Product::getUncategorizedProducts()))
-            <!--<h5>{{ __('frontend/shop.uncategorized') }}</h5>
-            <div class="row">-->
             @foreach(App\Models\Product::getUncategorizedProducts() as $product)
                 <div class="col-md-4">
                 @include('frontend/shop.product_simple_card')
                 </div>
             @endforeach
-            <!--</div>
-        
-            <hr />-->
         @endif
 
         @foreach($categories as $category)
-            <!--<h5>{{ $category->name }}</h5>
-            <div class="row">-->
+        
             @foreach($category->getProducts() as $product)
                 <div class="col-md-4">
                 @include('frontend/shop.product_simple_card') 
                 </div>
             @endforeach
-            <!--</div>-->
 
             @if(!$loop->last)
-            <!--<hr />--> 
             @endif
         @endforeach
     </div>

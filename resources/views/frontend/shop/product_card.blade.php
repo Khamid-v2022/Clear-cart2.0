@@ -23,7 +23,7 @@
                         </span>
                     @elseif($product->isUnlimited())
                         {{ __('frontend/v4.unlimited_ava') }}
-                    @elseif(!$product->asWeight() && !$product->asVariant())
+                    @elseif(!$product->asWeight() && !$product->asVariant() && !$product->asTiered())
                         {{ __('frontend/v4.stock_ava', [
                             'amount' => $product->getStock()
                         ]) }}
@@ -68,14 +68,26 @@
                         @endphp
                         <div class="col-xs-7 col-lg-6">
                             <select class="form-control" id="variant_select" required>
-                                <option value="">Select Variant</option>
+                                <option value="">{{ __('frontend/shop.select_variant') }}</option>
                                 @foreach($variants as $variant)
                                 <option value="{{$variant->id}}">{{$variant->title}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-xs-5 col-lg-6 text-start pt-1">
-                            <lable class="price-label">Price:<span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
+                            <lable class="price-label">{{ __('frontend/shop.price') }}<span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
+                        </div>
+                    @elseif($product->asTiered())
+                        @php 
+                            $tiered_prices = $product->getTieredPrices()
+                        @endphp
+                        <div class="col-xs-7 col-lg-6 d-flex">
+                            <button type="button" class="btn" id="decrease_amount_btn">-</button>
+                            <input type="number" id="product_amount_tiered" name="product_amount"  cart-amount="{{ $product->id }}" class="form-control form-control-round" min="0" value="0"> 
+                            <button type="button" class="btn" id="increase_amount_btn">+</button>
+                        </div>
+                        <div class="col-xs-5 col-lg-6 text-start pt-1">
+                            <lable class="price-label">Price:<span class="ml-2" id="product_price" data-price-in-cent=""></span> EUR</label>
                         </div>
                     @else
                         <div class="col-xs-6 col-lg-6 only-p-right">
@@ -99,9 +111,11 @@
                     </div> -->
                     <div class="col-xs-12 col-lg-12">
                         @if($product->asVariant())
-                        <a href="javascript:;" cart-btn="{{ $product->id }}" onClick="addVariantToCart({{ $product->id }});" class="btn btn-icon btn-block btn-primary @if(!$product->isAvailable()) disabled @endif" @if(!$product->isAvailable()) disabled="true" @endif><ion-icon name="cart"></ion-icon></a>
+                            <a href="javascript:;" cart-btn="{{ $product->id }}" onClick="addVariantToCart({{ $product->id }});" class="btn btn-icon btn-block btn-primary @if(!$product->isAvailable()) disabled @endif" @if(!$product->isAvailable()) disabled="true" @endif><ion-icon name="cart"></ion-icon></a>
+                        @elseif($product->asTiered())
+                            <a href="javascript:;" cart-btn="{{ $product->id }}" onClick="addTieredProductToCart({{ $product->id }}, 'input[cart-amount={{ $product->id }}]');" class="btn btn-icon btn-block btn-primary @if(!$product->isAvailable()) disabled @endif" @if(!$product->isAvailable()) disabled="true" @endif><ion-icon name="cart"></ion-icon></a>
                         @else
-                        <a href="javascript:;" cart-btn="{{ $product->id }}" onClick="addToCart({{ $product->id }}, 'input[cart-amount={{ $product->id }}]');" class="btn btn-icon btn-block btn-primary @if(!$product->isAvailable()) disabled @endif" @if(!$product->isAvailable()) disabled="true" @endif><ion-icon name="cart"></ion-icon></a>
+                            <a href="javascript:;" cart-btn="{{ $product->id }}" onClick="addToCart({{ $product->id }}, 'input[cart-amount={{ $product->id }}]');" class="btn btn-icon btn-block btn-primary @if(!$product->isAvailable()) disabled @endif" @if(!$product->isAvailable()) disabled="true" @endif><ion-icon name="cart"></ion-icon></a>
                         @endif
                     </div>
                 </div>
@@ -130,6 +144,14 @@
             @endforeach
         @endif
 
+        @if($product->asTiered())
+            var tiered_prices = [];
+            @foreach($tiered_prices as $price)
+                tiered_prices.push({'amount' : {{$price->amount}}, 'price': {{$price->price}} });
+            @endforeach
+        @endif
+
+
         $("#variant_select").on("change", function(){
             if(!$(this).val()){
                 $("#variant_price").html("");
@@ -143,8 +165,44 @@
                     let formated_price = getFormattedPriceFromCent(item.price);
                     $("#variant_price").attr("data-price-in-cent", item.price).html(formated_price);
                 }
-            })
+            })   
+        })
+
+        $("#product_amount_tiered").on("change", function(){
+            const amount = parseInt($(this).val());
+
+            if(tiered_prices.length > 0){
+                // sort by amount
+                tiered_prices = tiered_prices.sort((a, b) => a.amount - b.amount);
+
+                for(let i = 0; i < tiered_prices.length; i++){
+                    if(amount <= tiered_prices[i].amount){
+                        let formated_price = getFormattedPriceFromCent(tiered_prices[i].price);
+                        $("#product_price").attr("data-price-in-cent", tiered_prices[i].price).html(formated_price);
+                        return;
+                    }
+                }
                 
+                let formated_price = getFormattedPriceFromCent(tiered_prices[tiered_prices.length - 1].price);
+                $("#product_price").attr("data-price-in-cent", tiered_prices[tiered_prices.length - 1].price).html(formated_price);
+
+            }
+        })
+
+        $("#decrease_amount_btn").on("click", function(){
+            let amount = parseInt($("#product_amount_tiered").val());
+            if(amount > 0){
+                amount--;
+                $("#product_amount_tiered").val(amount).trigger("change");
+            }
+               
+        })
+
+        $("#increase_amount_btn").on("click", function(){
+            let amount = parseInt($("#product_amount_tiered").val());
+
+            amount++;
+            $("#product_amount_tiered").val(amount).trigger("change");
         })
   	});
 </script>

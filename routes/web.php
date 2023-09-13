@@ -129,6 +129,8 @@
     Route::get('cart/clear', 'Shop\CartController@clear')->name('cart-clear');
     Route::post('ajax/cart/add', 'Shop\CartController@ajaxAddItem')->name('cart-add-item-ajax');
     Route::post('ajax/cart/add-variant', 'Shop\CartController@ajaxAddVariantItem')->name('cart-add-variant-item-ajax');
+    Route::post('ajax/cart/add-tiered-item', 'Shop\CartController@ajaxAddTieredItem')->name('cart-add-tiered-item-ajax');
+    
     
     Route::post('ajax/cart', 'Shop\CartController@cart')->name('cart-ajax');
 

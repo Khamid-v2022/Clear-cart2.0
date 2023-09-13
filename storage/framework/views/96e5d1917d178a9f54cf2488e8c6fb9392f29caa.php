@@ -41,6 +41,9 @@
                                             <?php if($cartItem[0]->asVariant()): ?>
                                                 <?php echo e(\App\Models\Product::getFormattedPriceFromCent($cartItem[2])); ?>
 
+                                            <?php elseif($cartItem[0]->asTiered()): ?>
+                                                <?php echo e(\App\Models\Product::getFormattedPriceFromCent($cartItem[0]->getTieredPriceFromAmount($cartItem[1] ))); ?>
+
                                             <?php else: ?>
                                                 <?php echo e($cartItem[0]->getFormattedPrice()); ?>
 
