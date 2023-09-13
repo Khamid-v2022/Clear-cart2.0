@@ -21,7 +21,7 @@
                                 <div class="card-body">
                                     <div class="k-widget-20__label">
                                         <b><?php echo e(__('backend/dashboard.bestseller.price')); ?></b>
-                                            <?php echo e($bestsellerProduct->getFormattedPrice()); ?>
+                                            <?php echo e($bestsellerProduct->getBasePrice()); ?>
 
                                     </div>
                                 </div>

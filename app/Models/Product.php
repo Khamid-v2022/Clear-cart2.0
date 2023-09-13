@@ -246,4 +246,22 @@ namespace App\Models;
 
             return 0;
         }
+
+        public function getBasePrice(){
+            $price = 0;
+            if($this->as_variant){
+                // get first item price
+                $variant = ProductVariant::where('product_id', $this->id)->first();
+                if($variant)
+                    $price = $variant->price;
+            } else if($this->as_tiered_price){
+                $tieredPrice = ProductTieredPrices::where('product_id', $this->id)->orderBy('amount')->first();
+                if($tieredPrice)
+                    $price = $tieredPrice->price;
+            } else {
+                $price = $this->price_in_cent;
+            }
+
+            return self::getFormattedPriceFromCent($price);
+        }
     }

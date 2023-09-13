@@ -59,10 +59,8 @@
             <li class="list-group-item">
                 
                 <div style="text-align:left;padding-top:10px">
-                    <b>{{ __('frontend/shop.category') }}</b>
-                    <a href="{{ route('product-category', [$product->getCategory()->slug]) }}">
-                        {{ \App\Classes\LangHelper::translate(app()->getLocale(), 'product', null, 'name', $product->getCategory()) }}   
-                    </a>
+                    <b>{{ __('frontend/shop.price') }}</b>
+                    {{ $product->getBasePrice() }}
                 </div>
             </li>
         </ul>

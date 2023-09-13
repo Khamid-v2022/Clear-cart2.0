@@ -68,10 +68,9 @@
             <li class="list-group-item">
                 
                 <div style="text-align:left;padding-top:10px">
-                    <b><?php echo e(__('frontend/shop.category')); ?></b>
-                    <a href="<?php echo e(route('product-category', [$product->getCategory()->slug])); ?>">
-                        <?php echo e(\App\Classes\LangHelper::translate(app()->getLocale(), 'product', null, 'name', $product->getCategory())); ?>   
-                    </a>
+                    <b><?php echo e(__('frontend/shop.price')); ?></b>
+                    <?php echo e($product->getBasePrice()); ?>
+
                 </div>
             </li>
         </ul>

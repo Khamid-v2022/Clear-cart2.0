@@ -21,7 +21,7 @@
                                 <div class="card-body">
                                     <div class="k-widget-20__label">
                                         <b>{{ __('backend/dashboard.bestseller.price') }}</b>
-                                            {{ $bestsellerProduct->getFormattedPrice() }}
+                                            {{ $bestsellerProduct->getBasePrice() }}
                                     </div>
                                 </div>
                             </div>
