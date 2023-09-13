@@ -3,11 +3,17 @@
 @section('content')
 <div class="container">
     @if(count($products))
-        <h3 class="page-title">{{ \App\Classes\LangHelper::getValue(app()->getLocale(), 'product-category', null, $productCategory->id) ?? $productCategory->name }}</h3>
+        <h3 class="page-title">
+            @if(isset($productCategory->id))
+            {{ \App\Classes\LangHelper::getValue(app()->getLocale(), 'product-category', null, $productCategory->id) ?? $productCategory->name }}
+            @else
+            {{$productCategory->name}}
+            @endif
+        </h3>
         <div class="row">
             @foreach($products as $product)
                 <div class="col-md-4">
-                @include('frontend/shop.product_card')
+                @include('frontend/shop.product_simple_card')
                 </div>
             @endforeach
         </div>

@@ -338,14 +338,12 @@ namespace App\Http\Controllers\Shop;
         public function showProductPage($productId)
         {
             $product = Product::where('id', $productId)->get()->first();
-            // $variants = ProductVariant::where('product_id', $product->id)->get();
 
             if ($product != null) {
                 return view('frontend/shop.product', [
                     'metaTITLE' => strip_tags($product->name),
                     'metaDESC' => strip_tags(substr(strlen($product->description) ? decrypt($product->description) : '', 0, 65)),
                     'product' => $product,
-                    // 'variants' => $variants,
                     'productShowLongDes' => true,
                 ]);
             }
