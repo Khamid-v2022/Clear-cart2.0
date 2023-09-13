@@ -137,11 +137,11 @@ namespace App\Models;
 
         public function asVariant()
         {
-            return $this->as_variant;
+            return $this->as_variant == 1;
         }
 
         public function asTiered(){
-            return $this->as_tiered_price;
+            return $this->as_tiered_price == 1;
         }
 
         public function isAvailableAmount($amount)

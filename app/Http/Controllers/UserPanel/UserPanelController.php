@@ -283,7 +283,7 @@ namespace App\Http\Controllers\UserPanel;
 
         public function showOrdersPage($pageNumber = 0)
         {
-            $user_orders = UserCartShopping::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(10, ['*'], 'page', $pageNumber);
+            $user_orders = UserCartShopping::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(4, ['*'], 'page', $pageNumber);
 
             if ($pageNumber > $user_orders->lastPage() || $pageNumber <= 0) {
                 return redirect()->route('orders-with-pageNumber', 1);

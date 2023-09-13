@@ -283,27 +283,26 @@ namespace App\Http\Controllers\Shop;
                             }
                         }
 
-                        if ($createShopping && count($cartEntries) > 1) {
-                            $shopping = UserCartShopping::create([
-                                'user_id' => Auth::user()->id,
-                                'delivery_price' => $deliveryMethodPrice,
-                                'delivery_method' => $deliveryMethodName,
-                                'drop_name' => $dropName,
-                                'drop_street' => $dropStreet,
-                                'drop_postal_code' => $dropPostalCode,
-                                'drop_city' => $dropCity,
-                                'drop_country' => $dropCountry,
-                                'total_price' => $total
-                            ]);
+                        
+                        $shopping = UserCartShopping::create([
+                            'user_id' => Auth::user()->id,
+                            'delivery_price' => $deliveryMethodPrice,
+                            'delivery_method' => $deliveryMethodName,
+                            'drop_name' => $dropName,
+                            'drop_street' => $dropStreet,
+                            'drop_postal_code' => $dropPostalCode,
+                            'drop_city' => $dropCity,
+                            'drop_country' => $dropCountry,
+                            'total_price' => $total
+                        ]);
 
-                            if ($shopping != null) {
-                                foreach ($cartEntries as $cartEntry) {
-                                    UserCartEntry::create([
-                                        'user_id' => $cartEntry['user_id'],
-                                        'order_id' => $cartEntry['order_id'],
-                                        'shopping_id' => $shopping->id,
-                                    ]);
-                                }
+                        if ($shopping != null) {
+                            foreach ($cartEntries as $cartEntry) {
+                                UserCartEntry::create([
+                                    'user_id' => $cartEntry['user_id'],
+                                    'order_id' => $cartEntry['order_id'],
+                                    'shopping_id' => $shopping->id,
+                                ]);
                             }
                         }
 
