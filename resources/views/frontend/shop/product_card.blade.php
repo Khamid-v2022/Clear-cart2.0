@@ -108,7 +108,7 @@
                     @elseif($product->asTiered())
                         <div class="col-xs-7 col-lg-6 d-flex">
                             <button type="button" class="btn" id="decrease_amount_btn">-</button>
-                            <input type="number" id="product_amount_tiered" name="product_amount"  cart-amount="{{ $product->id }}" class="form-control form-control-round" min="0" value="0"> 
+                            <input type="number" id="product_amount_tiered" name="product_amount"  cart-amount="{{ $product->id }}" class="form-control form-control-round" min="{{$tiered_prices[0]->amount}}" value="{{$tiered_prices[0]->amount}}"> 
                             <button type="button" class="btn" id="increase_amount_btn">+</button>
                         </div>
                         <div class="col-xs-5 col-lg-6 text-start pt-1">
@@ -190,8 +190,9 @@
             })   
         })
 
-        $("#product_amount_tiered").on("keyup change", function(){
+        $("#product_amount_tiered").on("keyup", function(){
             const amount = parseInt($(this).val());
+            const min_value = parseInt($("#product_amount_tiered").attr("min"));
 
             if(amount){
                 if(tiered_prices.length > 0){
@@ -209,7 +210,6 @@
                     let total_price = tiered_prices[tiered_prices.length - 1].price * amount;
                     let formated_price = getFormattedPriceFromCent(total_price);
                     $("#product_price").attr("data-price-in-cent", total_price).html(formated_price);
-
                 }
             } else {
                 $("#product_price").attr("data-price-in-cent", "").html("");
@@ -219,19 +219,22 @@
 
         $("#decrease_amount_btn").on("click", function(){
             let amount = parseInt($("#product_amount_tiered").val());
-            if(amount > 0){
+
+            const min_value = parseInt($("#product_amount_tiered").attr("min"));
+            if(amount > 0 && amount > min_value){
                 amount--;
-                $("#product_amount_tiered").val(amount).trigger("change");
+                $("#product_amount_tiered").val(amount).trigger("keyup");
             }
-               
         })
 
         $("#increase_amount_btn").on("click", function(){
             let amount = parseInt($("#product_amount_tiered").val());
 
             amount++;
-            $("#product_amount_tiered").val(amount).trigger("change");
+            $("#product_amount_tiered").val(amount).trigger("keyup");
         })
+
+        $("#product_amount_tiered").trigger("keyup");
   	});
 </script>
 @endsection

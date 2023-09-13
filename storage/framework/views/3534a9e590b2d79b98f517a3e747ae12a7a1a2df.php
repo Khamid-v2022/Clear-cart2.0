@@ -420,6 +420,11 @@
             function addTieredProductToCart(productId, amountClass) {
                 if(!$('a[cart-btn=' + productId + ']').hasClass('disabled')) {
                     var amount = parseInt($(amountClass).val());
+                    const min_amount =  parseInt($(amountClass).attr("min"));
+                    if(amount < min_amount){
+                        alert("You must purchase at least the minimum order quantity: " + min_amount);
+                        return;
+                    }
                     $(amountClass).val('');
 
                     if(amount > 0) {

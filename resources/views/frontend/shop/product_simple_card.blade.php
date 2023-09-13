@@ -59,8 +59,7 @@
             <li class="list-group-item">
                 
                 <div style="text-align:left;padding-top:10px">
-                    <b>{{ __('frontend/shop.price') }}</b>
-                    {{ $product->getBasePrice() }}
+                    {{ $product->getBaseItem() }}
                 </div>
             </li>
         </ul>

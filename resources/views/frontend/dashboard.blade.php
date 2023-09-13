@@ -8,7 +8,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <h4 class="text-white">{{ __('frontend/main.top_seller_title') }}</h4>
                 <div class="row">
                     @foreach(App\Models\Product::orderByDesc('sells')->limit(6)->get() as $bestsellerProduct)
@@ -19,10 +19,7 @@
                                     <h5 class="k-portlet__head-title"> {{ $bestsellerProduct->name }}</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="k-widget-20__label">
-                                        <b>{{ __('backend/dashboard.bestseller.price') }}</b>
-                                            {{ $bestsellerProduct->getBasePrice() }}
-                                    </div>
+                                    {{ $bestsellerProduct->getBaseItem() }}
                                 </div>
                             </div>
                         </a>

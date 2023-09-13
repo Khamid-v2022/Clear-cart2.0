@@ -8,7 +8,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <h4 class="text-white"><?php echo e(__('frontend/main.top_seller_title')); ?></h4>
                 <div class="row">
                     <?php $__currentLoopData = App\Models\Product::orderByDesc('sells')->limit(6)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bestsellerProduct): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -19,11 +19,8 @@
                                     <h5 class="k-portlet__head-title"> <?php echo e($bestsellerProduct->name); ?></h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="k-widget-20__label">
-                                        <b><?php echo e(__('backend/dashboard.bestseller.price')); ?></b>
-                                            <?php echo e($bestsellerProduct->getBasePrice()); ?>
+                                    <?php echo e($bestsellerProduct->getBaseItem()); ?>
 
-                                    </div>
                                 </div>
                             </div>
                         </a>

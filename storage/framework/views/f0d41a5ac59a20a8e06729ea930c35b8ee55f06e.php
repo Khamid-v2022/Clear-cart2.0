@@ -68,8 +68,7 @@
             <li class="list-group-item">
                 
                 <div style="text-align:left;padding-top:10px">
-                    <b><?php echo e(__('frontend/shop.price')); ?></b>
-                    <?php echo e($product->getBasePrice()); ?>
+                    <?php echo e($product->getBaseItem()); ?>
 
                 </div>
             </li>
