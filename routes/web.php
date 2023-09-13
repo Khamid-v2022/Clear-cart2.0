@@ -62,32 +62,33 @@
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
     */
 
-    // UserPanel - No longer Use
-    // Route::get('home', 'UserPanel\UserPanelController@showUserDashboard')->name('home');
+    // UserPanel
+    Route::get('home', 'UserPanel\UserPanelController@showUserDashboard')->name('home');
 
     Route::get('coupon/remove/checkout', 'UserPanel\UserPanelController@removeCouponCheckout')->name('remove-coupon-checkout');
     Route::post('coupon/redeem/checkout', 'UserPanel\UserPanelController@redeemCouponCheckout')->name('redeem-coupon-checkout');
     Route::post('coupon/redeem', 'UserPanel\UserPanelController@redeemCoupon')->name('redeem-coupon');
 
-    Route::get('settings', 'UserPanel\UserPanelController@showSettingsPage')->name('settings');
+    // No longer use
+    // Route::get('settings', 'UserPanel\UserPanelController@showSettingsPage')->name('settings');
 
-    Route::get('settings/password/change', function () {
-        return redirect()->route('settings');
-    });
+    // Route::get('settings/password/change', function () {
+    //     return redirect()->route('settings');
+    // });
 
-    Route::post('settings/password/change', 'UserPanel\UserPanelController@passwordChangeForm')->name('settings-password-change');
+    // Route::post('settings/password/change', 'UserPanel\UserPanelController@passwordChangeForm')->name('settings-password-change');
 
-    Route::get('settings/jabber-id/change', function () {
-        return redirect()->route('settings');
-    });
+    // Route::get('settings/jabber-id/change', function () {
+    //     return redirect()->route('settings');
+    // });
 
-    Route::post('settings/jabber-id/change', 'UserPanel\UserPanelController@jabberIDChangeForm')->name('settings-jabber-id-change');
+    // Route::post('settings/jabber-id/change', 'UserPanel\UserPanelController@jabberIDChangeForm')->name('settings-jabber-id-change');
 
-    Route::get('settings/mail-address/change', function () {
-        return redirect()->route('settings');
-    });
+    // Route::get('settings/mail-address/change', function () {
+    //     return redirect()->route('settings');
+    // });
 
-    Route::post('settings/mail-address/change', 'UserPanel\UserPanelController@mailAddressChangeForm')->name('settings-mail-address-change');
+    // Route::post('settings/mail-address/change', 'UserPanel\UserPanelController@mailAddressChangeForm')->name('settings-mail-address-change');
 
     Route::get('deposit', 'UserPanel\UserPanelController@showDepositPage')->name('deposit');
     Route::get('deposit-btc', 'UserPanel\UserPanelController@showDepositBtcPage')->name('deposit-btc');
@@ -158,8 +159,8 @@
     Route::get('admin/dashboard', 'Backend\DashboardController@showDashboard')->name('backend-dashboard');
 
     // System Settings - No longer Use
-    // Route::get('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings');
-    // Route::post('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings-form');
+    Route::get('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings');
+    Route::post('admin/system/settings', 'Backend\System\SettingsController@showSettings')->name('backend-system-settings-form');
 
     // System Bonus - No longer Use
     // Route::get('admin/system/bonus', 'Backend\System\BonusController@show')->name('backend-system-bonus');

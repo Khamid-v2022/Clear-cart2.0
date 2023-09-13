@@ -194,9 +194,6 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-                                                    <!-- <a class="dropdown-item" href="{{ route('home') }}">
-                                                        {{ __('frontend/user.profile') }}
-                                                    </a> -->
 
                                                     <a class="dropdown-item" href="{{ route('orders') }}">
                                                         {{ __('frontend/user.orders') }}
@@ -212,9 +209,7 @@
                                                         {{ __('frontend/user.transactions') }}
                                                     </a>
 
-                                                    <!-- <a class="dropdown-item" href="{{ route('settings') }}">
-                                                        {{ __('frontend/user.settings') }}
-                                                    </a> -->
+                                                 
 
                                                     @if(Auth::user()->hasPermission('access_backend'))
                                                     <div class="dropdown-divider"></div>

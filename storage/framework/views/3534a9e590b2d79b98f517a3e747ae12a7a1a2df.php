@@ -206,10 +206,6 @@
                                                     <span class="caret"></span>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-                                                    <!-- <a class="dropdown-item" href="<?php echo e(route('home')); ?>">
-                                                        <?php echo e(__('frontend/user.profile')); ?>
-
-                                                    </a> -->
 
                                                     <a class="dropdown-item" href="<?php echo e(route('orders')); ?>">
                                                         <?php echo e(__('frontend/user.orders')); ?>
@@ -228,10 +224,7 @@
 
                                                     </a>
 
-                                                    <!-- <a class="dropdown-item" href="<?php echo e(route('settings')); ?>">
-                                                        <?php echo e(__('frontend/user.settings')); ?>
-
-                                                    </a> -->
+                                                 
 
                                                     <?php if(Auth::user()->hasPermission('access_backend')): ?>
                                                     <div class="dropdown-divider"></div>
