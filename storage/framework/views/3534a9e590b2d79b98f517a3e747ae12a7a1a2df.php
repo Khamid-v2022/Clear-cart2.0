@@ -167,11 +167,9 @@
                                             </div>
                                         </li>
                                         <?php endif; ?>
-                                            
-                                    
                                     </ul>
+
                                     <ul class="navbar-nav ml-auto">
-                                        
                                         <?php if(auth()->guard()->guest()): ?>
                                             <li class="nav-item">
                                                 <a class="nav-link btn btn-outline-secondary topnavBtn" href="<?php echo e(route('login')); ?>"><?php echo e(__('frontend/main.login')); ?></a>
@@ -188,65 +186,65 @@
                                                     <?php echo e(Auth::user()->getFormattedBalance()); ?>
 
                                                 </a>
-                                            </li><?php if(auth()->guard()->check()): ?>
-                                        <li class="nav-item nonavlnk">
-                                            <a href="<?php echo e(route('cart')); ?>" class="nav-link nav-link-btc btn topnavBtn">
-                                                <ion-icon name="cart"></ion-icon>
-                                                <span id="cart-name">
-                                                    <?php echo e(\App\Models\UserCart::getCartCountByUserId(\Auth::user()->id)); ?>
-
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <?php endif; ?>
-
-                                            <li class="nav-item active dropdown">
-                                                <a id="navbarDropdownUser" class="nav-link dropdown-toggle btn btn-gardient btn-inline-block active " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                    <ion-icon name="person"></ion-icon>
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('orders')); ?>">
-                                                        <?php echo e(__('frontend/user.orders')); ?>
-
-                                                    </a>
-
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('deposit')); ?>">
-                                                        <?php echo e(__('frontend/user.deposit')); ?>
-
-                                                    </a>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('transactions')); ?>">
-                                                        <?php echo e(__('frontend/user.transactions')); ?>
-
-                                                    </a>
-
-                                                 
-
-                                                    <?php if(Auth::user()->hasPermission('access_backend')): ?>
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('backend-dashboard')); ?>" target="_panel">
-                                                        <?php echo e(__('frontend/user.admin_panel')); ?>
-
-                                                        <ion-icon name="open"></ion-icon>
-                                                    </a>
-
-                                                    <div class="dropdown-divider"></div>
-                                                    <?php endif; ?>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                        <?php echo e(__('frontend/main.logout')); ?>
-
-                                                    </a>
-                                                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                                                        <?php echo csrf_field(); ?>
-                                                    </form>
-                                                </div>
                                             </li>
+                                        <?php if(auth()->guard()->check()): ?>
+                                            <li class="nav-item nonavlnk">
+                                                <a href="<?php echo e(route('cart')); ?>" class="nav-link nav-link-btc btn topnavBtn">
+                                                    <ion-icon name="cart"></ion-icon>
+                                                    <span id="cart-name">
+                                                        <?php echo e(\App\Models\UserCart::getCartCountByUserId(\Auth::user()->id)); ?>
+
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                        <li class="nav-item active dropdown">
+                                            <a id="navbarDropdownUser" class="nav-link dropdown-toggle btn btn-gardient btn-inline-block active " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                <ion-icon name="person"></ion-icon>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
+
+                                                <a class="dropdown-item" href="<?php echo e(route('orders')); ?>">
+                                                    <?php echo e(__('frontend/user.orders')); ?>
+
+                                                </a>
+
+                                                <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item" href="<?php echo e(route('deposit')); ?>">
+                                                    <?php echo e(__('frontend/user.deposit')); ?>
+
+                                                </a>
+
+                                                <a class="dropdown-item" href="<?php echo e(route('transactions')); ?>">
+                                                    <?php echo e(__('frontend/user.transactions')); ?>
+
+                                                </a>
+
+                                                
+
+                                                <?php if(Auth::user()->hasPermission('access_backend')): ?>
+                                                <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item" href="<?php echo e(route('backend-dashboard')); ?>" target="_panel">
+                                                    <?php echo e(__('frontend/user.admin_panel')); ?>
+
+                                                    <ion-icon name="open"></ion-icon>
+                                                </a>
+
+                                                <div class="dropdown-divider"></div>
+                                                <?php endif; ?>
+
+                                                <a class="dropdown-item" href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    <?php echo e(__('frontend/main.logout')); ?>
+
+                                                </a>
+                                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                                    <?php echo csrf_field(); ?>
+                                                </form>
+                                            </div>
+                                        </li>
                                         <?php endif; ?>
                                     </ul>
                                 </div>
@@ -302,27 +300,25 @@
                             <span>&copy; 2020 <?php echo e(App\Models\Setting::get('app.name')); ?>. All rights reserved.</span>
                         </div>
                         <div class="col-md-6 text-right mt-15">
-                 
-                                           
-                                        <a href="#" class="kursbtn">
-                                                1 BTC = <?php echo e(App\Classes\BitcoinAPI::getFormatted(App\Classes\BitcoinAPI::convertBtc(1))); ?>
+                            <a href="#" class="kursbtn">
+                                1 BTC = <?php echo e(App\Classes\BitcoinAPI::getFormatted(App\Classes\BitcoinAPI::convertBtc(1))); ?>
 
-                                            </a>
-                        <?php if(!count(App\Models\Setting::getAvailableLocales())): ?>
+                            </a>
+                            <?php if(!count(App\Models\Setting::getAvailableLocales())): ?>
 
-                        <?php endif; ?>
+                            <?php endif; ?>
 
-                                            <?php if(count(App\Models\Setting::getAvailableLocales())): ?> 
-                                            
-                                                <?php $__currentLoopData = App\Models\Setting::getAvailableLocales(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $locale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <a class="localelink <?php if($locale == app()->getLocale()): ?> localelink-active <?php endif; ?>" href="<?php echo e(route('language', $locale)); ?>">
-                                                    <img class="flag-icon-img" src="<?php echo e(asset_dir('svg/flags/' . \Lang::get('locale.icon', [], $locale) . '.svg')); ?>" />
-                                                    <span class="flag-icon-name"><?php echo e(\Lang::get('locale.name', [], $locale)); ?></span>
-                                                </a>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            
-                                            <?php endif; ?>
-                                </ul>
+                            <?php if(count(App\Models\Setting::getAvailableLocales())): ?> 
+                            
+                                <?php $__currentLoopData = App\Models\Setting::getAvailableLocales(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $locale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <a class="localelink <?php if($locale == app()->getLocale()): ?> localelink-active <?php endif; ?>" href="<?php echo e(route('language', $locale)); ?>">
+                                    <img class="flag-icon-img" src="<?php echo e(asset_dir('svg/flags/' . \Lang::get('locale.icon', [], $locale) . '.svg')); ?>" />
+                                    <span class="flag-icon-name"><?php echo e(\Lang::get('locale.name', [], $locale)); ?></span>
+                                </a>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            
+                            <?php endif; ?>
+                            </ul>
                         </div>
                     </div>
                 </div>

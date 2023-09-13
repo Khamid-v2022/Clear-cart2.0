@@ -157,11 +157,9 @@
                                             </div>
                                         </li>
                                         @endauth
-                                            
-                                    
                                     </ul>
+
                                     <ul class="navbar-nav ml-auto">
-                                        
                                         @guest
                                             <li class="nav-item">
                                                 <a class="nav-link btn btn-outline-secondary topnavBtn" href="{{ route('login') }}">{{ __('frontend/main.login') }}</a>
@@ -177,59 +175,59 @@
                                                     <ion-icon name="wallet"></ion-icon>
                                                     {{ Auth::user()->getFormattedBalance() }}
                                                 </a>
-                                            </li>@auth
-                                        <li class="nav-item nonavlnk">
-                                            <a href="{{ route('cart') }}" class="nav-link nav-link-btc btn topnavBtn">
-                                                <ion-icon name="cart"></ion-icon>
-                                                <span id="cart-name">
-                                                    {{ \App\Models\UserCart::getCartCountByUserId(\Auth::user()->id) }}
-                                                </span>
-                                            </a>
-                                        </li>
-                                        @endauth
-
-                                            <li class="nav-item active dropdown">
-                                                <a id="navbarDropdownUser" class="nav-link dropdown-toggle btn btn-gardient btn-inline-block active " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                    <ion-icon name="person"></ion-icon>
-                                                    <span class="caret"></span>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
-
-                                                    <a class="dropdown-item" href="{{ route('orders') }}">
-                                                        {{ __('frontend/user.orders') }}
-                                                    </a>
-
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="{{ route('deposit') }}">
-                                                        {{ __('frontend/user.deposit') }}
-                                                    </a>
-
-                                                    <a class="dropdown-item" href="{{ route('transactions') }}">
-                                                        {{ __('frontend/user.transactions') }}
-                                                    </a>
-
-                                                 
-
-                                                    @if(Auth::user()->hasPermission('access_backend'))
-                                                    <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="{{ route('backend-dashboard') }}" target="_panel">
-                                                        {{ __('frontend/user.admin_panel') }}
-                                                        <ion-icon name="open"></ion-icon>
-                                                    </a>
-
-                                                    <div class="dropdown-divider"></div>
-                                                    @endif
-
-                                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                        {{ __('frontend/main.logout') }}
-                                                    </a>
-                                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                        @csrf
-                                                    </form>
-                                                </div>
                                             </li>
+                                        @auth
+                                            <li class="nav-item nonavlnk">
+                                                <a href="{{ route('cart') }}" class="nav-link nav-link-btc btn topnavBtn">
+                                                    <ion-icon name="cart"></ion-icon>
+                                                    <span id="cart-name">
+                                                        {{ \App\Models\UserCart::getCartCountByUserId(\Auth::user()->id) }}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        @endauth
+                                        <li class="nav-item active dropdown">
+                                            <a id="navbarDropdownUser" class="nav-link dropdown-toggle btn btn-gardient btn-inline-block active " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                                <ion-icon name="person"></ion-icon>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownUser">
+
+                                                <a class="dropdown-item" href="{{ route('orders') }}">
+                                                    {{ __('frontend/user.orders') }}
+                                                </a>
+
+                                                <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item" href="{{ route('deposit') }}">
+                                                    {{ __('frontend/user.deposit') }}
+                                                </a>
+
+                                                <a class="dropdown-item" href="{{ route('transactions') }}">
+                                                    {{ __('frontend/user.transactions') }}
+                                                </a>
+
+                                                
+
+                                                @if(Auth::user()->hasPermission('access_backend'))
+                                                <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item" href="{{ route('backend-dashboard') }}" target="_panel">
+                                                    {{ __('frontend/user.admin_panel') }}
+                                                    <ion-icon name="open"></ion-icon>
+                                                </a>
+
+                                                <div class="dropdown-divider"></div>
+                                                @endif
+
+                                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                    {{ __('frontend/main.logout') }}
+                                                </a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </li>
                                         @endguest
                                     </ul>
                                 </div>
@@ -283,26 +281,24 @@
                             <span>&copy; 2020 {{ App\Models\Setting::get('app.name') }}. All rights reserved.</span>
                         </div>
                         <div class="col-md-6 text-right mt-15">
-                 
-                                           
-                                        <a href="#" class="kursbtn">
-                                                1 BTC = {{ App\Classes\BitcoinAPI::getFormatted(App\Classes\BitcoinAPI::convertBtc(1)) }}
-                                            </a>
-                        @if(!count(App\Models\Setting::getAvailableLocales()))
+                            <a href="#" class="kursbtn">
+                                1 BTC = {{ App\Classes\BitcoinAPI::getFormatted(App\Classes\BitcoinAPI::convertBtc(1)) }}
+                            </a>
+                            @if(!count(App\Models\Setting::getAvailableLocales()))
 
-                        @endif
+                            @endif
 
-                                            @if(count(App\Models\Setting::getAvailableLocales())) 
-                                            
-                                                @foreach(App\Models\Setting::getAvailableLocales() as $locale)
-                                                <a class="localelink @if($locale == app()->getLocale()) localelink-active @endif" href="{{ route('language', $locale) }}">
-                                                    <img class="flag-icon-img" src="{{ asset_dir('svg/flags/' . \Lang::get('locale.icon', [], $locale) . '.svg') }}" />
-                                                    <span class="flag-icon-name">{{ \Lang::get('locale.name', [], $locale) }}</span>
-                                                </a>
-                                                @endforeach
-                                            
-                                            @endif
-                                </ul>
+                            @if(count(App\Models\Setting::getAvailableLocales())) 
+                            
+                                @foreach(App\Models\Setting::getAvailableLocales() as $locale)
+                                <a class="localelink @if($locale == app()->getLocale()) localelink-active @endif" href="{{ route('language', $locale) }}">
+                                    <img class="flag-icon-img" src="{{ asset_dir('svg/flags/' . \Lang::get('locale.icon', [], $locale) . '.svg') }}" />
+                                    <span class="flag-icon-name">{{ \Lang::get('locale.name', [], $locale) }}</span>
+                                </a>
+                                @endforeach
+                            
+                            @endif
+                            </ul>
                         </div>
                     </div>
                 </div>

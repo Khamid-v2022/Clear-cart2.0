@@ -116,9 +116,6 @@
                 </div>
 
                 <div class="row mt-15">
-                    <!-- <div class="col-xs-6 col-lg-6 mb-15">
-                        <button type="submit" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><?php echo e(__('frontend/v4.buybtn')); ?></button>
-                    </div> -->
                     <div class="col-xs-12 col-lg-12">
                         <?php if($product->asVariant()): ?>
                             <a href="javascript:;" cart-btn="<?php echo e($product->id); ?>" onClick="addVariantToCart(<?php echo e($product->id); ?>);" class="btn btn-icon btn-block btn-primary <?php if(!$product->isAvailable()): ?> disabled <?php endif; ?>" <?php if(!$product->isAvailable()): ?> disabled="true" <?php endif; ?>><ion-icon name="cart"></ion-icon></a>
@@ -178,25 +175,30 @@
             })   
         })
 
-        $("#product_amount_tiered").on("change", function(){
+        $("#product_amount_tiered").on("keyup change", function(){
             const amount = parseInt($(this).val());
 
-            if(tiered_prices.length > 0){
-                // sort by amount
-                tiered_prices = tiered_prices.sort((a, b) => a.amount - b.amount);
+            if(amount){
+                if(tiered_prices.length > 0){
+                    // sort by amount
+                    tiered_prices = tiered_prices.sort((a, b) => b.amount - a.amount);
 
-                for(let i = 0; i < tiered_prices.length; i++){
-                    if(amount <= tiered_prices[i].amount){
-                        let formated_price = getFormattedPriceFromCent(tiered_prices[i].price);
-                        $("#product_price").attr("data-price-in-cent", tiered_prices[i].price).html(formated_price);
-                        return;
+                    for(let i = 0; i < tiered_prices.length; i++){
+                        if(amount >= tiered_prices[i].amount){
+                            let formated_price = getFormattedPriceFromCent(tiered_prices[i].price);
+                            $("#product_price").attr("data-price-in-cent", tiered_prices[i].price).html(formated_price);
+                            return;
+                        }
                     }
-                }
-                
-                let formated_price = getFormattedPriceFromCent(tiered_prices[tiered_prices.length - 1].price);
-                $("#product_price").attr("data-price-in-cent", tiered_prices[tiered_prices.length - 1].price).html(formated_price);
+                    
+                    let formated_price = getFormattedPriceFromCent(tiered_prices[tiered_prices.length - 1].price);
+                    $("#product_price").attr("data-price-in-cent", tiered_prices[tiered_prices.length - 1].price).html(formated_price);
 
+                }
+            } else {
+                $("#product_price").attr("data-price-in-cent", "").html("");
             }
+           
         })
 
         $("#decrease_amount_btn").on("click", function(){

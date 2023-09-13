@@ -230,14 +230,14 @@ namespace App\Models;
 
         public function getTieredPriceFromAmount($amount = 0, $product_id = NULL){
             if($product_id){
-                $tieredPrices = ProductTieredPrices::where('product_id', $product_id)->orderBy('amount')->get();
+                $tieredPrices = ProductTieredPrices::where('product_id', $product_id)->orderByDesc('amount')->get();
             } else {
-                $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->orderBy('amount')->get();
+                $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->orderByDesc('amount')->get();
             }
 
             if(count($tieredPrices) > 0) {
                 foreach($tieredPrices as $price){
-                    if($amount <= $price->amount){
+                    if($amount >= $price->amount){
                         return $price->price;
                     }
                 }
