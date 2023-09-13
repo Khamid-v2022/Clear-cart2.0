@@ -61,7 +61,6 @@
 				</div>
 				<!--end::Portlet-->
 			</div>
-			
 
 			<div class="col-lg-3 col-sm-6 order-lg-1 order-xl-1">
 				<!--begin::Portlet-->

@@ -42,7 +42,7 @@
     Route::get('/custom/colors', 'Custom\CSSController@generateOverridingColorsCSS')->name('custom-colors');
 
     // Default
-    Route::get('/', 'App\DefaultController@showIndex')->name('index');
+    Route::get('/', 'App\DefaultController@showDashboard')->name('index');
     Route::get('/article/{id}', 'App\DefaultController@showArticle')->name('article');
     Route::get('/page/{page?}', 'App\DefaultController@showIndex')->name('index-with-pageNumber');
 

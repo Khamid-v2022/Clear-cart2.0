@@ -44,4 +44,10 @@ namespace App\Http\Controllers\App;
                 'articles' => $articles,
             ]);
         }
+
+        public function showDashboard()
+        {
+            return view('frontend.dashboard', [
+            ]);
+        }
     }

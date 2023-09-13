@@ -7,6 +7,7 @@
         'please_choose' => 'Bitte wählen',
 
         'home' => 'Startseite',
+        'top_seller_title' => 'Top verkopers',
         'userpanel' => 'Kontoübersicht',
         'logout' => 'Abmelden',
 

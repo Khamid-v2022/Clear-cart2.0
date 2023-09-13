@@ -7,6 +7,7 @@
         'please_choose' => 'Bitte wählen',
 
         'home' => 'Home',
+        'top_seller_title' => 'Top Sellers',
         'userpanel' => 'Account',
         'logout' => 'Sign out',
 
