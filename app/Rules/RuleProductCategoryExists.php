@@ -17,7 +17,7 @@ namespace App\Rules;
         public function passes($attribute, $value)
         {
             if ($value == 0) {
-                return true;
+                return false;
             }
 
             return ProductCategory::where('id', $value)->get()->first() != null;
