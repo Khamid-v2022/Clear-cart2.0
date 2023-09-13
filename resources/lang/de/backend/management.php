@@ -16,6 +16,9 @@
             'weightchar' => 'Gewicht Bezeichnung (G, L, KG, ...)',
             'weight_available' => ':weight:char',
 
+            'variant_input_needed' => 'Voer de varianttitel en prijs in',
+            'tiered_input_needed' => 'Voer het gedifferentieerde bedrag en de prijs in',
+
             'add' => [
                 'title' => 'Produkt erstellen',
                 'submit_button' => 'Erstellen',
@@ -25,6 +28,9 @@
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
                 'variant' => 'Variant',
+                'tiered' => 'Gedifferentieerde prijs',
+                'amount' => 'hoeveelheid',
+                'price' => 'prijs'
             ],
 
             'edit' => [
@@ -36,6 +42,10 @@
                 'unlimited_available' => 'Unbegrenzt verfügbar',
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
+                'variant' => 'Variant',
+                'tiered' => 'Gedifferentieerde prijs',
+                'amount' => 'hoeveelheid',
+                'price' => 'prijs'
             ],
 
             'database' => [

@@ -11,7 +11,7 @@
 }
 
 /* Product add */
-.delete-variant {
+.delete-variant, .delete-tiered {
     font-size: 23px;
     display: flex;
     margin-top: 32px;

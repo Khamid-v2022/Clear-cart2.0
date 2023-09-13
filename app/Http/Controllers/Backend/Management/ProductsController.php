@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Management;
     use App\Http\Controllers\Controller;
     use App\Models\Product;
     use App\Models\ProductVariant;
+    use App\Models\ProductTieredPrices;
     use App\Models\ProductBonus;
     use App\Models\ProductItem;
     use App\Models\Setting;
@@ -428,7 +429,7 @@ namespace App\Http\Controllers\Backend\Management;
                             'product_edit_price_in_cent' => 'nullable|integer',
                             'product_edit_interval' => 'integer|min:1',
                             'product_edit_old_price_in_cent' => 'nullable|integer',
-                            'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants',
+                            'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
                         ]);
 
                         if (! $validator->fails()) {
@@ -444,6 +445,7 @@ namespace App\Http\Controllers\Backend\Management;
 
                             $as_weight = 0;
                             $as_variant = 0;
+                            $as_tiered = 0;
                             $weight_available = 0;
                             $stock_management = 1;
                             $weightchar = '';
@@ -464,9 +466,44 @@ namespace App\Http\Controllers\Backend\Management;
                                     $weightchar = 'g';
                                 }
                             } elseif ($product_edit_stock_management == 'variants') {
-                                $variant_titles = $request->get('product_add_variant_title');
-                                $variant_prices = $request->get('product_add_variant_price');
+                                $validator_again = Validator::make($request->all(), [
+                                    'product_edit_variant_title' => 'required|array|min:1',
+                                    'product_edit_variant_title.*' => 'required|string|distinct',
+                                    'product_edit_variant_price' => 'required|array|min:1',
+                                    'product_edit_variant_price.*' => 'required|integer|min:0',
+                                ]);
+        
+                                if ($validator_again->fails()) {
+                                    $request->flash();
+        
+                                    return redirect()->route('backend-management-product-edit', $product->id)->withErrors($validator_again)->withInput()->with([
+                                        'errorMessage' => __('backend/management.products.variant_input_needed'),
+                                    ]);
+                                }
+
+                                $variant_titles = $request->get('product_edit_variant_title');
+                                $variant_prices = $request->get('product_edit_variant_price');
                                 $as_variant = 1;
+                            } elseif ($product_edit_stock_management == 'tiered') {
+                                $validator_again = Validator::make($request->all(), [
+                                    'product_edit_tiered_amount' => 'required|array|min:1',
+                                    'product_edit_tiered_amount.*' => 'required|integer|distinct|min:1',
+                                    'product_edit_tiered_price' => 'required|array|min:1',
+                                    'product_edit_tiered_price.*' => 'required|integer|min:0',
+                                ]);
+        
+                                if ($validator_again->fails()) {
+                                    $request->flash();
+        
+                                    return redirect()->route('backend-management-product-edit', $product->id)->withErrors($validator_again)->withInput()->with([
+                                        'errorMessage' => __('backend/management.products.tiered_input_needed'),
+                                    ]);
+                                }
+        
+                                $tiered_amounts = $request->get('product_edit_tiered_amount');
+                                $tiered_prices = $request->get('product_edit_tiered_price');
+        
+                                $as_tiered = 1;
                             }
 
                             $drop_needed = 0;
@@ -488,17 +525,30 @@ namespace App\Http\Controllers\Backend\Management;
                                 'weight_char' => $weightchar,
                                 'interval' => $interval,
                                 'content' => encrypt($content),
-                                'as_variant' => $as_variant
+                                'as_variant' => $as_variant,
+                                'as_tiered_price' => $as_tiered
                             ]);
 
+                            // Delete old Variants, TieredPrices
+                            ProductVariant::where('product_id', $product->id)->delete();
+                            ProductTieredPrices::where('product_id', $product->id)->delete();
+
                             if($product_edit_stock_management == 'variants'){
-                                // Delete old Variants
-                                ProductVariant::where('product_id', $product->id)->delete();
                                 foreach ($variant_titles as $key => $title) {
                                     $variants[] = ProductVariant::create([
                                         'product_id' => $product->id,
                                         'title' => $title,
                                         'price' => $variant_prices[$key]
+                                    ]);
+                                }
+                            }
+
+                            if($product_edit_stock_management == 'tiered'){
+                                foreach ($tiered_amounts as $key => $amount) {
+                                    $tiereds[] = ProductTieredPrices::create([
+                                        'product_id' => $product->id,
+                                        'amount' => $amount,
+                                        'price' => $tiered_prices[$key]
                                     ]);
                                 }
                             }
@@ -531,6 +581,7 @@ namespace App\Http\Controllers\Backend\Management;
         {
             $product = Product::where('id', $id)->get()->first();
             $variants = ProductVariant::where('product_id', $product->id)->get();
+            $tieredPrices = ProductTieredPrices::where('product_id', $product->id)->get();
 
             if ($product == null) {
                 return redirect()->route('backend-management-products');
@@ -539,6 +590,7 @@ namespace App\Http\Controllers\Backend\Management;
             return view('backend.management.products.edit', [
                 'product' => $product,
                 'variants' => $variants,
+                'tieredPrices' => $tieredPrices,
                 'lang' => $lang,
                 'managementPage' => true,
             ]);
@@ -557,7 +609,7 @@ namespace App\Http\Controllers\Backend\Management;
                     // 'product_add_price_in_cent' => 'required|integer',
                     'product_add_price_in_cent' => 'nullable|integer',
                     'product_add_old_price_in_cent' => 'nullable|integer',
-                    'product_add_stock_management'=> 'required|in:normal,weight,unlimited,variants',
+                    'product_add_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
                 ]);
 
                 if (! $validator->fails()) {
@@ -573,6 +625,7 @@ namespace App\Http\Controllers\Backend\Management;
 
                     $as_weight = 0;
                     $as_variant = 0;
+                    $as_tiered = 0;
                     $weight_available = 0;
                     $stock_management = 1;
                     $weightchar = '';
@@ -593,9 +646,45 @@ namespace App\Http\Controllers\Backend\Management;
                             $weightchar = 'g';
                         }
                     } elseif ($product_add_stock_management == 'variants') {
+                        $validator_again = Validator::make($request->all(), [
+                            'product_add_variant_title' => 'required|array|min:1',
+                            'product_add_variant_title.*' => 'required|string|distinct',
+                            'product_add_variant_price' => 'required|array|min:1',
+                            'product_add_variant_price.*' => 'required|integer|min:0',
+                        ]);
+
+                        if ($validator_again->fails()) {
+                            $request->flash();
+
+                            return redirect()->route('backend-management-product-add')->withErrors($validator_again)->withInput()->with([
+                                'errorMessage' => __('backend/management.products.variant_input_needed'),
+                            ]);
+                        }
+
                         $variant_titles = $request->get('product_add_variant_title');
                         $variant_prices = $request->get('product_add_variant_price');
+
                         $as_variant = 1;
+                    } elseif ($product_add_stock_management == 'tiered') {
+                        $validator_again = Validator::make($request->all(), [
+                            'product_add_tiered_amount' => 'required|array|min:1',
+                            'product_add_tiered_amount.*' => 'required|integer|distinct|min:1',
+                            'product_add_tiered_price' => 'required|array|min:1',
+                            'product_add_tiered_price.*' => 'required|integer|min:0',
+                        ]);
+
+                        if ($validator_again->fails()) {
+                            $request->flash();
+
+                            return redirect()->route('backend-management-product-add')->withErrors($validator_again)->withInput()->with([
+                                'errorMessage' => __('backend/management.products.tiered_input_needed'),
+                            ]);
+                        }
+
+                        $tiered_amounts = $request->get('product_add_tiered_amount');
+                        $tiered_prices = $request->get('product_add_tiered_price');
+
+                        $as_tiered = 1;
                     }
 
                     $drop_needed = 0;
@@ -618,7 +707,8 @@ namespace App\Http\Controllers\Backend\Management;
                         'weight_char' => $weightchar,
                         'content' => encrypt($content),
                         'sells' => 0,
-                        'as_variant' => $as_variant
+                        'as_variant' => $as_variant,
+                        'as_tiered_price' => $as_tiered
                     ]);
 
                     if($product_add_stock_management == 'variants'){
@@ -627,6 +717,16 @@ namespace App\Http\Controllers\Backend\Management;
                                 'product_id' => $new_product->id,
                                 'title' => $title,
                                 'price' => $variant_prices[$key]
+                            ]);
+                        }
+                    }
+
+                    if($product_add_stock_management == 'tiered'){
+                        foreach ($tiered_amounts as $key => $amount) {
+                            $tiereds[] = ProductTieredPrices::create([
+                                'product_id' => $new_product->id,
+                                'amount' => $amount,
+                                'price' => $tiered_prices[$key]
                             ]);
                         }
                     }

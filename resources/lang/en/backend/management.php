@@ -16,7 +16,8 @@
             'weightchar' => 'Gewicht Bezeichnung (G, L, KG, ...)',
             'weight_available' => ':weight:char',
 
-            
+            'variant_input_needed' => 'Please enter the variant title & price',
+            'tiered_input_needed' => 'Please enter the tiered amount & price',
 
             'add' => [
                 'title' => 'Produkt erstellen',
@@ -27,6 +28,9 @@
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
                 'variant' => 'Variant',
+                'tiered' => 'Tiered Price',
+                'amount' => 'Amount',
+                'price' => 'Price'
             ],
 
             'edit' => [
@@ -38,6 +42,9 @@
                 'unlimited_available' => 'Unbegrenzt verfügbar',
                 'normal_stock_management' => 'Lagerverwaltung aktivieren',
                 'as_weight' => 'Gewicht (Gramm, Kilo, Liter, ...)',
+                'tiered' => 'Tiered Price',
+                'amount' => 'Amount',
+                'price' => 'Price'
             ],
 
             'database' => [

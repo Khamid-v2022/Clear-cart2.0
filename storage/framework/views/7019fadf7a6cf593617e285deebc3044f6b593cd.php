@@ -128,63 +128,6 @@
 
 								<!-- begin:: Header Topbar -->
 								<div class="k-header__topbar">
-									<!--begin: Search -->
-									<!--<div class="k-header__topbar-item k-header__topbar-item--search">
-										<div class="k-input-icon k-input-icon--right">
-											<input type="text" class="form-control" placeholder="<?php echo e(__('backend/header.search.placeholder')); ?>">
-											<span class="k-input-icon__icon k-input-icon__icon--right">
-												<span><i class="la la-search"></i></span>
-											</span>
-										</div>
-									</div>-->
-									<!--end: Search -->
-
-									<!--begin: Quick actions -->
-									<!-- <div class="k-header__topbar-item dropdown">
-										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
-											<span class="k-header__topbar-icon"><i class="flaticon-layers"></i></span>
-										</div>
-										<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
-											<div class="k-head k-head--sm k-head--skin-light">
-												<h3 class="k-head__title"><?php echo e(__('backend/header.quickmenu.title')); ?></h3>
-											</div>
-											<div class="k-grid-nav">
-												<?php if(Auth::user()->hasPermission('manage_bitcoin_wallet')): ?>
-												<a href="<?php echo e(route('backend-bitcoin-dashboard')); ?>" class="k-grid-nav__item">
-													<div class="k-grid-nav__item-icon"><i class="flaticon2-list"></i></div>
-													<div class="k-grid-nav__item-title"><?php echo e(__('backend/header.quickmenu.bitcoin_wallet')); ?></div>
-													<div class="k-grid-nav__item-desc"><?php echo e(__('backend/header.quickmenu.bitcoin_wallet_management')); ?></div>
-												</a>
-												<?php endif; ?>
-
-												<?php if(Auth::user()->hasPermission('manage_users')): ?>
-												<a href="<?php echo e(route('backend-management-users')); ?>" class="k-grid-nav__item">
-													<div class="k-grid-nav__item-icon"><i class="flaticon-users"></i></div>
-													<div class="k-grid-nav__item-title"><?php echo e(__('backend/header.quickmenu.users')); ?></div>
-													<div class="k-grid-nav__item-desc"><?php echo e(__('backend/header.quickmenu.users_management')); ?></div>
-												</a>
-												<?php endif; ?>
-
-												<?php if(Auth::user()->hasPermission('manage_articles')): ?>
-												<a href="<?php echo e(route('backend-management-articles')); ?>" class="k-grid-nav__item">
-													<div class="k-grid-nav__item-icon"><i class="flaticon2-open-text-book"></i></div>
-													<div class="k-grid-nav__item-title"><?php echo e(__('backend/header.quickmenu.articles')); ?></div>
-													<div class="k-grid-nav__item-desc"><?php echo e(__('backend/header.quickmenu.articles_management')); ?></div>
-												</a>
-												<?php endif; ?>
-												
-												<?php if(Auth::user()->hasPermission('manage_tickets')): ?>
-												<a href="<?php echo e(route('backend-management-tickets')); ?>" class="k-grid-nav__item">
-													<div class="k-grid-nav__item-icon"><i class="flaticon2-chat-1"></i></div>
-													<div class="k-grid-nav__item-title"><?php echo e(__('backend/header.quickmenu.tickets')); ?></div>
-													<div class="k-grid-nav__item-desc"><?php echo e(__('backend/header.quickmenu.tickets_management')); ?></div>
-												</a>
-												<?php endif; ?>
-											</div>
-										</div>
-									</div> -->
-									<!--end: Quick actions -->
-
 									<!--begin: Notifications -->
 									<?php ( $notificationsCount = App\Models\Notification::where('readed', 'false')->get()->count() ); ?>
 									<div id="dropdown-notifications" class="k-header__topbar-item dropdown">
@@ -204,68 +147,7 @@
 											</div>
 										</div>
 									</div>
-									<!--end: Notifications -->
-
-									<!--begin: Language bar -->
-									<!-- <div class="k-header__topbar-item k-header__topbar-item--langs">
-										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
-											<span class="k-header__topbar-icon">
-												<img class="" src="<?php echo e(asset_dir('admin/assets/media/flags/017-germany.svg')); ?>" alt="" />
-											</span>
-										</div>
-										<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim">
-											<ul class="k-nav k-margin-t-10 k-margin-b-10">
-												<li class="k-nav__item">
-													<a href="#" class="k-nav__link">
-														<span class="k-nav__link-icon"><img src="<?php echo e(asset_dir('admin/assets/media/flags/017-germany.svg')); ?>" alt="" /></span>
-														<span class="k-nav__link-text"><?php echo e(__('backend/header.languages.german')); ?></span>
-													</a>
-												</li>
-											</ul>
-										</div>
-									</div> -->
-									<!--end: Language bar -->
-
-									<!--begin: User bar -->
-									<!-- <div class="k-header__topbar-item k-header__topbar-item--user">
-										<div class="k-header__topbar-wrapper" data-toggle="dropdown" data-offset="20px 10px">
-											<img alt="" src="<?php echo e(asset_dir('admin/assets/media/users/default.jpg')); ?>" />
-										</div>
-										<div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-md">
-											<div class="k-user-card k-user-card--skin-light k-margin-b-50 k-margin-b-20-tablet-and-mobile">
-												<div class="k-user-card__wrapper">
-													<div class="k-user-card__pic">
-														<img alt="" src="<?php echo e(asset_dir('admin/assets/media/users/default.jpg')); ?>" />
-													</div>
-													<div class="k-user-card__details">
-														<div class="k-user-card__name"><?php echo e(Auth::user()->username); ?></div>
-														<div class="k-user-card__position"><?php echo e(Auth::user()->jabber_id); ?></div>
-													</div>
-												</div>
-											</div>
-											<ul class="k-nav k-margin-b-10">
-												<li class="k-nav__item">
-													<a href="#" class="k-nav__link">
-														<span class="k-nav__link-icon"><i class="flaticon-profile"></i></span>
-														<span class="k-nav__link-text"><?php echo e(__('backend/header.profile')); ?></span>
-													</a>
-												</li>
-												<li class="k-nav__item">
-													<a href="<?php echo e(route('settings')); ?>" class="k-nav__link">
-														<span class="k-nav__link-icon"><i class="flaticon-settings"></i></span>
-														<span class="k-nav__link-text"><?php echo e(__('backend/header.settings')); ?></span>
-													</a>
-												</li>
-												<li class="k-nav__item k-nav__item--custom k-margin-t-15">
-													<a href="<?php echo e(route('backend-logout')); ?>" class="btn btn-outline-metal btn-hover-brand btn-upper btn-font-dark btn-sm btn-bold">
-														<?php echo e(__('backend/header.logout')); ?>
-
-													</a>
-												</li>
-											</ul>
-										</div>
-									</div> -->
-									<!--end: User bar -->
+									<!--end: Notifications -->									
 								</div>
 
 								<!-- end:: Header Topbar -->

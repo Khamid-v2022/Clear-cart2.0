@@ -12,7 +12,7 @@ namespace App\Models;
         protected $table = 'products';
 
         protected $fillable = [
-            'sells', 'name', 'description', 'interval', 'short_description', 'drop_needed', 'content', 'old_price_in_cent', 'price_in_cent', 'category_id', 'stock_management', 'as_weight', 'weight_available', 'weight_char', 'as_variant'
+            'sells', 'name', 'description', 'interval', 'short_description', 'drop_needed', 'content', 'old_price_in_cent', 'price_in_cent', 'category_id', 'stock_management', 'as_weight', 'weight_available', 'weight_char', 'as_variant', 'as_tiered_price'
         ];
 
         protected $hidden = [
@@ -137,6 +137,10 @@ namespace App\Models;
         public function asVariant()
         {
             return $this->as_variant;
+        }
+
+        public function asTiered(){
+            return $this->as_tiered_price;
         }
 
         public function isAvailableAmount($amount)
