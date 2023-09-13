@@ -13,17 +13,19 @@
                 <div class="row">
                     @foreach(App\Models\Product::orderByDesc('sells')->limit(6)->get() as $bestsellerProduct)
                     <div class="col-lg-4 col-sm-6 mt-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="k-portlet__head-title"> {{ $loop->iteration }}. {{ $bestsellerProduct->name }}</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="k-widget-20__label">
-                                    <b>{{ __('backend/dashboard.bestseller.price') }}</b>
-                                        {{ $bestsellerProduct->getFormattedPrice() }}
+                        <a href="{{ route('product-page', $bestsellerProduct->id) }}" style="text-decoration: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="k-portlet__head-title"> {{ $bestsellerProduct->name }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="k-widget-20__label">
+                                        <b>{{ __('backend/dashboard.bestseller.price') }}</b>
+                                            {{ $bestsellerProduct->getFormattedPrice() }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     @endforeach
                 </div>

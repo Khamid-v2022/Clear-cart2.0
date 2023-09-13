@@ -13,18 +13,20 @@
                 <div class="row">
                     <?php $__currentLoopData = App\Models\Product::orderByDesc('sells')->limit(6)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bestsellerProduct): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="col-lg-4 col-sm-6 mt-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="k-portlet__head-title"> <?php echo e($loop->iteration); ?>. <?php echo e($bestsellerProduct->name); ?></h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="k-widget-20__label">
-                                    <b><?php echo e(__('backend/dashboard.bestseller.price')); ?></b>
-                                        <?php echo e($bestsellerProduct->getFormattedPrice()); ?>
+                        <a href="<?php echo e(route('product-page', $bestsellerProduct->id)); ?>" style="text-decoration: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="k-portlet__head-title"> <?php echo e($bestsellerProduct->name); ?></h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="k-widget-20__label">
+                                        <b><?php echo e(__('backend/dashboard.bestseller.price')); ?></b>
+                                            <?php echo e($bestsellerProduct->getFormattedPrice()); ?>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
