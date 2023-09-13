@@ -92,5 +92,5 @@
         'replace_rules_alert' => 'Beachte die Replace-Regeln!',
         'cancel_order' => 'Kauf abbrechen',
         'product_details' => 'Produkt-Details',
-
+        'starting_from' => 'Beginnend vanaf:',
     ];

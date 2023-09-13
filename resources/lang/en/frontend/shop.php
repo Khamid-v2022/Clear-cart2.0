@@ -92,5 +92,5 @@
         'replace_rules_alert' => 'Note the replace rules!',
         'cancel_order' => 'Cancel order',
         'product_details' => 'Product-Details',
-
+        'starting_from' => 'Starting From:',
     ];

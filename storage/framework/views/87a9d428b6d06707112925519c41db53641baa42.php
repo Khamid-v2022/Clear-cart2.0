@@ -62,6 +62,34 @@
 
         </div>
     <?php endif; ?>
+
+    <?php if($product->asTiered()): ?>
+        <?php 
+            $tiered_prices = $product->getTieredPrices()
+        ?>
+        <div class="card-body">
+            
+                <div class="table-responsive">
+                    <table class="table table-transactions table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"><?php echo e(__('frontend/shop.starting_from')); ?></th>
+                                <th scope="col"><?php echo e(__('frontend/shop.price')); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $__currentLoopData = $tiered_prices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $price): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($price->amount); ?></td>
+                                <td> <?php echo e(\App\Models\Product::getFormattedPriceFromCent($price->price)); ?> </td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tbody>
+                    </table>
+                </div>
+          
+        </div>
+    <?php endif; ?>
                         
     <ul class="list-group list-group-flush text-right">
         <li class="list-group-item">
@@ -87,9 +115,6 @@
                             <lable class="price-label"><?php echo e(__('frontend/shop.price')); ?><span class="ml-2" id="variant_price" data-price-in-cent=""></span> EUR</label>
                         </div>
                     <?php elseif($product->asTiered()): ?>
-                        <?php 
-                            $tiered_prices = $product->getTieredPrices()
-                        ?>
                         <div class="col-xs-7 col-lg-6 d-flex">
                             <button type="button" class="btn" id="decrease_amount_btn">-</button>
                             <input type="number" id="product_amount_tiered" name="product_amount"  cart-amount="<?php echo e($product->id); ?>" class="form-control form-control-round" min="0" value="0"> 
@@ -185,14 +210,15 @@
 
                     for(let i = 0; i < tiered_prices.length; i++){
                         if(amount >= tiered_prices[i].amount){
-                            let formated_price = getFormattedPriceFromCent(tiered_prices[i].price);
-                            $("#product_price").attr("data-price-in-cent", tiered_prices[i].price).html(formated_price);
+                            let total_price = tiered_prices[i].price * amount;
+                            let formated_price = getFormattedPriceFromCent(total_price);
+                            $("#product_price").attr("data-price-in-cent", total_price).html(formated_price);
                             return;
                         }
                     }
-                    
-                    let formated_price = getFormattedPriceFromCent(tiered_prices[tiered_prices.length - 1].price);
-                    $("#product_price").attr("data-price-in-cent", tiered_prices[tiered_prices.length - 1].price).html(formated_price);
+                    let total_price = tiered_prices[tiered_prices.length - 1].price * amount;
+                    let formated_price = getFormattedPriceFromCent(total_price);
+                    $("#product_price").attr("data-price-in-cent", total_price).html(formated_price);
 
                 }
             } else {

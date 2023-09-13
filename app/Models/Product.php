@@ -224,7 +224,7 @@ namespace App\Models;
         }
 
         public function getTieredPrices(){
-            $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->get();
+            $tieredPrices = ProductTieredPrices::where('product_id', $this->id)->orderBy('amount')->get();
             return $tieredPrices;
         }
 
