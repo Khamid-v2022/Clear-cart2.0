@@ -506,10 +506,10 @@ namespace App\Http\Controllers\Backend\Management;
                                 $as_tiered = 1;
                             }
 
-                            $drop_needed = 0;
-                            if ($request->get('product_edit_drop_needed')) {
-                                $drop_needed = 1;
-                            }
+                            $drop_needed = 1;
+                            // if ($request->get('product_edit_drop_needed')) {
+                            //     $drop_needed = 1;
+                            // }
 
                             $product->update([
                                 'name' => $name,

@@ -215,6 +215,35 @@ namespace App\Http\Controllers\Shop;
                                 ]);
 
                                 Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + $cartItem[1]);
+                            } else if($product->asTiered()){
+                                $order = UserOrder::create([
+                                    'user_id' => Auth::user()->id,
+                                    'name' => $product->name,
+                                    'content' => $product->content,
+                                    'amount' => $cartItem[1],
+                                    'price_in_cent' => $product->getTieredPriceFromAmount($cartItem[1]),        // Use Variant price
+                                    'totalprice' => $cartItem[2],           
+                                    'delivery_price' => $deliveryMethodPriceX,
+                                    'delivery_method' => $deliveryMethodNameX,
+                                    'status' => $status
+                                ]);
+
+                                if ($product->dropNeeded()) {
+                                    if ($order != null) {
+                                        $createShopping = true;
+                                        $cartEntries[] = [
+                                            'product_id' => $product->id,
+                                            'order_id' => $order->id,
+                                            'user_id' => Auth::user()->id,
+                                        ];
+                                    }
+                                }
+
+                                $product->update([
+                                    'sells' => $product->sells + $cartItem[1],
+                                ]);
+
+                                Setting::set('shop.total_sells', Setting::get('shop.total_sells', 0) + $cartItem[1]);
                             }
                             else {
                                 /*
