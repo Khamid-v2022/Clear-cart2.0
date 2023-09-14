@@ -353,17 +353,19 @@ namespace App\Http\Controllers\Shop;
 
         public function showProductCategoryPage($slug = null)
         {
-            if ($slug == null && strtolower($slug) != 'uncategorized') {
+            if ($slug == null || strtolower($slug) == 'uncategorized') {
                 return redirect()->route('shop');
             }
 
             $productCategory = ProductCategory::where('slug', $slug)->get()->first();
 
-            if ($productCategory == null && $slug != 'uncategorized') {
+            if ($productCategory == null || $slug == 'uncategorized') {
                 return redirect()->route('shop');
-            } elseif ($productCategory == null) {
-                $products = Product::getUncategorizedProducts();
-            } else {
+            } 
+            // elseif ($productCategory == null) {
+            //     $products = Product::getUncategorizedProducts();
+            // } 
+            else {
                 $products = Product::where('category_id', $productCategory->id)->get()->all();
             }
 
