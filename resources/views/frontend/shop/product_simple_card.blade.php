@@ -1,5 +1,10 @@
 <a href="{{ route('product-page', $product->id) }}" style="text-decoration: none;">
     <div class="card card-product card-hover mb-15">
+        @if($main_img = $product->getMainImage())
+        <div style="text-align:center">
+            <img src="{{ '/files/' . $main_img->img_path }}" class="product-img">
+        </div>
+        @endif
         @if($product->isSale())
         <div class="product-tag product-tag-sale">
             <span class="product-tag-percent">

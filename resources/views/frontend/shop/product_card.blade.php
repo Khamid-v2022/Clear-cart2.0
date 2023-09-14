@@ -42,6 +42,15 @@
 		{{ $product->name }}
 	</div>
 
+    @if($images = $product->getImages())
+    <div class="card-body">
+        <div style="text-align:center">
+            @foreach($images as $image)
+                <img src="{{ '/files/' . $image->img_path }}" class="product-img">
+            @endforeach
+        </div>
+    </div>
+    @endif
     @if(strlen($product->short_description) > 0)
         <div class="card-body">
         {!! \App\Classes\LangHelper::translate(app()->getLocale(), 'product', 'short_description', 'short_description', $product, true) !!}
@@ -59,7 +68,6 @@
             $tiered_prices = $product->getTieredPrices()
         @endphp
         <div class="card-body">
-            
                 <div class="table-responsive">
                     <table class="table table-transactions table-striped">
                         <thead>

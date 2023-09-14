@@ -62,7 +62,11 @@
 										<?php $__currentLoopData = $product->getImages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<img src="<?php echo e('/files/' . $img->img_path); ?>" class="product-img <?php if($img->is_main): ?> selected <?php endif; ?>" data-img_path="<?php echo e($img->img_path); ?>">
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+										<?php if($product->getMainImage()): ?>
 										<input type="hidden" name="main_img_name" id="main_img_name" value="<?php echo e($product->getMainImage()->img_path); ?>">
+										<?php else: ?>
+										<input type="hidden" name="main_img_name" id="main_img_name" value="">
+										<?php endif; ?>
 									</div>
 								</div>
 								

@@ -431,7 +431,7 @@ namespace App\Http\Controllers\Backend\Management;
                             'product_edit_interval' => 'integer|min:1',
                             'product_edit_old_price_in_cent' => 'nullable|integer',
                             'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
-                            'main_img_name' => 'required'
+                            // 'main_img_name' => 'required'
                         ]);
 
                         if (! $validator->fails()) {
@@ -557,12 +557,15 @@ namespace App\Http\Controllers\Backend\Management;
                             }
 
                             // Update main image
-                            ProductImg::where(['product_id' => $product->id])->update([
-                                'is_main' => 0
-                            ]);
-                            ProductImg::where(['product_id' => $product->id, 'img_path' => $main_img_name])->update([
-                                'is_main' => 1
-                            ]);
+                            if($main_img_name){
+                                ProductImg::where(['product_id' => $product->id])->update([
+                                    'is_main' => 0
+                                ]);
+                                ProductImg::where(['product_id' => $product->id, 'img_path' => $main_img_name])->update([
+                                    'is_main' => 1
+                                ]);
+                            }
+                            
 
                             return redirect()->route('backend-management-product-edit', $product->id)->with([
                                 'successMessage' => __('backend/main.changes_successfully'),

@@ -61,7 +61,11 @@
 										@foreach($product->getImages() as $img)
 										<img src="{{ '/files/' . $img->img_path }}" class="product-img @if($img->is_main) selected @endif" data-img_path="{{ $img->img_path }}">
 										@endforeach
+										@if($product->getMainImage())
 										<input type="hidden" name="main_img_name" id="main_img_name" value="{{$product->getMainImage()->img_path}}">
+										@else
+										<input type="hidden" name="main_img_name" id="main_img_name" value="">
+										@endif
 									</div>
 								</div>
 								

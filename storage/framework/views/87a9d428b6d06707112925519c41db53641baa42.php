@@ -49,6 +49,15 @@
 
 	</div>
 
+    <?php if($images = $product->getImages()): ?>
+    <div class="card-body">
+        <div style="text-align:center">
+            <?php $__currentLoopData = $images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <img src="<?php echo e('/files/' . $image->img_path); ?>" class="product-img">
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    </div>
+    <?php endif; ?>
     <?php if(strlen($product->short_description) > 0): ?>
         <div class="card-body">
         <?php echo \App\Classes\LangHelper::translate(app()->getLocale(), 'product', 'short_description', 'short_description', $product, true); ?>
@@ -68,7 +77,6 @@
             $tiered_prices = $product->getTieredPrices()
         ?>
         <div class="card-body">
-            
                 <div class="table-responsive">
                     <table class="table table-transactions table-striped">
                         <thead>
