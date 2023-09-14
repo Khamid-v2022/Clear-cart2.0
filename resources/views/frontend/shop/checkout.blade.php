@@ -45,9 +45,21 @@
 								<li class="list-group-item">
 									
 									<b>{{ __('frontend/shop.delivery_method.title') }}</b><br /><br />
-
-									@foreach(App\Models\DeliveryMethod::all() as $deliveryMethod)
-										<label class="k-radio k-radio--all k-radio--solid">
+									
+									@php 
+										$delivery_methods = App\Models\DeliveryMethod::all()
+									@endphp
+									<select class="form-control" id="delivery_methid_sel">
+										@foreach(App\Models\DeliveryMethod::all() as $deliveryMethod)
+											@if($deliveryMethod->isAvailableForUsersCart())
+												<option value="{{ $deliveryMethod->id }}"  name="product_delivery_method">
+													{{ __('frontend/shop.delivery_method.row', [
+														'name' => $deliveryMethod->name,
+														'price' => $deliveryMethod->getFormattedPrice()
+													]) }}
+												</option>
+											@endif
+										<!-- <label class="k-radio k-radio--all k-radio--solid">
 											<input type="radio" name="product_delivery_method" value="{{ $deliveryMethod->id }}" data-content-visible="false" data-weight-visible="false" @if(!$deliveryMethod->isAvailableForUsersCart()) disabled @endif 
 											data-delivery-price="{{ $deliveryMethod->price }}" />
 											<span></span>
@@ -64,8 +76,9 @@
 												]) }}
 											</div>
 											@endif
-										</label><br />
+										</label><br /> -->
 									@endforeach
+									</select>
 								</li>
 							</ul>
 
@@ -140,13 +153,33 @@
 @section('page_scripts')
 <script type="text/javascript">
 	$(function() {
-        $("input[name=product_delivery_method]").on("click", function(){
-			const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
-			let total_price = parseInt($("#total_price").attr('data-total_price'));
+        // $("input[name=product_delivery_method]").on("click", function(){
+		// 	const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
+		// 	let total_price = parseInt($("#total_price").attr('data-total_price'));
 
-			$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
-			$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)")
+		// 	$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+		// 	$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)");
+		// })
+		var delivery_methods = [];
+		@foreach($delivery_methods as $method)
+			delivery_methods.push({'id' : {{$method->id}}, 'price': {{$method->price}} });
+		@endforeach
+
+		$("#delivery_methid_sel").on("change", function(){
+			const sel_method_id = $(this).val();
+			delivery_methods.forEach((item) => {
+				if(item.id == sel_method_id) {
+					const shipping_price = item.price;
+					let total_price = parseInt($("#total_price").attr('data-total_price'));
+
+					$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+					$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)");
+					return;
+				}
+			})
 		})
+
+		$("#delivery_methid_sel").trigger("change");
   	});
 </script>
 @endsection

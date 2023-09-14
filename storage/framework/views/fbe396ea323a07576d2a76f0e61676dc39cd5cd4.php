@@ -44,9 +44,22 @@
 								<li class="list-group-item">
 									
 									<b><?php echo e(__('frontend/shop.delivery_method.title')); ?></b><br /><br />
+									
+									<?php 
+										$delivery_methods = App\Models\DeliveryMethod::all()
+									?>
+									<select class="form-control">
+										<?php $__currentLoopData = App\Models\DeliveryMethod::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deliveryMethod): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<?php if($deliveryMethod->isAvailableForUsersCart()): ?>
+												<option value="<?php echo e($deliveryMethod->id); ?>" id="delivery_methid_sel"  name="product_delivery_method">
+													<?php echo e(__('frontend/shop.delivery_method.row', [
+														'name' => $deliveryMethod->name,
+														'price' => $deliveryMethod->getFormattedPrice()
+													])); ?>
 
-									<?php $__currentLoopData = App\Models\DeliveryMethod::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deliveryMethod): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-										<label class="k-radio k-radio--all k-radio--solid">
+												</option>
+											<?php endif; ?>
+										<!-- <label class="k-radio k-radio--all k-radio--solid">
 											<input type="radio" name="product_delivery_method" value="<?php echo e($deliveryMethod->id); ?>" data-content-visible="false" data-weight-visible="false" <?php if(!$deliveryMethod->isAvailableForUsersCart()): ?> disabled <?php endif; ?> 
 											data-delivery-price="<?php echo e($deliveryMethod->price); ?>" />
 											<span></span>
@@ -65,8 +78,9 @@
 
 											</div>
 											<?php endif; ?>
-										</label><br />
+										</label><br /> -->
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									</select>
 								</li>
 							</ul>
 
@@ -141,13 +155,34 @@
 <?php $__env->startSection('page_scripts'); ?>
 <script type="text/javascript">
 	$(function() {
-        $("input[name=product_delivery_method]").on("click", function(){
-			const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
-			let total_price = parseInt($("#total_price").attr('data-total_price'));
+        // $("input[name=product_delivery_method]").on("click", function(){
+		// 	const shipping_price = parseInt($("input[name=product_delivery_method]:checked").attr("data-delivery-price"));
+		// 	let total_price = parseInt($("#total_price").attr('data-total_price'));
 
-			$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
-			$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)")
+		// 	$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+		// 	$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)");
+		// })
+		var delivery_methods = [];
+		<?php $__currentLoopData = $delivery_methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			delivery_methods.push({'id' : <?php echo e($method->id); ?>, 'price': <?php echo e($method->price); ?> });
+		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+		console.log(delivery_methods);
+
+		$("#delivery_methid_sel").on("change", function(){
+			const sel_method_id = $(this).val();
+			delivery_methods.forEach((item) => {
+				if(item.id == sel_method_id) {
+					const shipping_price = item.price;
+					let total_price = parseInt($("#total_price").attr('data-total_price'));
+
+					$("#total_price").html(getFormattedPriceFromCent(total_price + shipping_price) + " EUR");
+					$("#shipping_cost").html("(+" + getFormattedPriceFromCent(shipping_price) + " EUR)");
+					return;
+				}
+			})
 		})
+
+		$("#delivery_methid_sel").trigger("change");
   	});
 </script>
 <?php $__env->stopSection(); ?>
