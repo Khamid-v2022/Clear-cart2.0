@@ -235,6 +235,7 @@
     Route::get('admin/management/product/delete/{id}', 'Backend\Management\ProductsController@deleteProduct')->name('backend-management-product-delete');
     Route::get('admin/management/products/add', 'Backend\Management\ProductsController@showProductAddPage')->name('backend-management-product-add');
     Route::post('admin/management/products/add', 'Backend\Management\ProductsController@addProductForm')->name('backend-management-product-add-form');
+
     Route::any('admin/management/products/lang/{lang}/edit/{id}', 'Backend\Management\ProductsController@showProductEditPageLang')->name('lang-edit-product');
     Route::get('admin/management/products/edit/{id}', 'Backend\Management\ProductsController@showProductEditPage')->name('backend-management-product-edit');
     Route::post('admin/management/products/edit', 'Backend\Management\ProductsController@editProductForm')->name('backend-management-product-edit-form');

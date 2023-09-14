@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+    use App\Models\ProductImg;
     use App\Models\ProductCategory;
     use App\Models\ProductVariant;
     use App\Models\ProductTieredPrices;
@@ -287,5 +287,13 @@ namespace App\Models;
             }
 
             return $product_type ? $product_type . ": " . self::getFormattedPriceFromCent($price) : self::getFormattedPriceFromCent($price);
+        }
+
+        public function getImages(){
+            return ProductImg::where('product_id', $this->id)->orderByDesc('is_main')->get();
+        }
+
+        public function getMainImage(){
+            return ProductImg::where('product_id', $this->id)->where('is_main', 1)->first();
         }
     }

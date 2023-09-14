@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Management;
 
     use App\Http\Controllers\Controller;
     use App\Models\Product;
+    use App\Models\ProductImg;
     use App\Models\ProductVariant;
     use App\Models\ProductTieredPrices;
     use App\Models\ProductBonus;
@@ -430,6 +431,7 @@ namespace App\Http\Controllers\Backend\Management;
                             'product_edit_interval' => 'integer|min:1',
                             'product_edit_old_price_in_cent' => 'nullable|integer',
                             'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
+                            'main_img_name' => 'required'
                         ]);
 
                         if (! $validator->fails()) {
@@ -442,6 +444,7 @@ namespace App\Http\Controllers\Backend\Management;
                             $interval = $request->input('product_edit_interval') ?? 1;
                             $category_id = $request->input('product_edit_category_id');
                             $product_edit_stock_management = $request->input('product_edit_stock_management');
+                            $main_img_name = $request->input('main_img_name');
 
                             $as_weight = 0;
                             $as_variant = 0;
@@ -553,6 +556,14 @@ namespace App\Http\Controllers\Backend\Management;
                                 }
                             }
 
+                            // Update main image
+                            ProductImg::where(['product_id' => $product->id])->update([
+                                'is_main' => 0
+                            ]);
+                            ProductImg::where(['product_id' => $product->id, 'img_path' => $main_img_name])->update([
+                                'is_main' => 1
+                            ]);
+
                             return redirect()->route('backend-management-product-edit', $product->id)->with([
                                 'successMessage' => __('backend/main.changes_successfully'),
                             ]);
@@ -610,6 +621,9 @@ namespace App\Http\Controllers\Backend\Management;
                     'product_add_price_in_cent' => 'nullable|integer',
                     'product_add_old_price_in_cent' => 'nullable|integer',
                     'product_add_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
+                    'product_img' => 'required',
+                    'product_img.*' => 'image',
+                    'main_img_index' => 'required|integer|max:2'
                 ]);
 
                 if (! $validator->fails()) {
@@ -731,6 +745,27 @@ namespace App\Http\Controllers\Backend\Management;
                         }
                     }
 
+                    // product images
+                    $files = [];
+                    $main_img_index = $request->input('main_img_index');
+                    $index = -1;
+
+                    if($request->hasfile('product_img'))
+                    {
+                        foreach($request->file('product_img') as $file)
+                        {
+                            $index++;
+
+                            $name = time().rand(1,50) . '.' . $file->extension();
+                            $file->move(public_path('files'), $name);  
+
+                            ProductImg::create([
+                                'product_id' => $new_product->id,
+                                'img_path' => $name,
+                                'is_main' => $index == $main_img_index ? 1 : 0
+                            ]);
+                        }
+                    }
 
                     return redirect()->route('backend-management-product-add')->with([
                         'successMessage' => __('backend/main.added_successfully'),

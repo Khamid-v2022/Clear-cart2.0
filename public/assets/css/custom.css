@@ -22,3 +22,14 @@
 .price-label {
     font-size: 16px;
 }
+
+.product-imgs-preview .product-img {
+    height: 150px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.product-imgs-preview .product-img.selected {
+    border: 5px solid rgba(246, 176, 177, .3);
+}

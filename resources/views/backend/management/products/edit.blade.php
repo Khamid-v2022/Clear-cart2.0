@@ -52,6 +52,18 @@
 										</span>
 									@endif
 								</div>
+
+								<div class="form-group">
+									<label for="product_img">Product Images</label>
+									<input type="file" class="form-control" id="product_img" name="product_img[]" accept="image/*" multiple @if(count($product->getImages()) >= 3) disabled @endif/>
+									
+									<div class="product-imgs-preview d-flex">
+										@foreach($product->getImages() as $img)
+										<img src="{{ '/files/' . $img->img_path }}" class="product-img @if($img->is_main) selected @endif" data-img_path="{{ $img->img_path }}">
+										@endforeach
+										<input type="hidden" name="main_img_name" id="main_img_name" value="{{$product->getMainImage()->img_path}}">
+									</div>
+								</div>
 								
 								<div class="form-group">
 									<label for="product_edit_short_description">{{ __('backend/management.products.short_description') }}</label>
@@ -410,6 +422,12 @@
 				return;
 			}
 			$(this).parents(".tiered-item").remove();
+		})
+
+		$(".product-img").on("click", function(){
+			$(".product-img").removeClass("selected");
+			$(this).addClass("selected");
+			$("#main_img_name").val($(this).attr("data-img_path"));
 		})
   	});
 </script>

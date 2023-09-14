@@ -53,6 +53,18 @@
 										</span>
 									<?php endif; ?>
 								</div>
+
+								<div class="form-group">
+									<label for="product_img">Product Images</label>
+									<input type="file" class="form-control" id="product_img" name="product_img[]" accept="image/*" multiple <?php if(count($product->getImages()) >= 3): ?> disabled <?php endif; ?>/>
+									
+									<div class="product-imgs-preview d-flex">
+										<?php $__currentLoopData = $product->getImages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<img src="<?php echo e('/files/' . $img->img_path); ?>" class="product-img <?php if($img->is_main): ?> selected <?php endif; ?>" data-img_path="<?php echo e($img->img_path); ?>">
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+										<input type="hidden" name="main_img_name" id="main_img_name" value="<?php echo e($product->getMainImage()->img_path); ?>">
+									</div>
+								</div>
 								
 								<div class="form-group">
 									<label for="product_edit_short_description"><?php echo e(__('backend/management.products.short_description')); ?></label>
@@ -417,6 +429,12 @@
 				return;
 			}
 			$(this).parents(".tiered-item").remove();
+		})
+
+		$(".product-img").on("click", function(){
+			$(".product-img").removeClass("selected");
+			$(this).addClass("selected");
+			$("#main_img_name").val($(this).attr("data-img_path"));
 		})
   	});
 </script>

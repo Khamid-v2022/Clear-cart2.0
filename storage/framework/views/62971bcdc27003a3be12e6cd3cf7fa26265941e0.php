@@ -23,7 +23,7 @@
 							<h3 class="kt-portlet__head-title"><?php echo e(__('backend/management.products.add.title')); ?></h3>
 						</div>
 					</div>
-					<form method="POST" class="kt-form" action="<?php echo e(route('backend-management-product-add-form')); ?>">
+					<form method="POST" class="kt-form" action="<?php echo e(route('backend-management-product-add-form')); ?>" enctype="multipart/form-data">
 						<?php echo csrf_field(); ?>
 						
 						<div class="kt-portlet__body">
@@ -37,6 +37,19 @@
 											<strong><?php echo e($errors->first('product_add_name')); ?></strong>
 										</span>
 									<?php endif; ?>
+								</div>
+
+								<div class="form-group">
+									<label for="product_img">Product Images</label>
+									<input type="file" class="form-control" id="product_img" name="product_img[]" accept="image/*" multiple/>
+									<?php if($errors->has('product_img')): ?>
+										<span class="invalid-feedback" style="display:block" role="alert">
+											<strong>Please add product images</strong>
+										</span>
+									<?php endif; ?>
+									<div class="product-imgs-preview d-flex">
+										<input type="hidden" name="main_img_index" id="main_img_index" value="-1">
+									</div>
 								</div>
 								
 								<div class="form-group">
@@ -353,6 +366,61 @@
 			}
 			$(this).parents(".tiered-item").remove();
 		})
+
+		// image display 
+		$("#product_img").on('change', function () {
+			if(this.files.length == 0) {
+				removeAllPictures();
+				return;
+			}
+			if(this.files.length > 3){
+				alert("You can only upload 3 files");
+				$(this).val(''); 
+				return;
+			}
+
+			displayPicture(this);
+		});
+
+		var displayPicture = function(input) {
+			$(".product-img").remove();
+			if (input.files) {
+				var filesAmount = input.files.length;
+
+				for (i = 0; i < filesAmount; i++) {
+					if(i > 2)
+						break;
+					var reader = new FileReader();
+
+					reader.onload = function(event) {
+						$($.parseHTML('<img>')).attr('src', event.target.result).attr('class', 'product-img').appendTo(".product-imgs-preview");
+						
+						product_img_click_listener();
+						select_first_img();
+					}
+
+					reader.readAsDataURL(input.files[i]);
+				}
+			}
+			
+		};
+
+		var removeAllPictures = function(input) {
+			$(input).val('');
+			$(".product-img").remove();
+		}
+
+		var product_img_click_listener = function(){
+			$(".product-img").on("click", function(){
+				$(".product-img").removeClass("selected");
+				$(this).addClass("selected");
+				$("#main_img_index").val($(this).index() - 1);
+			})
+		}
+
+		function select_first_img() {
+			$(".product-img:first").trigger("click");
+		}
   	});
 </script>
 <?php $__env->stopSection(); ?>
