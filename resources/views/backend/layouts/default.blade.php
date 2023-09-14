@@ -178,7 +178,6 @@
 											@if(Auth::user()->hasAnyPermissionFromArray([
 												'manage_articles',
 												'manage_faqs',
-												'manage_faqs_categories',
 												'manage_products',
 												'manage_products_categories',
 												'manage_tickets',
@@ -259,35 +258,14 @@
 														</li>
 														@endif
 
-														@if(Auth::user()->hasPermission('manage_faqs') || Auth::user()->hasPermission('manage_faqs_categories'))
-														<li class="k-menu__item k-menu__item--submenu" data-kmenu-submenu-toggle="hover" aria-haspopup="true">
-															<a href="javascript:;" class="k-menu__link k-menu__toggle">
-																<i class="k-menu__link-bullet k-menu__link-bullet--line"><span></span></i>
+														@if(Auth::user()->hasPermission('manage_faqs'))
+														<li class="k-menu__item" aria-haspopup="true">
+															<a href="{{ route('backend-management-faqs') }}" class="k-menu__link ">
+																<i class="k-menu__link-bullet k-menu__link-bullet--line">
+																	<span></span>
+																</i>
 																<span class="k-menu__link-text">{{ __('backend/management.faqs.title') }}</span>
-																<i class="k-menu__hor-arrow la la-angle-right"></i>
-																<i class="k-menu__ver-arrow la la-angle-right"></i>
 															</a>
-															<div class="k-menu__submenu k-menu__submenu--classic k-menu__submenu--right">
-																<ul class="k-menu__subnav">
-																	@if(Auth::user()->hasPermission('manage_faqs'))
-																	<li class="k-menu__item" aria-haspopup="true">
-																		<a href="{{ route('backend-management-faqs') }}" class="k-menu__link ">
-																			<i class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
-																			<span class="k-menu__link-text">{{ __('backend/management.faqs.title') }}</span>
-																		</a>
-																	</li>
-																	@endif
-
-																	@if(Auth::user()->hasPermission('manage_faqs_categories'))
-																	<li class="k-menu__item" aria-haspopup="true">
-																		<a href="{{ route('backend-management-faqs-categories') }}" class="k-menu__link ">
-																			<i class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
-																			<span class="k-menu__link-text">{{ __('backend/management.faqs.categories.title') }}</span>
-																		</a>
-																	</li>
-																	@endif
-																</ul>
-															</div>
 														</li>
 														@endif
 

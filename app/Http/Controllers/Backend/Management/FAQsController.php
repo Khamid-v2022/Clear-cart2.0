@@ -64,19 +64,19 @@ namespace App\Http\Controllers\Backend\Management;
                         $validator = Validator::make($request->all(), [
                             'faq_edit_question' => 'required|max:255',
                             'faq_edit_answer' => 'required|max:5000',
-                            'faq_edit_category' => new RuleFAQCategoryExists(),
+                            // 'faq_edit_category' => new RuleFAQCategoryExists(),
                         ]);
 
                         if (! $validator->fails()) {
                             $question = $request->input('faq_edit_question');
                             $answer = $request->input('faq_edit_answer');
-                            $category = $request->input('faq_edit_category');
+                            // $category = $request->input('faq_edit_category');
                             $ordering = $request->input('faq_edit_ordering') ?? 1;
 
                             $faq->update([
                                 'answer' => encrypt($answer),
                                 'question' => $question,
-                                'category_id' => $category,
+                                // 'category_id' => $category,
                                 'ordering' => $ordering,
                             ]);
 
@@ -125,19 +125,19 @@ namespace App\Http\Controllers\Backend\Management;
                 $validator = Validator::make($request->all(), [
                     'faq_add_question' => 'required|max:255',
                     'faq_add_answer' => 'required|max:5000',
-                    'faq_add_category' => new RuleFAQCategoryExists(),
+                    // 'faq_add_category' => new RuleFAQCategoryExists(),
                 ]);
 
                 if (! $validator->fails()) {
                     $question = $request->input('faq_add_question');
                     $answer = $request->input('faq_add_answer');
-                    $category = $request->input('faq_add_category');
+                    // $category = $request->input('faq_add_category');
                     $ordering = $request->input('faq_add_ordering') ?? 1;
 
                     FAQ::create([
                         'answer' => encrypt($answer),
                         'question' => $question,
-                        'category_id' => $category,
+                        // 'category_id' => $category,
                         'ordering' => $ordering,
                     ]);
 

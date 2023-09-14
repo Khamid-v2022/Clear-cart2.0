@@ -266,16 +266,16 @@
     Route::get('admin/management/tickets', 'Backend\Management\TicketsController@showTicketsPage')->name('backend-management-tickets');
     Route::get('admin/management/tickets/page/{page?}', 'Backend\Management\TicketsController@showTicketsPage')->name('backend-management-tickets-with-pageNumber');
 
-    // FAQ Categories
-    Route::any('admin/management/faqs/categories/lang/{lang}/edit/{id}', 'Backend\Management\FAQsCategoriesController@showFAQCategoryEditPageLang')->name('lang-edit-faq-category');
+    // FAQ Categories - No loger Use
+    // Route::any('admin/management/faqs/categories/lang/{lang}/edit/{id}', 'Backend\Management\FAQsCategoriesController@showFAQCategoryEditPageLang')->name('lang-edit-faq-category');
 
-    Route::get('admin/management/faqs/category/delete/{id}', 'Backend\Management\FAQsCategoriesController@deleteFAQCategory')->name('backend-management-faq-category-delete');
-    Route::get('admin/management/faqs/categories', 'Backend\Management\FAQsCategoriesController@showFAQsCategoriesPage')->name('backend-management-faqs-categories');
-    Route::get('admin/management/faqs/categories/page/{page?}', 'Backend\Management\FAQsCategoriesController@showFAQsCategoriesPage')->name('backend-management-faqs-categories-with-pageNumber');
-    Route::get('admin/management/faqs/categories/add', 'Backend\Management\FAQsCategoriesController@showFAQCategoryAddPage')->name('backend-management-faq-category-add');
-    Route::post('admin/management/faqs/categories/add', 'Backend\Management\FAQsCategoriesController@addFAQCategoryForm')->name('backend-management-faq-category-add-form');
-    Route::get('admin/management/faqs/categories/edit/{id}', 'Backend\Management\FAQsCategoriesController@showFAQCategoryEditPage')->name('backend-management-faq-category-edit');
-    Route::post('admin/management/faqs/categories/edit', 'Backend\Management\FAQsCategoriesController@editFAQCategoryForm')->name('backend-management-faq-category-edit-form');
+    // Route::get('admin/management/faqs/category/delete/{id}', 'Backend\Management\FAQsCategoriesController@deleteFAQCategory')->name('backend-management-faq-category-delete');
+    // Route::get('admin/management/faqs/categories', 'Backend\Management\FAQsCategoriesController@showFAQsCategoriesPage')->name('backend-management-faqs-categories');
+    // Route::get('admin/management/faqs/categories/page/{page?}', 'Backend\Management\FAQsCategoriesController@showFAQsCategoriesPage')->name('backend-management-faqs-categories-with-pageNumber');
+    // Route::get('admin/management/faqs/categories/add', 'Backend\Management\FAQsCategoriesController@showFAQCategoryAddPage')->name('backend-management-faq-category-add');
+    // Route::post('admin/management/faqs/categories/add', 'Backend\Management\FAQsCategoriesController@addFAQCategoryForm')->name('backend-management-faq-category-add-form');
+    // Route::get('admin/management/faqs/categories/edit/{id}', 'Backend\Management\FAQsCategoriesController@showFAQCategoryEditPage')->name('backend-management-faq-category-edit');
+    // Route::post('admin/management/faqs/categories/edit', 'Backend\Management\FAQsCategoriesController@editFAQCategoryForm')->name('backend-management-faq-category-edit-form');
 
     // FAQ
     Route::any('admin/management/faq/lang/{lang}/edit/{id}', 'Backend\Management\FAQsController@showFAQEditPageLang')->name('lang-edit-faq');
