@@ -123,11 +123,11 @@
                                                     @endforeach
 
                                                     @if(count(App\Models\Product::getUncategorizedProducts()))
-                                                    <div class="dropdown-divider"></div>
+                                                    <!-- <div class="dropdown-divider"></div>
 
                                                     <a class="dropdown-item" href="{{ route('product-category', ['uncategorized']) }}">
                                                         {{ __('frontend/shop.uncategorized') }}
-                                                    </a>
+                                                    </a> -->
                                                     @endif
                                                 @endif
                                             </div>

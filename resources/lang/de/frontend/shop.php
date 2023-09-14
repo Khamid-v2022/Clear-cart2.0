@@ -93,4 +93,5 @@
         'cancel_order' => 'Kauf abbrechen',
         'product_details' => 'Produkt-Details',
         'starting_from' => 'Beginnend vanaf:',
+        'from' => 'Vanaf:',
     ];
