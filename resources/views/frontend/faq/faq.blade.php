@@ -20,7 +20,6 @@
                     <div class="card-header" id="faqHeading-{{ $loop->iteration }}">
                         <h5 class="mb-0">
                             <button class=" btn-link btn-block text-left text-decoration-none btn-faq" data-toggle="collapse" data-target="#faqCollapse-{{ $loop->iteration }}" aria-expanded="@if($loop->iteration == 1) true @else false @endif" aria-controls="faqCollapse-{{ $loop->iteration }}">
-                                <strong class="">{{ $loop->iteration }}.</strong> 
                                 {{ \App\Classes\LangHelper::translate(app()->getLocale(), 'faq', 'question', 'question', $faq) }}
                             </button>
                         </h5>

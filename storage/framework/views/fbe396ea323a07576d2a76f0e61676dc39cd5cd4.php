@@ -48,10 +48,11 @@
 									<?php 
 										$delivery_methods = App\Models\DeliveryMethod::all()
 									?>
-									<select class="form-control">
+									<select class="form-control" id="delivery_method_sel" name="product_delivery_method">
+										<option value=""><?php echo e(__('frontend/shop.delivery_method.select_delivery_method')); ?></option>
 										<?php $__currentLoopData = App\Models\DeliveryMethod::all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $deliveryMethod): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 											<?php if($deliveryMethod->isAvailableForUsersCart()): ?>
-												<option value="<?php echo e($deliveryMethod->id); ?>" id="delivery_methid_sel"  name="product_delivery_method">
+												<option value="<?php echo e($deliveryMethod->id); ?>" >
 													<?php echo e(__('frontend/shop.delivery_method.row', [
 														'name' => $deliveryMethod->name,
 														'price' => $deliveryMethod->getFormattedPrice()
@@ -166,9 +167,8 @@
 		<?php $__currentLoopData = $delivery_methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 			delivery_methods.push({'id' : <?php echo e($method->id); ?>, 'price': <?php echo e($method->price); ?> });
 		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-		console.log(delivery_methods);
 
-		$("#delivery_methid_sel").on("change", function(){
+		$("#delivery_method_sel").on("change", function(){
 			const sel_method_id = $(this).val();
 			delivery_methods.forEach((item) => {
 				if(item.id == sel_method_id) {
@@ -182,7 +182,7 @@
 			})
 		})
 
-		$("#delivery_methid_sel").trigger("change");
+		$("#delivery_method_sel").trigger("change");
   	});
 </script>
 <?php $__env->stopSection(); ?>

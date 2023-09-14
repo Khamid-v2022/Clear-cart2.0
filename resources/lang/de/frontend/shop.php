@@ -31,6 +31,7 @@
             'title' => 'Versandart:',
             'row' => ':name (+:price)',
             'minmaxinfo' => 'Für Bestellungen zwischen :min - :max',
+            'select_delivery_method' => 'Selecteer Methode'
         ],
 
         'delivery_price' => 'Versandkosten:',
@@ -94,4 +95,5 @@
         'product_details' => 'Produkt-Details',
         'starting_from' => 'Beginnend vanaf:',
         'from' => 'Vanaf:',
+        
     ];

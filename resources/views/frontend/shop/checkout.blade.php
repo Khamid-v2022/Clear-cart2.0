@@ -49,10 +49,11 @@
 									@php 
 										$delivery_methods = App\Models\DeliveryMethod::all()
 									@endphp
-									<select class="form-control" id="delivery_methid_sel">
+									<select class="form-control" id="delivery_method_sel" name="product_delivery_method">
+										<option value="">{{ __('frontend/shop.delivery_method.select_delivery_method') }}</option>
 										@foreach(App\Models\DeliveryMethod::all() as $deliveryMethod)
 											@if($deliveryMethod->isAvailableForUsersCart())
-												<option value="{{ $deliveryMethod->id }}"  name="product_delivery_method">
+												<option value="{{ $deliveryMethod->id }}" >
 													{{ __('frontend/shop.delivery_method.row', [
 														'name' => $deliveryMethod->name,
 														'price' => $deliveryMethod->getFormattedPrice()
@@ -165,7 +166,7 @@
 			delivery_methods.push({'id' : {{$method->id}}, 'price': {{$method->price}} });
 		@endforeach
 
-		$("#delivery_methid_sel").on("change", function(){
+		$("#delivery_method_sel").on("change", function(){
 			const sel_method_id = $(this).val();
 			delivery_methods.forEach((item) => {
 				if(item.id == sel_method_id) {
@@ -179,7 +180,7 @@
 			})
 		})
 
-		$("#delivery_methid_sel").trigger("change");
+		$("#delivery_method_sel").trigger("change");
   	});
 </script>
 @endsection

@@ -31,6 +31,7 @@
             'title' => 'Delivery method:',
             'row' => ':name (+:price)',
             'minmaxinfo' => 'Für Bestellungen zwischen :min - :max',
+            'select_delivery_method' => 'Select Method'
         ],
 
         'delivery_price' => 'Delivery price:',
@@ -94,4 +95,5 @@
         'product_details' => 'Product-Details',
         'starting_from' => 'Starting From:',
         'from' => 'From:',
+        
     ];
