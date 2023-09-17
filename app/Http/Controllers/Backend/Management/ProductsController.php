@@ -431,7 +431,6 @@ namespace App\Http\Controllers\Backend\Management;
                             'product_edit_interval' => 'integer|min:1',
                             'product_edit_old_price_in_cent' => 'nullable|integer',
                             'product_edit_stock_management'=> 'required|in:normal,weight,unlimited,variants,tiered',
-                            // 'main_img_name' => 'required'
                         ]);
 
                         if (! $validator->fails()) {
@@ -444,7 +443,8 @@ namespace App\Http\Controllers\Backend\Management;
                             $interval = $request->input('product_edit_interval') ?? 1;
                             $category_id = $request->input('product_edit_category_id');
                             $product_edit_stock_management = $request->input('product_edit_stock_management');
-                            $main_img_name = $request->input('main_img_name');
+                            
+                            
 
                             $as_weight = 0;
                             $as_variant = 0;
@@ -556,6 +556,41 @@ namespace App\Http\Controllers\Backend\Management;
                                 }
                             }
 
+                            // img
+                            $deleted_img_ids = $request->input('deleted_img_ids');
+                            if($deleted_img_ids){
+                                $del_img_ids = explode (",", $deleted_img_ids);
+                                foreach($del_img_ids as $del_img_id){
+                                    $del_img = ProductImg::where('id', $del_img_id)->first();
+                                    unlink(public_path('files') . "/" . $del_img->img_path);
+                                    $del_img->delete();
+                                }
+                            }
+
+
+                            $main_img_name = $request->input('main_img_name');
+                            $main_img_index = $request->input('main_img_index');
+
+                            $files = [];
+                            $index = -1;
+                            if($request->hasfile('product_img'))
+                            {
+                                foreach($request->file('product_img') as $file)
+                                {
+                                    $index++;
+
+                                    $name = time().rand(1,50) . '.' . $file->extension();
+                                    $file->move(public_path('files'), $name);  
+
+                                    ProductImg::create([
+                                        'product_id' => $product->id,
+                                        'img_path' => $name,
+                                        'is_main' => $index == $main_img_index ? 1 : 0
+                                    ]);
+                                }
+                            }
+
+                            
                             // Update main image
                             if($main_img_name){
                                 ProductImg::where(['product_id' => $product->id])->update([

@@ -23,13 +23,25 @@
     font-size: 16px;
 }
 
-.product-img {
+.product-img, .product-img-new {
     height: 150px;
     width: auto;
     margin-right: 10px;
     border-radius: 10px;
 }
 
-.product-imgs-preview .product-img.selected {
+.product-imgs-preview .product-img.selected, .product-imgs-preview .product-img-new.selected  {
     border: 5px solid rgba(246, 176, 177, .3);
+}
+
+.product-imgs-preview .product-img-item {
+    position: relative;
+}
+
+.product-imgs-preview .product-img-item .delete-img-btn {
+    position: absolute;
+    bottom: 0;
+    right: 14px;
+    font-size: 23px;
+    cursor: pointer;
 }

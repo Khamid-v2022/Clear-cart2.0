@@ -33,7 +33,7 @@
 						</div>
 					</div>
 
-					<form method="post" class="kt-form" action="<?php echo e(route('backend-management-product-edit-form')); ?>">
+					<form method="post" class="kt-form" action="<?php echo e(route('backend-management-product-edit-form')); ?>"  enctype="multipart/form-data">
 						<?php echo csrf_field(); ?>
 
 						<?php if($lang != null): ?>
@@ -60,14 +60,19 @@
 									
 									<div class="product-imgs-preview d-flex">
 										<?php $__currentLoopData = $product->getImages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-										<img src="<?php echo e('/files/' . $img->img_path); ?>" class="product-img <?php if($img->is_main): ?> selected <?php endif; ?>" data-img_path="<?php echo e($img->img_path); ?>">
+											<div class="product-img-item" data-img_id="<?php echo e($img->id); ?>">
+												<img src="<?php echo e('/files/' . $img->img_path); ?>" class="product-img <?php if($img->is_main): ?> selected <?php endif; ?>" data-img_path="<?php echo e($img->img_path); ?>">
+												<span class="delete-img-btn"><i class="la la-trash"></i></span>
+											</div>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-										<?php if($product->getMainImage()): ?>
-										<input type="hidden" name="main_img_name" id="main_img_name" value="<?php echo e($product->getMainImage()->img_path); ?>">
-										<?php else: ?>
-										<input type="hidden" name="main_img_name" id="main_img_name" value="">
-										<?php endif; ?>
 									</div>
+									<?php if($product->getMainImage()): ?>
+										<input type="hidden" name="main_img_name" id="main_img_name" value="<?php echo e($product->getMainImage()->img_path); ?>">
+									<?php else: ?>
+										<input type="hidden" name="main_img_name" id="main_img_name" value="">
+									<?php endif; ?>
+									<input type="hidden" name="main_img_index" id="main_img_index" value="-1">
+									<input type="hidden" name="deleted_img_ids" id="deleted_img_ids" value="">
 								</div>
 								
 								<div class="form-group">
@@ -437,9 +442,81 @@
 
 		$(".product-img").on("click", function(){
 			$(".product-img").removeClass("selected");
+			$(".product-img-new").removeClass("selected");
 			$(this).addClass("selected");
 			$("#main_img_name").val($(this).attr("data-img_path"));
+			$("#main_img_index").val(-1);
 		})
+
+		$(".delete-img-btn").on("click", function(){
+			let deleted_img_ids = $("#deleted_img_ids").val();
+			if(deleted_img_ids)
+				deleted_img_ids += ',' + $(this).parents(".product-img-item").attr("data-img_id");
+			else
+				deleted_img_ids += $(this).parents(".product-img-item").attr("data-img_id");
+			$("#deleted_img_ids").val(deleted_img_ids);
+			
+			$(this).parents(".product-img-item").remove();
+			$("#product_img").removeAttr("disabled");
+		})
+
+		$("#product_img").on('change', function () {
+			if(this.files.length == 0) {
+				removeAllNewAddedPictures();
+				return;
+			}
+
+			if(this.files.length + $('.product-img').length > 3){
+				alert("You can only upload 3 files");
+				$(this).val(''); 
+				return;
+			}
+
+			displayPicture(this);
+		});
+
+		var displayPicture = function(input) {
+			$(".product-img-new").remove();
+			if (input.files) {
+				var filesAmount = input.files.length;
+
+				for (i = 0; i < filesAmount; i++) {
+					if(i > 2)
+						break;
+					var reader = new FileReader();
+
+					reader.onload = function(event) {
+						$($.parseHTML('<img>')).attr('src', event.target.result).attr('class', 'product-img-new').appendTo(".product-imgs-preview");
+						
+						product_img_click_listener();
+						select_first_img();
+					}
+
+					reader.readAsDataURL(input.files[i]);
+				}
+			}
+			
+		};
+
+		var removeAllNewAddedPictures = function(input) {
+			$(input).val('');
+			$(".product-img-new").remove();
+		}
+
+		var product_img_click_listener = function(){
+			$(".product-img-new").on("click", function(){
+				$(".product-img").removeClass("selected");
+				$(".product-img-new").removeClass("selected");
+				$(this).addClass("selected");
+				$("#main_img_name").val("");
+				$("#main_img_index").val($(this).index() - 1);
+			})
+		}
+
+		function select_first_img() {
+			if(!$(".product-img").hasClass("selected"))
+				$(".product-img-new:first").trigger("click");
+		}
   	});
 </script>
 <?php $__env->stopSection(); ?>

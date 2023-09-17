@@ -109,7 +109,7 @@ namespace App\Http\Controllers\Shop;
                             $product = $cartItem[0];
 
                             $status = 'nothing';
-                            $deliveryMethodNameX = '';
+                            $deliveryMethodNameX = '';    
                             $deliveryMethodPriceX = 0;
 
                             if ($product->dropNeeded()) {
