@@ -19,7 +19,12 @@
                                     <h5 class="k-portlet__head-title"> <?php echo e($bestsellerProduct->name); ?></h5>
                                 </div>
                                 <div class="card-body">
-                                    <?php echo e($bestsellerProduct->getBaseItem()); ?>
+                                    <?php if($main_img = $bestsellerProduct->getMainImage()): ?>
+                                        <div style="text-align:center">
+                                            <img src="<?php echo e('/files/' . $main_img->img_path); ?>" class="product-img">
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php echo e(__('frontend/shop.from')); ?> <?php echo e($bestsellerProduct->getBasePrice()); ?>
 
                                 </div>
                             </div>

@@ -294,6 +294,9 @@ namespace App\Models;
         }
 
         public function getMainImage(){
-            return ProductImg::where('product_id', $this->id)->where('is_main', 1)->first();
+            $main_img = ProductImg::where('product_id', $this->id)->where('is_main', 1)->first();
+            if($main_img)
+                return $main_img;
+            return ProductImg::where('product_id', $this->id)->first();
         }
     }

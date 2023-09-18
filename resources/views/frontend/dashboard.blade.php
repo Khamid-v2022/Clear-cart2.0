@@ -19,7 +19,12 @@
                                     <h5 class="k-portlet__head-title"> {{ $bestsellerProduct->name }}</h5>
                                 </div>
                                 <div class="card-body">
-                                    {{ $bestsellerProduct->getBaseItem() }}
+                                    @if($main_img = $bestsellerProduct->getMainImage())
+                                        <div style="text-align:center">
+                                            <img src="{{ '/files/' . $main_img->img_path }}" class="product-img">
+                                        </div>
+                                    @endif
+                                    {{ __('frontend/shop.from') }} {{ $bestsellerProduct->getBasePrice() }}
                                 </div>
                             </div>
                         </a>
