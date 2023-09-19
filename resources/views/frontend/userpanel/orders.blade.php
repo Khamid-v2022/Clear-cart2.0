@@ -23,25 +23,37 @@
                                         @foreach($user_orders as $order_shopping)
                                         <tr class="">
                                             <td>
-                                                {{ __('frontend/shop.order_id') }} <span class="text-danger">#{{ $order_shopping->id }}</span>
-                                                <div>
-                                                @foreach($order_shopping->getOrders() as $order)
+                                                <div class="d-flex">
                                                     <div>
-                                                        <span class="product-name text-dark">{{ $order->name }}</span> 
-                                                        <span class="product-quantity text-muted">
-                                                            @if($order->getAmount() > 1)
-                                                                {{ $order->getAmount() }}
+                                                        @if($first_order = $order_shopping->getFirstOrder())
+                                                            @if($product = $first_order->getProduct())
+                                                                @if($main_img = $product->getMainImage())
+                                                                    <img src="{{ '/files/' . $main_img->img_path }}" class="product-img-sm">
+                                                                @endif
                                                             @endif
-                                                            @if($order->asWeight())
-                                                                {{ $order->getWeight() . $order->getWeightChar() }}
-                                                            @endif
-                                                            @if($order->is_variant_type)
-                                                            {{ $order->getVariant()->title}}
-                                                            @endif
-                                                        </span>
+                                                        @endif
                                                     </div>
-                                                @endforeach
-                                                </div>
+                                                    <div>
+                                                        {{ __('frontend/shop.order_id') }} <span class="text-danger">#{{ $order_shopping->id }}</span>
+                                                        <div>
+                                                        @foreach($order_shopping->getOrders() as $order)
+                                                            <div>
+                                                                <span class="product-name text-dark">{{ $order->name }}</span> 
+                                                                <span class="product-quantity text-muted">
+                                                                    @if($order->getAmount() > 1)
+                                                                        {{ $order->getAmount() }}
+                                                                    @endif
+                                                                    @if($order->asWeight())
+                                                                        {{ $order->getWeight() . $order->getWeightChar() }}
+                                                                    @endif
+                                                                    @if($order->is_variant_type)
+                                                                    {{ $order->getVariant()->title}}
+                                                                    @endif
+                                                                </span>
+                                                            </div>
+                                                        @endforeach
+                                                        </div>
+                                                    </div>
                                             </td>
                                             <td>
                                                 {{ \App\Models\Product::getFormattedPriceFromCent($order_shopping->total_price + $order_shopping->delivery_price)  }}

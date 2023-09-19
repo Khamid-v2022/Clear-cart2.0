@@ -53,6 +53,15 @@ namespace App\Models;
             return $orders;
         }
 
+        public function getFirstOrder(){
+            $order = null;
+            $cartEntry = UserCartEntry::where('shopping_id', $this->id)->first();
+            if($cartEntry)
+                $order = UserOrder::where('id', $cartEntry->order_id)->first();
+            return $order;
+        }
+
+
         // public function getOrderDetail()
         // {
         //     return UserOrder::where('order_header_id', $this->id)->get();
