@@ -28,7 +28,15 @@
                                         <?php $__currentLoopData = $shopping->getOrders(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr class="">
                                             <td> #<?php echo e($order->id); ?></td>
-                                            <td><?php echo e($order->name); ?></td>
+                                            <td>
+                                                <?php if($product = $order->getProduct()): ?>
+                                                    <?php if($main_img = $product->getMainImage()): ?>
+                                                        <img src="<?php echo e('/files/' . $main_img->img_path); ?>" class="product-img-sm">
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                                <?php echo e($order->name); ?>
+
+                                            </td>
                                             <td>
                                                 <?php if($order->getAmount() > 1): ?>
                                                     <?php echo e($order->getAmount()); ?>

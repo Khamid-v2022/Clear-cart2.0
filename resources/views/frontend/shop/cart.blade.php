@@ -25,7 +25,12 @@
                                     @foreach($cart as $cartItem)
                                     <tr class="">
                                         <td>
-                                            <a href="{{ route('product-page', $cartItem[0]->id) }}">{{ htmlspecialchars($cartItem[0]->name) }}</a>
+                                            <a href="{{ route('product-page', $cartItem[0]->id) }}">
+                                                @if($main_img = $cartItem[0]->getMainImage())
+                                                    <img src="{{ '/files/' . $main_img->img_path }}" class="product-img-sm">
+                                                @endif
+                                                {{ htmlspecialchars($cartItem[0]->name) }}
+                                            </a>
                                         </td>
                                         <td>
                                             @if($cartItem[0]->asWeight())

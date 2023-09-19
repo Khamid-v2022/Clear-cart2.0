@@ -122,6 +122,7 @@ namespace App\Http\Controllers\Shop;
                             if ($product->isUnlimited()) {
                                 $order = UserOrder::create([
                                     'user_id' => Auth::user()->id,
+                                    'product_id' => $product->id,
                                     'name' => $product->name,
                                     'content' => $product->content,
                                     'amount' => $cartItem[1],
@@ -153,6 +154,7 @@ namespace App\Http\Controllers\Shop;
                             } elseif ($product->asWeight()) {
                                 $order = UserOrder::create([
                                     'user_id' => Auth::user()->id,
+                                    'product_id' => $product->id,
                                     'name' => $product->name,
                                     'amount' => 1,
                                     'content' => $product->content,
@@ -185,6 +187,7 @@ namespace App\Http\Controllers\Shop;
                             } else if($product->asVariant()){
                                 $order = UserOrder::create([
                                     'user_id' => Auth::user()->id,
+                                    'product_id' => $product->id,
                                     'name' => $product->name,
                                     'content' => $product->content,
                                     'amount' => $cartItem[1],
@@ -218,6 +221,7 @@ namespace App\Http\Controllers\Shop;
                             } else if($product->asTiered()){
                                 $order = UserOrder::create([
                                     'user_id' => Auth::user()->id,
+                                    'product_id' => $product->id,
                                     'name' => $product->name,
                                     'content' => $product->content,
                                     'amount' => $cartItem[1],
@@ -269,6 +273,7 @@ namespace App\Http\Controllers\Shop;
     
                                 UserOrder::create([
                                     'user_id' => Auth::user()->id,
+                                    'product_id' => $product->id,
                                     'name' => $product->name,
                                     'amount' => $cartItem[1],
                                     'content' => $productContent,

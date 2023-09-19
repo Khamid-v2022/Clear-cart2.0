@@ -28,7 +28,14 @@
                                         @foreach($shopping->getOrders() as $order)
                                         <tr class="">
                                             <td> #{{ $order->id }}</td>
-                                            <td>{{ $order->name }}</td>
+                                            <td>
+                                                @if($product = $order->getProduct())
+                                                    @if($main_img = $product->getMainImage())
+                                                        <img src="{{ '/files/' . $main_img->img_path }}" class="product-img-sm">
+                                                    @endif
+                                                @endif
+                                                {{ $order->name }}
+                                            </td>
                                             <td>
                                                 @if($order->getAmount() > 1)
                                                     {{ $order->getAmount() }}

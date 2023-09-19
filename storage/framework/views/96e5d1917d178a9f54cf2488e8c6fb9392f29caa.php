@@ -23,7 +23,13 @@
                                     <?php $__currentLoopData = $cart; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cartItem): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr class="">
                                         <td>
-                                            <a href="<?php echo e(route('product-page', $cartItem[0]->id)); ?>"><?php echo e(htmlspecialchars($cartItem[0]->name)); ?></a>
+                                            <a href="<?php echo e(route('product-page', $cartItem[0]->id)); ?>">
+                                                <?php if($main_img = $cartItem[0]->getMainImage()): ?>
+                                                    <img src="<?php echo e('/files/' . $main_img->img_path); ?>" class="product-img-sm">
+                                                <?php endif; ?>
+                                                <?php echo e(htmlspecialchars($cartItem[0]->name)); ?>
+
+                                            </a>
                                         </td>
                                         <td>
                                             <?php if($cartItem[0]->asWeight()): ?>

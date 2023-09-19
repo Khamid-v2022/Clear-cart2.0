@@ -30,6 +30,13 @@
     border-radius: 10px;
 }
 
+.product-img-sm {
+    height: 80px;
+    width: auto;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
 .product-imgs-preview .product-img.selected, .product-imgs-preview .product-img-new.selected  {
     border: 5px solid rgba(246, 176, 177, .3);
 }

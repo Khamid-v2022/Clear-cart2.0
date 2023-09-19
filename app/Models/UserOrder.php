@@ -6,6 +6,7 @@ namespace App\Models;
     use App\Models\User;
     use App\Models\UserOrderNote;
     use App\Models\UserCartShopping;
+    use App\Models\Product;
     use App\Models\ProductVariant;
     use DB;
     use Illuminate\Database\Eloquent\Model;
@@ -15,12 +16,16 @@ namespace App\Models;
         protected $table = 'users_orders';
 
         protected $fillable = [
-            'user_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice',  'delivery_method', 'delivery_price', 'is_variant_type', 'variant_id'
+            'user_id', 'product_id', 'name', 'content', 'price_in_cent', 'amount', 'status', 'weight', 'weight_char', 'totalprice',  'delivery_method', 'delivery_price', 'is_variant_type', 'variant_id'
         ];
 
         public static function getById($id)
         {
             return self::where('id', $id)->first();
+        }
+
+        public function getProduct(){
+            return Product::where('id', $this->product_id)->first();
         }
 
         public static function getTodayWin()
