@@ -19,6 +19,7 @@
                 'cancelled' => 'Cancelled',
                 'pending' => 'Pending',
             ],
+            'order_summary' => 'Order Summary',
         ],
 
         'sale' => ':percent%',
@@ -27,8 +28,10 @@
             'sale' => 'Sale',
         ],
 
+        'delivery' => 'Delivery',
         'delivery_method' => [
             'title' => 'Delivery method:',
+            'address' => 'Address',
             'row' => ':name (+:price)',
             'minmaxinfo' => 'Für Bestellungen zwischen :min - :max',
             'select_delivery_method' => 'Select Method'
@@ -49,6 +52,7 @@
             'city' => 'City',
             'country' => 'Country'
         ],
+        'order_date' => 'Order Date',
         'order_note' => 'Drop',
         'orders_status' => 'Status:',
         'orders_order_note' => 'Drop:',
@@ -88,6 +92,7 @@
         'to_shop' => 'Back to shop',
         'confirm' => 'Confirm',
         'total_price' => 'Total price:',
+        'total' => 'Total',
         'product_confirm_buy' => 'Confirm',
         'start_video_alert' => 'Start a video now, before you press the buy button!',
         'replace_rules_alert' => 'Note the replace rules!',
@@ -95,5 +100,6 @@
         'product_details' => 'Product-Details',
         'starting_from' => 'Starting From:',
         'from' => 'From:',
-        
+        'payment' => 'Payment',
+        'need_help' => 'Need Help',
     ];

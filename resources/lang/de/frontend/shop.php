@@ -19,6 +19,7 @@
                 'cancelled' => 'Stoniert',
                 'pending' => 'In Wartestellung',
             ],
+            'order_summary' => 'Overzicht van de Bestelling',
         ],
 
         'sale' => ':percent%',
@@ -27,8 +28,10 @@
             'sale' => 'Sale',
         ],
 
+        'delivery' => 'Levering',
         'delivery_method' => [
             'title' => 'Versandart:',
+            'address' => 'Adres',
             'row' => ':name (+:price)',
             'minmaxinfo' => 'Für Bestellungen zwischen :min - :max',
             'select_delivery_method' => 'Selecteer Methode'
@@ -50,6 +53,7 @@
             'city' => 'Stad',
             'country' => 'Land'
         ],
+        'order_date' => 'Besteldatum',
         'orders_status' => 'Status:',
         'orders_order_note' => 'Drop:',
         'order_note_placeholder' => 'Lieferanschrift (HD / PS / BKD...)',
@@ -88,6 +92,7 @@
         'to_shop' => 'Zum Shop',
         'confirm' => 'Bestätigen',
         'total_price' => 'Gesamtpreis:',
+        'total' => 'Totaal',
         'product_confirm_buy' => 'Kauf bestätigen',
         'start_video_alert' => 'Starte jetzt ein Video, bevor du den Kauf-Button betätigst!',
         'replace_rules_alert' => 'Beachte die Replace-Regeln!',
@@ -95,5 +100,6 @@
         'product_details' => 'Produkt-Details',
         'starting_from' => 'Beginnend vanaf:',
         'from' => 'Vanaf:',
-        
+        'payment' => 'Betaling',
+        'need_help' => 'Hulp nodig',
     ];

@@ -562,7 +562,8 @@ namespace App\Http\Controllers\Backend\Management;
                                 $del_img_ids = explode (",", $deleted_img_ids);
                                 foreach($del_img_ids as $del_img_id){
                                     $del_img = ProductImg::where('id', $del_img_id)->first();
-                                    unlink(public_path('files') . "/" . $del_img->img_path);
+                                    if(file_exists(public_path('files') . "/" . $del_img->img_path))
+                                        unlink(public_path('files') . "/" . $del_img->img_path);
                                     $del_img->delete();
                                 }
                             }

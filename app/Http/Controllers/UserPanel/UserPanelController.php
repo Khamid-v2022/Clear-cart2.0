@@ -296,7 +296,6 @@ namespace App\Http\Controllers\UserPanel;
 
         public function showOrdersDetailPage($header_id) {
             $shopping = UserCartShopping::where('id', $header_id)->first();
-
             return view('frontend/userpanel.order_details', [
                 'shopping' => $shopping,
             ]);

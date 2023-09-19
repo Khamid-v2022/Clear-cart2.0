@@ -1,3 +1,5 @@
+/* Basic */
+
 .text-start {
     text-align: start!important;
 }
@@ -9,6 +11,15 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+
+.table td, .table th {
+    vertical-align: middle;
+}
+/* End Basic */
+
+
+/* Each page */
 
 /* Product add */
 .delete-variant, .delete-tiered {
@@ -51,4 +62,53 @@
     right: 14px;
     font-size: 23px;
     cursor: pointer;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.delivery-steps {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    position: relative;
+}
+
+.delivery-steps .delivery-step-bar {
+    height: 6px;
+    background-color: gray;
+    position: absolute;
+    top: 64px;
+    /* left: 130px; */
+    /* width: calc(100% - 260px); */
+    width: 76%;
+    left: 12%;
+}
+
+.delivery-steps .delivery-step-item {
+    text-align: center;
+}
+
+.delivery-steps .delivery-step-item .delivery-step-dot {
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.delivery-steps .delivery-step-item.active .delivery-step-dot {
+    background-color: green;
+}
+
+.delivery-steps .delivery-step-item.active h6 {
+    color: green;
 }
