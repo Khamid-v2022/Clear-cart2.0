@@ -10,11 +10,12 @@
                 <div class="card-header">{{ __('frontend/user.payment_methods') }}</div>
 
                 <div class="card-body">
-                    <a href="{{ route('deposit-btc') }}" class="btn btn-warning btn-cashin @if(!App\Classes\BitcoinAPI::connected()) disabled @endif">{{ __('frontend/user.cashin_btc_button') }}</a>
+                    <!-- <a href="{{ route('deposit-btc') }}" class="btn btn-warning btn-cashin @if(!App\Classes\BitcoinAPI::connected()) disabled @endif">{{ __('frontend/user.cashin_btc_button') }}</a> -->
+                    <a href="{{ route('deposit-btc') }}" class="btn btn-warning btn-cashin">{{ __('frontend/user.cashin_btc_button') }}</a>
                 </div>
             </div>
 
-            <div class="card mt-15">
+            <!-- <div class="card mt-15">
                 <div class="card-header">{{ __('frontend/user.coupon_redeem.title') }}</div>
 
                 <div class="card-body">
@@ -44,7 +45,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

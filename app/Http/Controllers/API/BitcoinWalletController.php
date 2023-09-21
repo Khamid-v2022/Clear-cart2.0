@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+    namespace App\Http\Controllers\API;
 
     use App\Classes\BitcoinAPI;
     use App\Http\Controllers\Controller;

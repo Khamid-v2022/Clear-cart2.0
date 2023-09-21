@@ -4,6 +4,7 @@ namespace App\Http\Controllers\UserPanel;
 
     use App\Classes\BitcoinAPI;
     use App\Http\Controllers\Controller;
+    use App\Http\Controllers\API\BtcpayApiService;
     use App\Models\Coupon;
     use App\Models\UserCouponCheckout;
     use App\Models\UserOrder;
@@ -225,39 +226,80 @@ namespace App\Http\Controllers\UserPanel;
             }
         }
 
+        // public function showDepositBtcPage_Backup()
+        // {
+        //     $userTransaction = UserTransaction::where([
+        //         ['user_id', '=', Auth::user()->id],
+        //         ['status', '=', 'waiting'],
+        //         ['payment_method', '=', 'btc'],
+        //     ])->orderByDesc('created_at')->get()->first();
+
+        //     if ($userTransaction == null) {
+        //         $bitcoind = BitcoinAPI::getBitcoinClient();
+        //         $btcWallet = $bitcoind->getnewaddress(Auth::user()->username, 'p2sh-segwit');
+
+        //         $userTransaction = UserTransaction::create([
+        //             'user_id' => Auth::user()->id,
+        //             'wallet' => encrypt($btcWallet),
+        //             'status' => 'waiting',
+        //             'payment_method' => 'btc',
+        //             'amount' => 0,
+        //             'amount_cent' => 0,
+        //             'txid' => '',
+        //         ]);
+        //     } else {
+        //         $btcWallet = decrypt($userTransaction->wallet);
+        //     }
+
+        //     return view('frontend/userpanel.deposit_btc', [
+        //         'btcWallet' => $btcWallet,
+        //         'clipboardJS' => (object) [
+        //             'element' => '.btc-cashin-copy-btn',
+        //             'fadeIn' => '.btc-cashin-copy-info',
+        //         ],
+        //         'userTransactionID' => $userTransaction->id,
+        //     ]);
+        // }
+
         public function showDepositBtcPage()
         {
-            $userTransaction = UserTransaction::where([
-                ['user_id', '=', Auth::user()->id],
-                ['status', '=', 'waiting'],
-                ['payment_method', '=', 'btc'],
-            ])->orderByDesc('created_at')->get()->first();
+            $btcInstance = new BtcpayApiService;
+            $invoice = $btcInstance->createInvoice([]);
 
-            if ($userTransaction == null) {
-                $bitcoind = BitcoinAPI::getBitcoinClient();
-                $btcWallet = $bitcoind->getnewaddress(Auth::user()->username, 'p2sh-segwit');
+            
+            redirect($invoice['metadata']['orderUrl']);
 
-                $userTransaction = UserTransaction::create([
-                    'user_id' => Auth::user()->id,
-                    'wallet' => encrypt($btcWallet),
-                    'status' => 'waiting',
-                    'payment_method' => 'btc',
-                    'amount' => 0,
-                    'amount_cent' => 0,
-                    'txid' => '',
-                ]);
-            } else {
-                $btcWallet = decrypt($userTransaction->wallet);
-            }
+            // $userTransaction = UserTransaction::where([
+            //     ['user_id', '=', Auth::user()->id],
+            //     ['status', '=', 'waiting'],
+            //     ['payment_method', '=', 'btc'],
+            // ])->orderByDesc('created_at')->get()->first();
 
-            return view('frontend/userpanel.deposit_btc', [
-                'btcWallet' => $btcWallet,
-                'clipboardJS' => (object) [
-                    'element' => '.btc-cashin-copy-btn',
-                    'fadeIn' => '.btc-cashin-copy-info',
-                ],
-                'userTransactionID' => $userTransaction->id,
-            ]);
+            // if ($userTransaction == null) {
+            //     $bitcoind = BitcoinAPI::getBitcoinClient();
+            //     $btcWallet = $bitcoind->getnewaddress(Auth::user()->username, 'p2sh-segwit');
+
+            //     $userTransaction = UserTransaction::create([
+            //         'user_id' => Auth::user()->id,
+            //         'wallet' => encrypt($btcWallet),
+            //         'status' => 'waiting',
+            //         'payment_method' => 'btc',
+            //         'amount' => 0,
+            //         'amount_cent' => 0,
+            //         'txid' => '',
+            //     ]);
+            // } else {
+            //     $btcWallet = decrypt($userTransaction->wallet);
+            // }
+
+            // return view('frontend/userpanel.deposit_btc', [
+            //     'btcWallet' => $btcWallet,
+            //     'clipboardJS' => (object) [
+            //         'element' => '.btc-cashin-copy-btn',
+            //         'fadeIn' => '.btc-cashin-copy-info',
+            //     ],
+            //     'userTransactionID' => $userTransaction->id,
+            // ]);
         }
 
         public function depositEthPaidCheck($userTransactionID)

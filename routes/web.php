@@ -180,8 +180,8 @@
     // Route::get('admin/media/delete/{id}', 'Backend\MediaController@delete')->name('backend-media-delete');
 
     // System Payments - No longer Use
-    // Route::get('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments');
-    // Route::post('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments-form');
+    Route::get('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments');
+    Route::post('admin/system/payments', 'Backend\System\PaymentsController@showPayments')->name('backend-system-payments-form');
 
     // Bitcoin Wallet
     Route::get('admin/bitcoin', 'Backend\Bitcoin\DashboardController@showDashboardPage')->name('backend-bitcoin-dashboard');

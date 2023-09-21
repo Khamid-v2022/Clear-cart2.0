@@ -336,6 +336,16 @@
 															</a>
 														</li>
 														@endif
+														<!-- @if(Auth::user()->hasPermission('system_payments'))
+														<li class="k-menu__item" aria-haspopup="true">
+															<a href="{{ route('backend-system-payments') }}" class="k-menu__link ">
+																<i class="k-menu__link-bullet k-menu__link-bullet--line">
+																<span></span>
+																</i>
+																<span class="k-menu__link-text">{{ __('backend/system.payments.title') }}</span>
+															</a>
+														</li>
+														@endif -->
 													</ul>
 												</div>
 											</li>
