@@ -35,7 +35,7 @@
 																	</span>
 																@endif
 															</div>
-															<div class="form-group">
+															<!-- <div class="form-group">
 																<label for="settings_api_enabled">{{ __('backend/system.settings.api_enabled') }}</label>
 																<select name="settings_api_enabled" id="settings_api_enabled" class="form-control @if($errors->has('settings_api_enabled')) is-invalid @endif">
 																	<option>{{ __('backend/system.settings.please_choose') }}</option>
@@ -162,7 +162,7 @@
 																		<strong>{{ $errors->first('available_locales') }}</strong>
 																	</span>
 																@endif
-															</div>
+															</div> -->
 														</div>
 													</div>
 													<div class="kt-portlet__foot">
