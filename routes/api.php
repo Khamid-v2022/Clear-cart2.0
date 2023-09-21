@@ -8,6 +8,6 @@
         return $request->user();
     });
 
-    // Route::group(['prefix' => 'api', 'middleware' => 'api'], function() {
-    //     Route::post('btcpay/webhook', 'API\BTCWebhook');
-    // });
+    Route::group(['middleware' => 'api'], function() {
+        Route::post('btcpay/webhook', 'API\BTCWebhook');
+    });

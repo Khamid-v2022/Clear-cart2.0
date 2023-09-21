@@ -10,12 +10,7 @@ use App\Models\User;
 class BTCWebhook extends Controller
 {
 
-    // public function __invoke(Request $request){
-
-    // }
-
-    public function processWebhook(Request $request)
-    {
+    public function __invoke(Request $request){
         $secret = config('btcpayserver.default.secret');  // Get BTCpay secret from config/app.php
         $signature = $request->header('BTCPay-Sig');
         $payload = $request->getContent();
@@ -59,7 +54,5 @@ class BTCWebhook extends Controller
             // Signature does not match
             return response()->json(['error' => 'Unauthorized attempt.'], 401);
         }
-
     }
-
 }

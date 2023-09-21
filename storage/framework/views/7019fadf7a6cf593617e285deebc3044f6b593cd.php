@@ -336,7 +336,7 @@
 															</a>
 														</li>
 														<?php endif; ?>
-														<?php if(Auth::user()->hasPermission('system_payments')): ?>
+														<!-- <?php if(Auth::user()->hasPermission('system_payments')): ?>
 														<li class="k-menu__item" aria-haspopup="true">
 															<a href="<?php echo e(route('backend-system-payments')); ?>" class="k-menu__link ">
 																<i class="k-menu__link-bullet k-menu__link-bullet--line">
@@ -345,7 +345,7 @@
 																<span class="k-menu__link-text"><?php echo e(__('backend/system.payments.title')); ?></span>
 															</a>
 														</li>
-														<?php endif; ?>
+														<?php endif; ?> -->
 													</ul>
 												</div>
 											</li>

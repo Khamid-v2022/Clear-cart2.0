@@ -266,8 +266,8 @@ namespace App\Http\Controllers\UserPanel;
             $btcInstance = new BtcpayApiService;
             $invoice = $btcInstance->createInvoice([]);
 
-            
-            redirect($invoice['metadata']['orderUrl']);
+            var_dump($invoice);
+            // redirect($invoice['metadata']['orderUrl']);
 
             // $userTransaction = UserTransaction::where([
             //     ['user_id', '=', Auth::user()->id],

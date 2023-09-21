@@ -25,10 +25,7 @@ class BtcpayApiService
         $this->client = new Client([
             'base_uri' => "$host/api/v1/stores/$storeId/",
             'headers' => [
-                'Authorization' => [
-                    'Basic ' . $credentials,
-                    'token ' . $apiKey
-                ],
+                'Authorization' => ['Basic ' . $credentials],
                 'Accept' => 'application/json',
             ],
         ]);
@@ -43,7 +40,7 @@ class BtcpayApiService
 
     public function createInvoice(array $data)
     {
-        $response = $this->client->get('invoices', [
+        $response = $this->client->post('invoices', [
             'json' => $data,
         ]);
 
