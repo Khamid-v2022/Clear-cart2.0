@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\UserTransaction;
 use Illuminate\Http\Request;
 use App\Models\User;
+// use App\Models\Article;
+
 
 class BTCWebhook extends Controller
 {
@@ -49,6 +51,8 @@ class BTCWebhook extends Controller
                         ]);
                     }
                 }
+            } else {
+                return response()->json(['error' => 'No transaction'], 401);
             }
         } else {
             // Signature does not match
