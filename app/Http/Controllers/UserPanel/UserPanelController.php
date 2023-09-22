@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UserPanel;
+    namespace App\Http\Controllers\UserPanel;
 
     use App\Classes\BitcoinAPI;
     use App\Http\Controllers\Controller;
@@ -15,6 +15,14 @@ namespace App\Http\Controllers\UserPanel;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use Validator;
+
+
+    // Include autoload file.
+
+    // Import Invoice client class.
+    use BTCPayServer\Client\Invoice;
+    use BTCPayServer\Client\InvoiceCheckoutOptions;
+    use BTCPayServer\Util\PreciseNumber;
 
     class UserPanelController extends Controller
     {
@@ -261,13 +269,38 @@ namespace App\Http\Controllers\UserPanel;
         //     ]);
         // }
 
-        public function showDepositBtcPage()
+        public function showDepositBtcPage(Request $request)
         {
-            $btcInstance = new BtcpayApiService;
-            $invoice = $btcInstance->createInvoice([]);
+            $amount = $request->amount;
 
-            var_dump($invoice);
-            // redirect($invoice['metadata']['orderUrl']);
+            $userTransaction = UserTransaction::where([
+                ['user_id', '=', Auth::user()->id],
+                ['status', '=', 'waiting'],
+                ['payment_method', '=', 'btc'],
+            ])->orderByDesc('created_at')->get()->first();
+            if($userTransaction){
+                $response = ['code'=> 201];
+                return response()->json($response);
+            }
+
+            $client = new BtcpayApiService;
+            $response = $client->createInvoice([
+                "amount"=> $amount / 100,
+                "currency"=> "USD"
+            ]);
+
+            $userTransaction = UserTransaction::create([
+                'user_id' => Auth::user()->id,
+                'wallet' => encrypt($response['checkoutLink']),
+                'status' => 'waiting',
+                'payment_method' => 'btc',
+                'amount' => $amount / 100,
+                'amount_cent' => $response['amount'],
+                'txid' => $response['id'],
+            ]);
+
+
+            return response()->json($response);
 
             // $userTransaction = UserTransaction::where([
             //     ['user_id', '=', Auth::user()->id],
@@ -292,14 +325,14 @@ namespace App\Http\Controllers\UserPanel;
             //     $btcWallet = decrypt($userTransaction->wallet);
             // }
 
-            // return view('frontend/userpanel.deposit_btc', [
-            //     'btcWallet' => $btcWallet,
-            //     'clipboardJS' => (object) [
-            //         'element' => '.btc-cashin-copy-btn',
-            //         'fadeIn' => '.btc-cashin-copy-info',
-            //     ],
-            //     'userTransactionID' => $userTransaction->id,
-            // ]);
+            return view('frontend/userpanel.deposit_btc', [
+                'btcWallet' => $btcWallet,
+                'clipboardJS' => (object) [
+                    'element' => '.btc-cashin-copy-btn',
+                    'fadeIn' => '.btc-cashin-copy-info',
+                ],
+                'userTransactionID' => $userTransaction->id,
+            ]);
         }
 
         public function depositEthPaidCheck($userTransactionID)

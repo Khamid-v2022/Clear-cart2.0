@@ -91,7 +91,8 @@
     // Route::post('settings/mail-address/change', 'UserPanel\UserPanelController@mailAddressChangeForm')->name('settings-mail-address-change');
 
     Route::get('deposit', 'UserPanel\UserPanelController@showDepositPage')->name('deposit');
-    Route::get('deposit-btc', 'UserPanel\UserPanelController@showDepositBtcPage')->name('deposit-btc');
+    // Route::get('deposit-btc', 'UserPanel\UserPanelController@showDepositBtcPage')->name('deposit-btc');
+    Route::post('deposit-btc', 'UserPanel\UserPanelController@showDepositBtcPage')->name('deposit-btc');
     Route::post('deposit-btc/{id}', 'UserPanel\UserPanelController@depositBtcPaidCheck')->name('deposit-btc-post');
     Route::get('deposit-eth', 'UserPanel\UserPanelController@showDepositEthPage')->name('deposit-eth');
     Route::post('deposit-eth/{id}', 'UserPanel\UserPanelController@depositEthPaidCheck')->name('deposit-eth-post');

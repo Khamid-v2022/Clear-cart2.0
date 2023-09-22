@@ -10,11 +10,6 @@ class BtcpayApiService
 
     public function __construct()
     {
-	    // $email = Config::get('btcpayserver.default.email');
-        // $password = Config::get('btcpayserver.default.password');
-        // $storeId = Config::get('btcpayserver.default.storeid');
-	    // $apiKey = Config::get('btcpayserver.default.apikey');
-        // $host = Config::get('btcpayserver.default.host');
         $email = config('btcpayserver.default.email');
         $password = config('btcpayserver.default.password');
         $storeId = config('btcpayserver.default.storeid');
@@ -25,7 +20,10 @@ class BtcpayApiService
         $this->client = new Client([
             'base_uri' => "$host/api/v1/stores/$storeId/",
             'headers' => [
-                'Authorization' => ['Basic ' . $credentials],
+                'Authorization' => [
+                    'Basic ' . $credentials,
+                    // 'token ' . $apiKey
+                ],
                 'Accept' => 'application/json',
             ],
         ]);
