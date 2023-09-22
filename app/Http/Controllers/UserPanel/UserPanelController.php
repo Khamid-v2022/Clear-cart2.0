@@ -296,7 +296,7 @@
                 'status' => 'waiting',
                 'payment_method' => 'btc',
                 'amount' => $amount / 100,
-                'amount_cent' => $response['amount'],
+                'amount_cent' => $amount,
                 'txid' => $response['id']
             ]);
 
