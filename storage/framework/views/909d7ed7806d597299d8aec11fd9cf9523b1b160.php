@@ -92,8 +92,8 @@
             e.preventDefault();
 
             const amount = parseInt($("#pay_amount").val());
-            if(amount < 500) {
-                alert("The minimum amount is 500(5 EURO).");
+            if(amount < 100) {
+                alert("The minimum amount is 100(1 EURO).");
                 return;
             }
 
@@ -111,8 +111,9 @@
                     // close the modal
                     $("#payBTC_modal").modal('hide');
 
-                    let params = `width=480,height=760,left=100,top=200`;
+                    let params = `width=480,height=760,left=100,top=100`;
                     window.open(resp.checkoutLink, 'mywindow', params).focus();
+
                     alert("It may take up to 1 hour for your payment to be processed.");
                 }
                     

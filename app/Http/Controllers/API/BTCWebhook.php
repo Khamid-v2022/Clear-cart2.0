@@ -35,8 +35,7 @@ class BTCWebhook extends Controller
                         'status' => 'expired',
                     ]);
                 } elseif ($response['type'] == 'InvoiceSettled' || 
-                $response['type'] == 'InvoicePaymentSettled' || 
-                $response['type'] == 'InvoiceReceivedPayment') {
+                $response['type'] == 'InvoicePaymentSettled') {
                     $userTransaction->update([
                         'status' => 'paid',
                         'confirmations' => 1

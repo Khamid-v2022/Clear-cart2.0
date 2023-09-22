@@ -14,7 +14,7 @@ namespace App\Models;
         protected $table = 'users_transactions';
 
         protected $fillable = [
-            'user_id', 'wallet', 'txids', 'confirmations', 'status', 'amount', 'amount_cent', 'payment_method',
+            'user_id', 'wallet', 'txid', 'confirmations', 'status', 'amount', 'amount_cent', 'payment_method',
         ];
 
         public static function getById($id)

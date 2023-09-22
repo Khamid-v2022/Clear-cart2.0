@@ -92,8 +92,8 @@
             e.preventDefault();
 
             const amount = parseInt($("#pay_amount").val());
-            if(amount < 500) {
-                alert("The minimum amount is 500(5 EURO).");
+            if(amount < 100) {
+                alert("The minimum amount is 100(1 EURO).");
                 return;
             }
 

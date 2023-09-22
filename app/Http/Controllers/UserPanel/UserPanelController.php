@@ -273,15 +273,16 @@
         {
             $amount = $request->amount;
 
-            $userTransaction = UserTransaction::where([
-                ['user_id', '=', Auth::user()->id],
-                ['status', '=', 'waiting'],
-                ['payment_method', '=', 'btc'],
-            ])->orderByDesc('created_at')->get()->first();
-            if($userTransaction){
-                $response = ['code'=> 201];
-                return response()->json($response);
-            }
+            // $userTransaction = UserTransaction::where([
+            //     ['user_id', '=', Auth::user()->id],
+            //     ['status', '=', 'waiting'],
+            //     ['payment_method', '=', 'btc'],
+            // ])->orderByDesc('created_at')->get()->first();
+
+            // if($userTransaction){
+            //     $response = ['code'=> 201];
+            //     return response()->json($response);
+            // }
 
             $client = new BtcpayApiService;
             $response = $client->createInvoice([
@@ -296,7 +297,7 @@
                 'payment_method' => 'btc',
                 'amount' => $amount / 100,
                 'amount_cent' => $response['amount'],
-                'txid' => $response['id'],
+                'txid' => $response['id']
             ]);
 
 
