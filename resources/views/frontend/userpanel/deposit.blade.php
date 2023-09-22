@@ -111,7 +111,9 @@
                     // close the modal
                     $("#payBTC_modal").modal('hide');
 
-                    window.open(resp.checkoutLink,'mywindow').focus();
+                    let params = `width=480,height=760,left=100,top=100`;
+                    window.open(resp.checkoutLink, 'mywindow', params).focus();
+
                     alert("It may take up to 1 hour for your payment to be processed.");
                 }
                     
