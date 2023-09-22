@@ -31,15 +31,13 @@
                                     <td>{{ strtoupper($transaction->payment_method) }}</td>
                                     <td>{{ strlen($transaction->wallet) ? decrypt($transaction->wallet) : '' }}</td>
                                     <td style="max-width:200px;">
-                                        @if(strlen($transaction->txids) > 0)
-                                            @foreach(explode(',', decrypt($transaction->txids)) as $txid)
+                                        @if(strlen($transaction->txid) > 0)
                                             <div>
-                                                <a href="https://blockchain.info/tx/{{ $txid }}" target="_blockchain_{{ $loop->iteration }}">
-                                                    {{ $txid }}
+                                                <a href="https://btcpay0.voltageapp.io/i/{{ $transaction->txid }}" target="_blockchain_{{ $loop->iteration }}">
+                                                    {{ $transaction->txid }}
                                                     <ion-icon name="open"></ion-icon>
                                                 </a>
                                             </div>
-                                            @endforeach
                                         @endif
                                     </td>
                                     <td>
@@ -68,7 +66,7 @@
                                     </td>
                                     <td>
                                         @if(!$transaction->isWaiting() && strlen($transaction->txid) > 0)
-                                        <a href="https://blockchain.info/tx/{{ decrypt($transaction->txid) }}" target="_blockchain_{{ $transaction->id }}">
+                                        <a href="https://btcpay0.voltageapp.io/i/{{ $transaction->txid }}" target="_blockchain_{{ $transaction->id }}">
                                             Blockchain
                                             <ion-icon name="open"></ion-icon>
                                         </a>

@@ -381,6 +381,7 @@
         {
             $user_transactions = UserTransaction::where('user_id', Auth::user()->id)->orderByDesc('created_at')->paginate(5, ['*'], 'page', $pageNumber);
 
+
             if ($pageNumber > $user_transactions->lastPage() || $pageNumber <= 0) {
                 return redirect()->route('transactions-with-pageNumber', 1);
             }
