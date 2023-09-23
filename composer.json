@@ -20,7 +20,9 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "mews/captcha": "^3.2"
+        "livewire/livewire": "^2.12",
+        "mews/captcha": "^3.2",
+        "rap2hpoutre/laravel-log-viewer": "^2.3"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

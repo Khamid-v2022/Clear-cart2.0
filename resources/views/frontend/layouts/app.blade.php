@@ -21,6 +21,8 @@
         ])
         @endif
 
+        @livewireStyles
+
         <!-- Fonts -->
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
         <link href="//fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap" rel="stylesheet" type="text/css" />
@@ -55,6 +57,18 @@
         <script src="{{ asset_dir('admin/assets/vendors/general/jquery/dist/jquery.js') }}" type="text/javascript"></script>
         <script src="{{ asset_dir('admin/assets/vendors/general/jquery-form/dist/jquery.form.min.js') }}" type="text/javascript"></script>
 
+        <!-- font awesome css-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css ">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
+            integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+        <!-- BEGIN: Page Level CSS-->
+        @stack('css')
+        <!-- END: Page Level CSS-->
         
     </head>
     <body>
@@ -138,25 +152,13 @@
                                             <a class="nav-link" href="{{ route('faq') }}">{{ __('frontend/main.faq') }}</a>
                                         </li>
 
-                                        @auth
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdownShop" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        @if(Auth::check() && Auth::user()->role_id == "2")
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('chat.dashboard') }}">
                                                 {{ __('frontend/main.tickets') }}
                                             </a>
-
-                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="{{ route('tickets') }}">
-                                                    {{ __('frontend/main.my_tickets') }}
-                                                </a>
-                                            
-                                                <div class="dropdown-divider"></div>
-
-                                                <a class="dropdown-item" href="{{ route('ticket-create') }}">
-                                                    {{ __('frontend/main.create_ticket') }}
-                                                </a>
-                                            </div>
                                         </li>
-                                        @endauth
+                                        @endif
                                     </ul>
 
                                     <ul class="navbar-nav ml-auto">
@@ -307,6 +309,15 @@
 
         <!-- Scripts -->
         <script src="{{ asset_dir('vendor/jquery-3.3.1/js/jquery-3.3.1.min.js') }}" defer></script>
+        <script>
+            var publicPath = "{!! URL::to('/'); !!}/";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            
+        </script>
         <script src="{{ asset_dir('vendor/bootstrap-4.1.3/js/bootstrap.min.js') }}" defer></script>
 
         <script src="//unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script>
@@ -441,7 +452,26 @@
             @endif
         </script>
 
+
+        <!-- font awesome js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js
+        "></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.all.min.js
+        "></script>
+            <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.min.css
+        " rel="stylesheet">
+
+        <!--- toaster cdn --->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script src=" {{ asset('frontend/js/alert.js?t=') }}<?= time() ?>"></script>
+
         @section('page_scripts')
         @show
+
+        @stack('js')
     </body>
 </html>

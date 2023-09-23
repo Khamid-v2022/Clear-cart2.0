@@ -16,7 +16,7 @@
                                 <tr>
                                     <th scope="col">{{ __('frontend/user.tickets.id') }}</th>
                                     <th scope="col">{{ __('frontend/user.tickets.subject') }}</th>
-                                    <th scope="col">{{ __('frontend/user.tickets.category') }}</th>
+                                    {{-- <th scope="col">{{ __('frontend/user.tickets.category') }}</th> --}}
                                     <th scope="col">{{ __('frontend/user.tickets.status') }}</th>
                                     <th scope="col">{{ __('frontend/user.tickets.date') }}</th>
                                     <th scope="col">{{ __('frontend/user.tickets.actions') }}</th>
@@ -24,33 +24,37 @@
                             </thead>
                             <tbody>
                                 @foreach($user_tickets as $ticket)
-                                <tr class="@if($ticket->isClosed()) bg-light @elseif($ticket->isReplied()) bg-light-2 @endif">
+                                <tr
+                                    class="@if($ticket->isClosed()) bg-light @elseif($ticket->isReplied()) bg-light-2 @endif">
                                     <th scope="row">#{{ $ticket->id }}</th>
-									
+
                                     <td>
-										<a href="{{ route('ticket-id', $ticket->id) }}">{{ substr($ticket->subject, 0, 255) }}</a>
-									</td>
-									
-                                    <td>{{ $ticket->getCategory()->name }}</td>
-                                    
+                                        <a href="{{ route('ticket-id', $ticket->id) }}">{{ substr($ticket->subject, 0,
+                                            255) }}</a>
+                                    </td>
+
+                                    {{-- <td>{{ $ticket->getCategory()->name }}</td> --}}
+
                                     <td>
                                         @if($ticket->isClosed())
-										    {{ __('frontend/user.tickets.status_data.closed') }}
-										@else
-											@if(!$ticket->isReplied())
-                                                {{ __('frontend/user.tickets.status_data.open') }}
-											@else
-                                                {{ __('frontend/user.tickets.status_data.replied') }}
-											@endif
-										@endif
+                                        {{ __('frontend/user.tickets.status_data.closed') }}
+                                        @else
+                                        @if(!$ticket->isReplied())
+                                        {{ __('frontend/user.tickets.status_data.open') }}
+                                        @else
+                                        {{ __('frontend/user.tickets.status_data.replied') }}
+                                        @endif
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $ticket->getDate() }}
                                     </td>
                                     <td>
-										<a href="{{ route('ticket-id', $ticket->id) }}">{{ __('frontend/user.tickets.view') }}</a>
-										<span class="span-divider">|</span>
-										<a href="{{ route('ticket-delete', $ticket->id) }}">{{ __('frontend/user.tickets.delete') }}</a>
+                                        <a href="{{ route('ticket-id', $ticket->id) }}">{{
+                                            __('frontend/user.tickets.view') }}</a>
+                                        <span class="span-divider">|</span>
+                                        <a href="{{ route('ticket-delete', $ticket->id) }}">{{
+                                            __('frontend/user.tickets.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -61,9 +65,9 @@
                 </div>
             </div>
             @else
-                <div class="alert alert-warning">
-                    {{ __('frontend/user.tickets.no_tickets_exists') }}
-                </div>  
+            <div class="alert alert-warning">
+                {{ __('frontend/user.tickets.no_tickets_exists') }}
+            </div>
             @endif
         </div>
     </div>

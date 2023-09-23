@@ -2,31 +2,33 @@
 
 namespace App\Providers;
 
-    use App;
-    use App\Models\Setting;
-    use Config;
-    use Illuminate\Support\Facades\Schema;
-    use Illuminate\Support\ServiceProvider;
+use App;
+use App\Models\Setting;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
-    class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
     {
-        public function boot()
-        {
-            \Illuminate\Pagination\Paginator::useBootstrap();
-            // \URL::forceScheme('http');
+        Paginator::defaultView('vendor.pagination.bootstrap-4');
 
-            if (Schema::hasTable('settings')) {
-                foreach (Setting::all() as $setting) {
-                    Config::set($setting->key, Setting::get($setting->key));
+        // \URL::forceScheme('http');
 
-                    if (strtolower($setting->key) == 'app.locale') {
-                        App::setLocale(strtolower($setting->value));
-                    }
+        if (Schema::hasTable('settings')) {
+            foreach (Setting::all() as $setting) {
+                Config::set($setting->key, Setting::get($setting->key));
+
+                if (strtolower($setting->key) == 'app.locale') {
+                    App::setLocale(strtolower($setting->value));
                 }
             }
         }
-
-        public function register()
-        {
-        }
     }
+
+    public function register()
+    {
+    }
+}

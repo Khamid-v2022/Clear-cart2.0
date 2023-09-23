@@ -78,6 +78,13 @@
 
 		<!-- Custom CSS -->
 		<link href="<?php echo e(asset_dir('css/custom.css')); ?>" rel="stylesheet" type="text/css" />
+			
+		<?php echo \Livewire\Livewire::styles(); ?>
+
+
+		<!-- BEGIN: Page Level CSS-->
+		<?php echo $__env->yieldPushContent('css'); ?>
+		<!-- END: Page Level CSS-->
 	</head>
 
 	<!-- end::Head -->
@@ -161,7 +168,7 @@
 								<div class="k-header-menu-wrapper" id="k_header_menu_wrapper">
 									<div id="k_header_menu" class="k-header-menu k-header-menu-mobile ">
 										<ul class="k-menu__nav ">
-										<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-dashboard'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
+											<li class="k-menu__item  k-menu__item--open <?php if(\Route::currentRouteName() == 'backend-dashboard'): ?> k-menu__item--here <?php endif; ?> k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
 												<a href="<?php echo e(route('backend-dashboard')); ?>" class="k-menu__link">
 													<span class="k-menu__link-text"><?php echo e(__('backend/dashboard.title')); ?></span>
 												</a>
@@ -180,8 +187,8 @@
 												'manage_faqs',
 												'manage_products',
 												'manage_products_categories',
-												'manage_tickets',
-												'manage_tickets_categories',
+												// 'manage_tickets',
+												// 'manage_tickets_categories',
 												'manage_users',
 												'manage_coupons',
 												'manage_delivery_methods'
@@ -459,14 +466,32 @@
 		<!-- end::Global Config -->
 
 		<!--begin:: Global Mandatory Vendors -->
+		<?php echo \Livewire\Livewire::scripts(); ?>
+
+
 		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/jquery/dist/jquery.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/popper.js/dist/umd/popper.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/js-cookie/src/js.cookie.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/moment/min/moment.min.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js')); ?>" type="text/javascript"></script>
-		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/sticky-js/dist/sticky.min.js')); ?>" type="text/javascript"></script>
+		<script>
+			var publicPath = "<?php echo URL::to('/'); ?>/admin/";
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		</script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/popper.js/dist/umd/popper.js')); ?>" type="text/javascript">
+		</script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js')); ?>"
+			type="text/javascript"></script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/js-cookie/src/js.cookie.js')); ?>" type="text/javascript">
+		</script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/moment/min/moment.min.js')); ?>" type="text/javascript">
+		</script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js')); ?>"
+			type="text/javascript"></script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js')); ?>"
+			type="text/javascript"></script>
+		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/sticky-js/dist/sticky.min.js')); ?>" type="text/javascript">
+		</script>
 		<script src="<?php echo e(asset_dir('admin/assets/vendors/general/wnumb/wNumb.js')); ?>" type="text/javascript"></script>
 
 		<!--end:: Global Mandatory Vendors -->
@@ -620,6 +645,21 @@
 		</script>
 
 		<!-- end::Page Loader -->
+
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.all.min.js
+		"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.min.css
+		" rel="stylesheet">
+
+		<script src=" <?php echo e(asset('frontend/js/alert.js?t=')); ?><?= time() ?>"></script>
+
+		<!-- BEGIN: Page Level JS-->
+		<?php echo $__env->yieldPushContent('js'); ?>
+		<!-- END: Page Level JS-->
+		
 	</body>
 
 	<!-- end::Body -->

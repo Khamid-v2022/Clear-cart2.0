@@ -67,6 +67,17 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
+  'livewire/livewire' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Livewire\\LivewireServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Livewire' => 'Livewire\\Livewire',
+    ),
+  ),
   'mews/captcha' => 
   array (
     'providers' => 
@@ -90,6 +101,13 @@
     'providers' => 
     array (
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    ),
+  ),
+  'rap2hpoutre/laravel-log-viewer' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Rap2hpoutre\\LaravelLogViewer\\LaravelLogViewerServiceProvider',
     ),
   ),
 );

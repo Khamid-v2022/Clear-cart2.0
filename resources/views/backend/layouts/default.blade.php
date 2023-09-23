@@ -78,6 +78,12 @@
 
 		<!-- Custom CSS -->
 		<link href="{{ asset_dir('css/custom.css') }}" rel="stylesheet" type="text/css" />
+			
+		@livewireStyles
+
+		<!-- BEGIN: Page Level CSS-->
+		@stack('css')
+		<!-- END: Page Level CSS-->
 	</head>
 
 	<!-- end::Head -->
@@ -161,7 +167,7 @@
 								<div class="k-header-menu-wrapper" id="k_header_menu_wrapper">
 									<div id="k_header_menu" class="k-header-menu k-header-menu-mobile ">
 										<ul class="k-menu__nav ">
-										<li class="k-menu__item  k-menu__item--open @if(\Route::currentRouteName() == 'backend-dashboard') k-menu__item--here @endif k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
+											<li class="k-menu__item  k-menu__item--open @if(\Route::currentRouteName() == 'backend-dashboard') k-menu__item--here @endif k-menu__item--submenu k-menu__item--rel k-menu__item--open" data-kmenu-submenu-toggle="click" aria-haspopup="true">
 												<a href="{{ route('backend-dashboard') }}" class="k-menu__link">
 													<span class="k-menu__link-text">{{ __('backend/dashboard.title') }}</span>
 												</a>
@@ -180,8 +186,8 @@
 												'manage_faqs',
 												'manage_products',
 												'manage_products_categories',
-												'manage_tickets',
-												'manage_tickets_categories',
+												// 'manage_tickets',
+												// 'manage_tickets_categories',
 												'manage_users',
 												'manage_coupons',
 												'manage_delivery_methods'
@@ -457,14 +463,31 @@
 		<!-- end::Global Config -->
 
 		<!--begin:: Global Mandatory Vendors -->
+		@livewireScripts
+
 		<script src="{{ asset_dir('admin/assets/vendors/general/jquery/dist/jquery.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/popper.js/dist/umd/popper.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/js-cookie/src/js.cookie.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/moment/min/moment.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js') }}" type="text/javascript"></script>
-		<script src="{{ asset_dir('admin/assets/vendors/general/sticky-js/dist/sticky.min.js') }}" type="text/javascript"></script>
+		<script>
+			var publicPath = "{!! URL::to('/'); !!}/admin/";
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		</script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/popper.js/dist/umd/popper.js') }}" type="text/javascript">
+		</script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/bootstrap/dist/js/bootstrap.min.js') }}"
+			type="text/javascript"></script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/js-cookie/src/js.cookie.js') }}" type="text/javascript">
+		</script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/moment/min/moment.min.js') }}" type="text/javascript">
+		</script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/tooltip.js/dist/umd/tooltip.min.js') }}"
+			type="text/javascript"></script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/perfect-scrollbar/dist/perfect-scrollbar.js') }}"
+			type="text/javascript"></script>
+		<script src="{{ asset_dir('admin/assets/vendors/general/sticky-js/dist/sticky.min.js') }}" type="text/javascript">
+		</script>
 		<script src="{{ asset_dir('admin/assets/vendors/general/wnumb/wNumb.js') }}" type="text/javascript"></script>
 
 		<!--end:: Global Mandatory Vendors -->
@@ -618,6 +641,21 @@
 		</script>
 
 		<!-- end::Page Loader -->
+
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.all.min.js
+		"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.28/dist/sweetalert2.min.css
+		" rel="stylesheet">
+
+		<script src=" {{ asset('frontend/js/alert.js?t=') }}<?= time() ?>"></script>
+
+		<!-- BEGIN: Page Level JS-->
+		@stack('js')
+		<!-- END: Page Level JS-->
+		
 	</body>
 
 	<!-- end::Body -->
