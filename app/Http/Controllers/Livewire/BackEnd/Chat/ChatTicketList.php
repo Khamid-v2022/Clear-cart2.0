@@ -9,13 +9,15 @@ use Livewire\Component;
 
 class ChatTicketList extends Component
 {
-    public $ticketList        = null;
-    public $isNew             = false;
-    public $subject           = null;
-    public $content           = null;
-    public $search_ticket     = null;
-    public $userTicketId      = null;
-    public $ticketUnreadCount = [];
+    public $ticketFirstList      = null;
+    public $ticketSecondList     = null;
+    public $isNew                = false;
+    public $subject              = null;
+    public $content              = null;
+    public $search_ticket        = null;
+    public $userTicketId         = null;
+    public $ticketUnreadCount    = [];
+    public $ticketUnreadCountIds = [];
 
     protected $listeners = [
         'storeUserTicket' => 'storeUserTicket',
@@ -65,6 +67,7 @@ class ChatTicketList extends Component
             ->where('receiver_read', 0)
             ->update(['receiver_read' => 1]);
         $this->emitTo('back-end.chat.chat-body', 'updateBody', $userTicketId);
+        $this->emitSelf('refresh');
     }
 
     /**
@@ -75,19 +78,62 @@ class ChatTicketList extends Component
      */
     public function render()
     {
-        $this->ticketList = ChatMessage::select("chat_messages.ticket_id", "users_tickets.status", "users_tickets.created_at")
+        $this->ticketUnreadCountIds = [];
+
+        $this->ticketUnreadCountIds = ChatMessage::select("chat_messages.ticket_id", DB::Raw('count(*) as unread_count'))
+            ->where(function ($query) {
+                $query->where('sender_id', auth()->id())
+                    ->orWhere('receiver_id', auth()->id());
+            })
+            ->where('receiver_read', 0)
+            ->groupBy('ticket_id')
+            ->having('unread_count', '>', 0)
+            ->pluck('ticket_id')
+            ->all();
+
+        $this->ticketFirstList  = null;
+        $this->ticketSecondList = null;
+
+        if (count($this->ticketUnreadCountIds) > 0) {
+            $this->ticketFirstList = ChatMessage::select("chat_messages.ticket_id", "users_tickets.status", "users_tickets.updated_at as ticket_updated_at", "users.username as user_name")
+                ->leftJoin("users_tickets", "users_tickets.id", "=", "chat_messages.ticket_id")
+                ->leftJoin("users", "users.id", "=", "users_tickets.user_id")
+                ->where(function ($query) {
+                    $query->where('chat_messages.sender_id', auth()->id())
+                        ->orWhere('chat_messages.receiver_id', auth()->id());
+                })
+                ->whereIn('chat_messages.ticket_id', $this->ticketUnreadCountIds);
+
+            if ($this->search_ticket) {
+                $this->ticketFirstList = $this->ticketFirstList->where(function ($query) {
+                    $query->where('chat_messages.ticket_id', 'like', '%' . $this->search_ticket . '%')
+                        ->orWhere('users.username', 'like', '%' . $this->search_ticket . '%');
+                });
+            }
+
+            $this->ticketFirstList = $this->ticketFirstList->distinct("chat_messages.ticket_id")
+                ->orderBy('users_tickets.updated_at', 'DESC')
+                ->get();
+        }
+
+        $this->ticketSecondList = ChatMessage::select("chat_messages.ticket_id", "users_tickets.status", "users_tickets.updated_at as ticket_updated_at", "users.username as user_name")
             ->leftJoin("users_tickets", "users_tickets.id", "=", "chat_messages.ticket_id")
+            ->leftJoin("users", "users.id", "=", "users_tickets.user_id")
             ->where(function ($query) {
                 $query->where('chat_messages.sender_id', auth()->id())
                     ->orWhere('chat_messages.receiver_id', auth()->id());
-            });
+            })
+            ->whereNotIn('chat_messages.ticket_id', $this->ticketUnreadCountIds);
 
         if ($this->search_ticket) {
-            $this->ticketList = $this->ticketList->where('chat_messages.ticket_id', 'like', '%' . $this->search_ticket . '%');
+            $this->ticketSecondList = $this->ticketSecondList->where(function ($query) {
+                $query->where('chat_messages.ticket_id', 'like', '%' . $this->search_ticket . '%')
+                    ->orWhere('users.username', 'like', '%' . $this->search_ticket . '%');
+            });
         }
 
-        $this->ticketList = $this->ticketList->distinct("chat_messages.ticket_id")
-            ->orderBy('chat_messages.updated_at', 'desc')
+        $this->ticketSecondList = $this->ticketSecondList->distinct("chat_messages.ticket_id")
+            ->orderBy('users_tickets.updated_at', 'DESC')
             ->get();
 
         $this->ticketUnreadCount = ChatMessage::select("chat_messages.ticket_id", DB::Raw('count(*) as unread_count'))

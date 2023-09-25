@@ -43,6 +43,7 @@
     39 => 'App\\Providers\\RouteServiceProvider',
     40 => 'App\\Providers\\BackendServiceProvider',
     41 => 'Denpa\\Bitcoin\\Providers\\ServiceProvider',
+    42 => 'Rap2hpoutre\\LaravelLogViewer\\LaravelLogViewerServiceProvider',
   ),
   'eager' => 
   array (
@@ -75,6 +76,7 @@
     26 => 'App\\Providers\\RouteServiceProvider',
     27 => 'App\\Providers\\BackendServiceProvider',
     28 => 'Denpa\\Bitcoin\\Providers\\ServiceProvider',
+    29 => 'Rap2hpoutre\\LaravelLogViewer\\LaravelLogViewerServiceProvider',
   ),
   'deferred' => 
   array (

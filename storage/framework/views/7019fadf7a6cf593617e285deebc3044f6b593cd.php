@@ -22,17 +22,14 @@
                 }
             });
         </script>
-
 		<!--end::Web font -->
 
 		<!--begin::Page Vendors Styles -->
 		<link href="<?php echo e(asset_dir('admin/assets/vendors/custom/fullcalendar/fullcalendar.bundle.css')); ?>" rel="stylesheet" type="text/css" />
-
 		<!--end::Page Vendors Styles -->
 
 		<!--begin:: Global Mandatory Vendors -->
 		<link href="<?php echo e(asset_dir('admin/assets/vendors/general/perfect-scrollbar/css/perfect-scrollbar.css')); ?>" rel="stylesheet" type="text/css" />
-
 		<!--end:: Global Mandatory Vendors -->
 
 		<!--begin:: Global Optional Vendors -->
@@ -60,12 +57,10 @@
 		<link href="<?php echo e(asset_dir('admin/assets/vendors/custom/vendors/fontawesome5/css/all.min.css')); ?>" rel="stylesheet" type="text/css" />
 
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
 		<!--end:: Global Optional Vendors -->
 
 		<!--begin::Global Theme Styles -->
 		<link href="<?php echo e(asset_dir('admin/assets/files/base/style.bundle.css')); ?>" rel="stylesheet" type="text/css" />
-
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Layout Skins -->
@@ -130,7 +125,6 @@
 										</a>
 									</div>
 								</div>
-
 								<!-- end:: Brand -->
 
 								<!-- begin:: Header Topbar -->
@@ -201,35 +195,14 @@
 												</a>
 												<div class="k-menu__submenu k-menu__submenu--classic k-menu__submenu--left">
 													<ul class="k-menu__subnav">
-														<?php if(Auth::user()->hasPermission('manage_tickets') || Auth::user()->hasPermission('manage_tickets_categproes')): ?>
-														<li class="k-menu__item k-menu__item--submenu" data-kmenu-submenu-toggle="hover" aria-haspopup="true">
-															<a href="javascript:;" class="k-menu__link k-menu__toggle">
-																<i class="k-menu__link-bullet k-menu__link-bullet--line"><span></span></i>
+														<?php if(Auth::user()->hasPermission('manage_tickets')): ?>
+														<li class="k-menu__item" aria-haspopup="true">
+															<a href="<?php echo e(route('admin.chat.dashbaord')); ?>"
+																class="k-menu__link ">
+																<i
+																	class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
 																<span class="k-menu__link-text"><?php echo e(__('backend/management.tickets.title')); ?></span>
-																<i class="k-menu__hor-arrow la la-angle-right"></i>
-																<i class="k-menu__ver-arrow la la-angle-right"></i>
 															</a>
-															<div class="k-menu__submenu k-menu__submenu--classic k-menu__submenu--right">
-																<ul class="k-menu__subnav">
-																	<?php if(Auth::user()->hasPermission('manage_tickets')): ?>
-																	<li class="k-menu__item" aria-haspopup="true">
-																		<a href="<?php echo e(route('backend-management-tickets')); ?>" class="k-menu__link ">
-																			<i class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
-																			<span class="k-menu__link-text"><?php echo e(__('backend/management.tickets.title')); ?></span>
-																		</a>
-																	</li>
-																	<?php endif; ?>
-
-																	<?php if(Auth::user()->hasPermission('manage_tickets_categories')): ?>
-																	<li class="k-menu__item" aria-haspopup="true">
-																		<a href="<?php echo e(route('backend-management-tickets-categories')); ?>" class="k-menu__link ">
-																			<i class="k-menu__link-bullet k-menu__link-bullet--dot"><span></span></i>
-																			<span class="k-menu__link-text"><?php echo e(__('backend/management.tickets.categories.title')); ?></span>
-																		</a>
-																	</li>
-																	<?php endif; ?>
-																</ul>
-															</div>
 														</li>
 														<?php endif; ?>
 

@@ -12,10 +12,10 @@ class RobotsController extends Controller
 
     public function robots()
     {
-        $robots = 'User-agent: *'.PHP_EOL
-        .'Disallow:'.PHP_EOL.PHP_EOL;
+        $robots = 'User-agent: *' . PHP_EOL
+            . 'Disallow:' . PHP_EOL . PHP_EOL;
 
-        $robots .= 'Sitemap: '.route('sitemap-xml');
+        $robots .= 'Sitemap: ' . route('sitemap-xml');
 
         return response($robots, 200)
             ->header('Content-Type', 'text/plain');

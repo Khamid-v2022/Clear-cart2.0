@@ -49,9 +49,10 @@ class ChatBody extends Component
      */
     public function updateBody(int $userTicketId)
     {
+        $this->message      = '';
         $this->userTicketId = $userTicketId;
         $this->userTicket   = UserTicket::find($userTicketId);
-        //$this->emitSelf('refresh');
+        $this->emitSelf('refresh');
     }
 
     /**
@@ -80,9 +81,9 @@ class ChatBody extends Component
         $chatMessage->updated_at    = date("Y-m-d H:i:s");
         $chatMessage->save();
 
-        $userTicket         = UserTicket::find($this->userTicketId);
-        $userTicket->status = 'closed';
-        $userTicket->save();
+        // $userTicket         = UserTicket::find($this->userTicketId);
+        // $userTicket->status = 'closed';
+        // $userTicket->save();
 
         $this->updateTicketTime();
 
@@ -119,6 +120,8 @@ class ChatBody extends Component
             })
             ->where('receiver_read', 0)
             ->update(['receiver_read' => 1]);
+
+        $this->ticketMessagesList = [];
 
         $dates = ChatMessage::select("message_date")
             ->where("ticket_id", $this->userTicketId)

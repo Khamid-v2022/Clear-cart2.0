@@ -135,14 +135,6 @@
                                                         {{ \App\Classes\LangHelper::getValue(app()->getLocale(), 'product-category', null, $productCategory->id) ?? $productCategory->name }}
                                                     </a>
                                                     @endforeach
-
-                                                    @if(count(App\Models\Product::getUncategorizedProducts()))
-                                                    <!-- <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="{{ route('product-category', ['uncategorized']) }}">
-                                                        {{ __('frontend/shop.uncategorized') }}
-                                                    </a> -->
-                                                    @endif
                                                 @endif
                                             </div>
                                             @endif

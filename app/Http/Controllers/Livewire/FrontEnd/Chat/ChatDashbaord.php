@@ -23,7 +23,7 @@ class ChatDashbaord extends Component
     public function render()
     {
         $this->userTicket = UserTicket::where('user_id', auth()->id())
-            ->orderBy('id', 'DESC')
+            ->orderBy('updated_at', 'DESC')
             ->first();
 
         if ($this->userTicket) {

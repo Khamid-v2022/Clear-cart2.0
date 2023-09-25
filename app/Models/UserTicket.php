@@ -51,7 +51,7 @@ class UserTicket extends Model
         }
 
         return (object) [
-            'name' => $name,
+            'name'     => $name,
             'username' => $name,
         ];
     }
@@ -88,7 +88,6 @@ class UserTicket extends Model
         return $ticketReply;
     }
 
-
     /**
      * get ticket replies
      *
@@ -109,5 +108,16 @@ class UserTicket extends Model
     public function chatMessages()
     {
         return $this->hasMany(UserTicketReply::class, 'ticket_id', 'id');
+    }
+
+    /**
+     * get ticket user
+     *
+     * @return void
+     *
+     */
+    public function ticketUser()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id')->where('role_id', '!=', 1);
     }
 }

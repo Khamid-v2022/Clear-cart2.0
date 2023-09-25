@@ -64,6 +64,8 @@
             App\Providers\BackendServiceProvider::class,
 
             Denpa\Bitcoin\Providers\ServiceProvider::class,
+
+            Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         ],
 
         'aliases' => [

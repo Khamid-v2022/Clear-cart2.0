@@ -142,15 +142,6 @@
 
                                                     </a>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                                    <?php if(count(App\Models\Product::getUncategorizedProducts())): ?>
-                                                    <!-- <div class="dropdown-divider"></div>
-
-                                                    <a class="dropdown-item" href="<?php echo e(route('product-category', ['uncategorized'])); ?>">
-                                                        <?php echo e(__('frontend/shop.uncategorized')); ?>
-
-                                                    </a> -->
-                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </div>
                                             <?php endif; ?>

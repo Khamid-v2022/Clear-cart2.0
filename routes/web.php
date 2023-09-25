@@ -21,7 +21,6 @@
     use App\Http\Controllers\UserPanel\UserPanelController;
     use Rap2hpoutre\LaravelLogViewer\LogViewerController;
     
-
     Route::get('/robots.txt', [RobotsController::class, 'robots'])->name('robots');
     Route::get('/sitemap', [SitemapController::class, 'main'])->name('sitemap');
     Route::get('/sitemap/products', [SitemapController::class, 'products'])->name('sitemap-products');
@@ -29,7 +28,6 @@
     Route::get('/sitemap/news', [SitemapController::class, 'news'])->name('sitemap-news');
     Route::get('/sitemap.xml', [SitemapController::class, 'main'])->name('sitemap-xml');
     
-
     /*
      * Error
      */
@@ -41,7 +39,6 @@
     Route::get('no-permissions', [ErrorController::class, 'noPermissions'])->name('no-permissions');
      
     /*
-
     Route::get('/api/product/database/import', 'API\ProductDatabaseImportController@databaseImport')->name('api-product-database-import');
     Route::post('/api/product/database/import', 'API\ProductDatabaseImportController@databaseImport');
 
@@ -55,26 +52,22 @@
     Route::post('/api/bitcoin/info', 'API\BitcoinWalletController@bitcoinWalletInfo');
      */
 
-    /*
-     * Frontend
-     */
-
-     Route::get('/custom/css', [CSSController::class, 'generateCustomCSS'])->name('custom-css');
-     Route::get('/custom/colors', [CSSController::class, 'generateOverridingColorsCSS'])->name('custom-colors');
+    Route::get('/custom/css', [CSSController::class, 'generateCustomCSS'])->name('custom-css');
+    Route::get('/custom/colors', [CSSController::class, 'generateOverridingColorsCSS'])->name('custom-colors');
      
-     // Default
-     Route::get('/', [DefaultController::class, 'showIndex'])->name('index');
-     Route::get('/article/{id}', [DefaultController::class, 'showArticle'])->name('article');
-     Route::get('/page/{page?}', [DefaultController::class, 'showIndex'])->name('index-with-pageNumber');
+    // Default
+    Route::get('/', [DefaultController::class, 'showIndex'])->name('index');
+    Route::get('/article/{id}', [DefaultController::class, 'showArticle'])->name('article');
+    Route::get('/page/{page?}', [DefaultController::class, 'showIndex'])->name('index-with-pageNumber');
      
-     // Auth
-     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-     Route::post('login', [LoginController::class, 'login']);
-     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    // Auth
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
      
-     Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-     Route::post('register', [RegisterController::class, 'register']);
+    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+    Route::post('register', [RegisterController::class, 'register']);
 
     /*
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
@@ -82,8 +75,8 @@
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
     */
+
     Route::group(["middleware" => 'auth'], function () {
-        // UserPanel
         Route::get('home', [UserPanelController::class, 'showUserDashboard'])->name('home');
 
         Route::get('coupon/remove/checkout', [UserPanelController::class, 'removeCouponCheckout'])->name('remove-coupon-checkout');

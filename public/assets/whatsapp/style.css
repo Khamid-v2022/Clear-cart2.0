@@ -272,13 +272,13 @@ button.send {
 	top: 20px;
 	width: 0;
 	height: 0;
-	right: -14px;
+	right: -13px;
 	border-bottom: 16px solid transparent;
 	border-left: 18px solid #2904b0;
 }
 
 .align-self-start:before {
-	left: -14px;
+	left: -13px;
 	border-bottom: 16px solid transparent;
 	border-right: 18px solid #fff;
 	content: "";
@@ -286,17 +286,6 @@ button.send {
 	top: 20px;
 	width: 0;
 	height: 0;
-
-	/* content: '';
-	position: absolute;
-	bottom: 6px;
-	left: -3px;
-	width: 8px;
-	height: 12px;
-	transform: rotate(45deg);
-	background-color: #ffffff;
-	margin: 0;
-	box-shadow: 0 .125rem 0.25rem 0px rgba(0, 0, 0, .075); */
 }
 
 .input-group.newDesign input {

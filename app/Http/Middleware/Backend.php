@@ -2,26 +2,26 @@
 
 namespace App\Http\Middleware;
 
-    use Auth;
-    use Closure;
-    use Route;
+use Auth;
+use Closure;
+use Route;
 
-    class Backend
+class Backend
+{
+    public function handle($request, Closure $next)
     {
-        public function handle($request, Closure $next)
-        {
-            $currentAction = explode('@', Route::currentRouteAction())[1];
+        $currentAction = explode('@', Route::currentRouteAction())[1];
 
-            if ($currentAction == 'showLoginPage') {
-                if (Auth::user() && Auth::user()->hasPermission('access_backend')) {
-                    return redirect()->route('backend-dashboard');
-                } else {
-                    return $next($request);
-                }
-            } elseif (Auth::user() && Auth::user()->hasPermission('access_backend')) {
+        if ($currentAction == 'showLoginPage') {
+            if (Auth::user() && Auth::user()->hasPermission('access_backend')) {
+                return redirect()->route('backend-dashboard');
+            } else {
                 return $next($request);
             }
-
-            return redirect()->route('backend-logout');
+        } elseif (Auth::user() && Auth::user()->hasPermission('access_backend')) {
+            return $next($request);
         }
+
+        return redirect()->route('backend-logout');
     }
+}
